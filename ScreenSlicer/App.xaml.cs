@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,23 +15,32 @@ namespace ScreenSlicer
     /// </summary>
     public partial class App : Application
     {
-        private IKernel container;
+        private IKernel _container;
+
+        private TaskbarIcon _notifyIcon;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             ConfigureContainer();
             ComposeObjects();
-            Current.MainWindow.Show();
+            _notifyIcon.BeginInit();
         }
 
         private void ConfigureContainer()
         {
-            container = new StandardKernel();
+            _container = new StandardKernel();
         }
 
         private void ComposeObjects()
         {
-            Current.MainWindow = container.Get<MainWindow>();
+            Current.MainWindow = _container.Get<MainWindow>();
+            _notifyIcon = _container.Get<NotifyIcon.NotifyIcon>();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
+            base.OnExit(e);
         }
     }
 }
