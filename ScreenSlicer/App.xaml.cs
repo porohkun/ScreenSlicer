@@ -28,13 +28,13 @@ namespace ScreenSlicer
 
         private void ConfigureContainer()
         {
-            _container = new StandardKernel();
+            _container = new StandardKernel(new MainModule());
         }
 
         private void ComposeObjects()
         {
-            Current.MainWindow = _container.Get<MainWindow>();
             _notifyIcon = _container.Get<NotifyIcon.NotifyIcon>();
+            _container.Get<Updating.Updater>().CheckUpdates();
         }
 
         protected override void OnExit(ExitEventArgs e)
