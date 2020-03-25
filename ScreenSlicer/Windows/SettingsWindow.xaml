@@ -4,9 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenSlicer.Windows"
-        mc:Ignorable="d"
-        Title="SettingsWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        Title="Screen Slicer" Height="450" Width="600"
+        BorderThickness="1" 
+        IsTitleVisible="True"
+        WindowStartupLocation="CenterScreen">
+    <Grid/>
+    <local:HideableWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="Snaps">
+            <mui:LinkGroup.Links >
+                <mui:Link Source="/Pages/SettingsWindow/SnapPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="System">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/SystemPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="Localization">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/LocalesPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="Updates">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/UpdatesPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="About">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/AboutPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </local:HideableWindow.MenuLinkGroups>
 </local:HideableWindow>
