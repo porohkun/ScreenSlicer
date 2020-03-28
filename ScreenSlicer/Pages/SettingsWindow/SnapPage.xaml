@@ -4,11 +4,30 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ScreenSlicer.Pages.SettingsWindow"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800" 
-      Title="SnapPage">
+      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+      lex:LocalizeDictionary.DesignCulture="en"
+      lex:ResxLocalizationProvider.DefaultAssembly="ScreenSlicer"
+      lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+      mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <TextBlock Text="SnapPage"/>
+        <DockPanel>
+            <TextBlock Text="SnapPage" DockPanel.Dock="Top"/>
+            <ToolBarTray DockPanel.Dock="Top">
+                <ToolBar>
+                    <ComboBox ItemsSource="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=MergedAvailableCultures}"
+                          SelectedItem="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=Culture}" 
+                          DisplayMemberPath="NativeName" />
+                </ToolBar>
+            </ToolBarTray>
+            <StatusBar DockPanel.Dock="Bottom">
+                <TextBlock>
+                <Run Text="{lex:Loc Key=Toolbar.LanguageLabel}" />
+                <Run Text="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=Culture.DisplayName, Mode=OneWay}" />
+                </TextBlock>
+                <Label Content="Version: 0.1" />
+            </StatusBar>
+            <TabControl Name="Items" />
+        </DockPanel>
     </Grid>
 </Page>

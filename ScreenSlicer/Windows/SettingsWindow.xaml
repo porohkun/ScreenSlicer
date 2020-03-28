@@ -5,33 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenSlicer.Windows"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-        Title="Screen Slicer" Height="450" Width="600"
+        xmlns:extensions="http://wpflocalizeextension.codeplex.com"
+        xmlns:lex ="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+        lex:LocalizeDictionary.DesignCulture="en"
+        extensions:ResxLocalizationProvider.DefaultAssembly="ScreenSlicer"
+        extensions:ResxLocalizationProvider.DefaultDictionary="Strings"
+        Title="{extensions:Loc Key=SettingsWindow.Title}" Height="450" Width="600"
         BorderThickness="1" 
         IsTitleVisible="True"
         WindowStartupLocation="CenterScreen">
     <Grid/>
     <local:HideableWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="Snaps">
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Snaps.GroupHeader}">
             <mui:LinkGroup.Links >
                 <mui:Link Source="/Pages/SettingsWindow/SnapPage.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="System">
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.System.GroupHeader}">
             <mui:LinkGroup.Links>
                 <mui:Link Source="/Pages/SettingsWindow/SystemPage.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="Localization">
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Localization.GroupHeader}">
             <mui:LinkGroup.Links>
                 <mui:Link Source="/Pages/SettingsWindow/LocalesPage.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="Updates">
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Updates.GroupHeader}">
             <mui:LinkGroup.Links>
                 <mui:Link Source="/Pages/SettingsWindow/UpdatesPage.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="About">
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.About.GroupHeader}">
             <mui:LinkGroup.Links>
                 <mui:Link Source="/Pages/SettingsWindow/AboutPage.xaml"/>
             </mui:LinkGroup.Links>
