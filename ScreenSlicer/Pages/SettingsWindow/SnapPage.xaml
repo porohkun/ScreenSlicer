@@ -11,23 +11,6 @@
       mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <DockPanel>
-            <TextBlock Text="SnapPage" DockPanel.Dock="Top"/>
-            <ToolBarTray DockPanel.Dock="Top">
-                <ToolBar>
-                    <ComboBox ItemsSource="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=MergedAvailableCultures}"
-                          SelectedItem="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=Culture}" 
-                          DisplayMemberPath="NativeName" />
-                </ToolBar>
-            </ToolBarTray>
-            <StatusBar DockPanel.Dock="Bottom">
-                <TextBlock>
-                <Run Text="{lex:Loc Key=Toolbar.LanguageLabel}" />
-                <Run Text="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=Culture.DisplayName, Mode=OneWay}" />
-                </TextBlock>
-                <Label Content="Version: 0.1" />
-            </StatusBar>
-            <TabControl Name="Items" />
-        </DockPanel>
+        <TextBlock Text="SnapPage" DockPanel.Dock="Top"/>
     </Grid>
 </Page>
