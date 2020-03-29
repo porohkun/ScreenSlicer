@@ -3,18 +3,24 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ScreenSlicer.Pages.SettingsWindow"
+      xmlns:local="clr-namespace:ScreenSlicer"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
-      lex:LocalizeDictionary.DesignCulture="en"
       lex:ResxLocalizationProvider.DefaultAssembly="ScreenSlicer"
       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
       mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
 
     <DockPanel>
         <TextBlock Text="LocalesPage" DockPanel.Dock="Top"/>
-        <ComboBox ItemsSource="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=MergedAvailableCultures}"
-                      SelectedItem="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=Culture}" 
-                      DisplayMemberPath="NativeName" Width="200" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+        <ComboBox ItemsSource="{Binding Source={x:Static local:Settings.Instance}, Path=Localization.MergedAvailableCultures}"
+                  SelectedItem="{Binding Source={x:Static local:Settings.Instance}, Path=Localization.Culture}" 
+                  Width="200" HorizontalAlignment="Left" DockPanel.Dock="Top">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Name="somePerson" Text="{Binding Path=NativeName, Converter={StaticResource CapitalizeConverter}}"/>
+
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock Text="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=Culture.DisplayName, Mode=OneWay}" DockPanel.Dock="Top"/>
         <Label Content="Version: 0.1"  DockPanel.Dock="Top"/>
     </DockPanel>

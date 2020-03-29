@@ -130,7 +130,7 @@
     <value>System</value>
   </data>
   <data name="SettingsWindow.Title" xml:space="preserve">
-    <value>Screen Slicer [en-US] v.{0}</value>
+    <value>Screen Slicer v.{0}</value>
   </data>
   <data name="SettingsWindow.Updates.GroupHeader" xml:space="preserve">
     <value>Updates</value>
