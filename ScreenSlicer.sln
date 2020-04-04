@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSlicer", "ScreenSlicer\ScreenSlicer.csproj", "{E7858322-789F-4857-AE95-B1FEE4075DCA}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WPF.Controls.IntUpDown", "WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.shproj", "{E087D350-D4C7-45F3-89CC-55DC0F1EDE75}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.projitems*{e087d350-d4c7-45f3-89cc-55dc0f1ede75}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

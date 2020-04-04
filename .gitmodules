@@ -1,0 +1,3 @@
+[submodule "WPF.Controls.IntUpDown"]
+	path = WPF.Controls.IntUpDown
+	url = ../WPF.Controls.IntUpDown.git
