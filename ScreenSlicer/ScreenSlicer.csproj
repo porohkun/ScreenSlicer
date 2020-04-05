@@ -134,6 +134,7 @@
     <Compile Include="Pages\SettingsWindow\UpdatesPage.xaml.cs">
       <DependentUpon>UpdatesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings\SnapSettings.cs" />
     <Compile Include="Settings\LocalizationSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\WindowStateSettings.cs" />

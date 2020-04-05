@@ -60,13 +60,29 @@ namespace ScreenSlicer
             }
         }
 
+        private SnapSettings _snaps;
+        public SnapSettings Snaps
+        {
+            get
+            {
+                if (_snaps == null)
+                    Snaps = new SnapSettings();
+                return _snaps;
+            }
+            set
+            {
+                _snaps = value;
+                _snaps.PropertyChanged += SaveByPropertyChanged;
+            }
+        }
 
         public Settings() { }
         private Settings(bool defaultValues)
         {
-            if (defaultValues == false)
+            if (!defaultValues)
                 return;
-            Localization = new LocalizationSettings() { Culture = CultureInfo.GetCultureInfo("de") };
+            Localization = new LocalizationSettings() { Culture = CultureInfo.GetCultureInfo("en") };
+            Snaps = new SnapSettings() { SnapDistance = 10, SnapToMonitors = true, SnapToRegions = true };
         }
 
         private static Settings Load()

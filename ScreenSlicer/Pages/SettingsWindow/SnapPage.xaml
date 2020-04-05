@@ -12,14 +12,19 @@
       mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
 
     <DockPanel local:MarginSetter.Margin="4" Width="300" HorizontalAlignment="Left">
-        <CheckBox x:Name="AutoFill" Content="Enable auto fill regions" DockPanel.Dock="Top"/>
+        <CheckBox x:Name="AutoFill" Content="Enable auto fill regions" DockPanel.Dock="Top"
+                      IsChecked="{Binding Source={x:Static local:Settings.Instance}, Path=Snaps.AutoFill, Mode=TwoWay}"/>
         <DockPanel local:MarginSetter.Margin="4" DockPanel.Dock="Top" IsEnabled="{Binding ElementName=AutoFill, Path=IsChecked, Converter={StaticResource ReverseBooleanConverter}}">
-            <CheckBox Content="Snap to monitor borders" DockPanel.Dock="Top"/>
-            <CheckBox Content="Snap to windows edges" DockPanel.Dock="Top"/>
-            <CheckBox Content="Snap to regions" DockPanel.Dock="Top"/>
+            <CheckBox Content="Snap to monitor borders" DockPanel.Dock="Top"
+                      IsChecked="{Binding Source={x:Static local:Settings.Instance}, Path=Snaps.SnapToMonitors, Mode=TwoWay}"/>
+            <CheckBox Content="Snap to windows edges" DockPanel.Dock="Top"
+                      IsChecked="{Binding Source={x:Static local:Settings.Instance}, Path=Snaps.SnapToWindows, Mode=TwoWay}"/>
+            <CheckBox Content="Snap to regions" DockPanel.Dock="Top"
+                      IsChecked="{Binding Source={x:Static local:Settings.Instance}, Path=Snaps.SnapToRegions, Mode=TwoWay}"/>
             <DockPanel DockPanel.Dock="Top">
                 <TextBlock Text="Snap distance" DockPanel.Dock="Top"/>
-                <wpfc:IntUpDown MaxValue="100" DockPanel.Dock="Left" Width="60"/>
+                <wpfc:IntUpDown MaxValue="100" DockPanel.Dock="Left" Width="60"
+                      Value="{Binding Source={x:Static local:Settings.Instance}, Path=Snaps.SnapDistance, Mode=TwoWay}"/>
                 <TextBlock TextAlignment="Left" Text="Pixels" DockPanel.Dock="Left" Margin="8,0,0,0"/>
             </DockPanel>
         </DockPanel>
