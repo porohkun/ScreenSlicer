@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Light.xaml"/>
                 <ResourceDictionary Source="MuiModify.xaml"/>
                 <ResourceDictionary Source="Converters.xaml"/>
+                <ResourceDictionary Source="IntUpDown.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

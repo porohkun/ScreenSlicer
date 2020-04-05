@@ -242,6 +242,7 @@
     <Resource Include="Images\Icon.ico" />
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
