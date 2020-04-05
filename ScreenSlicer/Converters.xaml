@@ -4,4 +4,5 @@
                     xmlns:c="clr-namespace:ScreenSlicer.Converters">
     <c:LocFormatConverter x:Key="LocFormatConverter"/>
     <c:CapitalizeConverter x:Key="CapitalizeConverter"/>
+    <c:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
 </ResourceDictionary>

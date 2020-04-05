@@ -110,12 +110,14 @@
     </ApplicationDefinition>
     <Compile Include="Converters\CapitalizeConverter.cs" />
     <Compile Include="Converters\LocFormatConverter.cs" />
+    <Compile Include="Converters\ReverseBooleanConverter.cs" />
     <Compile Include="Localization\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="MainModule.cs" />
+    <Compile Include="Misc\MarginSetter.cs" />
     <Compile Include="Misc\StringFormatProxy.cs" />
     <Compile Include="Pages\SettingsWindow\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
