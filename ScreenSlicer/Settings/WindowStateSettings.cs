@@ -18,10 +18,6 @@ namespace ScreenSlicer
         private double _height = 480;
         private WindowState _state;
 
-        public event EventHandler WidthChanged;
-        public event EventHandler HeightChanged;
-        public event EventHandler StateChanged;
-
         [XmlAttribute]
         public double Width
         {

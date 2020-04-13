@@ -27,10 +27,12 @@ namespace ScreenSlicer.NotifyIcon
         public ICommand ShowSettingsWindowCommand { get; }
         public ICommand ExitCommand { get; }
 
-        public NotifyIcon(AppActivatedCommand appActivatedCommand,
-            ShowWindowCommand<Windows.SlicingWindow> showSlicingWindowCommand,
+        public NotifyIcon(
+            AppActivatedCommand appActivatedCommand,
+            ActivateRegionsManagerCommand showSlicingWindowCommand,
             ShowWindowCommand<Windows.SettingsWindow> showSettingsWindowCommand,
-            ExitCommand exitCommand)
+            ExitCommand exitCommand
+            )
         {
             AppActivatedCommand = appActivatedCommand;
             ShowSlicingWindowCommand = showSlicingWindowCommand;

@@ -108,6 +108,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\ActivateRegionsManagerCommand.cs" />
     <Compile Include="Converters\CapitalizeConverter.cs" />
     <Compile Include="Converters\LocFormatConverter.cs" />
     <Compile Include="Converters\ReverseBooleanConverter.cs" />
@@ -117,8 +118,14 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="MainModule.cs" />
+    <Compile Include="Managers\RegionsManager.cs" />
     <Compile Include="Misc\MarginSetter.cs" />
     <Compile Include="Misc\StringFormatProxy.cs" />
+    <Compile Include="Native\Methods.cs" />
+    <Compile Include="Native\NativeRectangle.cs" />
+    <Compile Include="Native\Screens\MonitorInfo.cs" />
+    <Compile Include="Native\Screens\Screen.cs" />
+    <Compile Include="OverrideXml.cs" />
     <Compile Include="Pages\SettingsWindow\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
@@ -134,12 +141,16 @@
     <Compile Include="Pages\SettingsWindow\UpdatesPage.xaml.cs">
       <DependentUpon>UpdatesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings\RegionSettings.cs" />
+    <Compile Include="Settings\Slice\Region.cs" />
+    <Compile Include="Settings\Slice\RegionsPreset.cs" />
+    <Compile Include="Settings\Slice\ScreenRegion.cs" />
+    <Compile Include="Settings\Slice\Slice.cs" />
     <Compile Include="Settings\SnapSettings.cs" />
     <Compile Include="Settings\LocalizationSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\WindowStateSettings.cs" />
     <Compile Include="Updating\Updater.cs" />
-    <Compile Include="Windows\HideableWindow.cs" />
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -244,7 +255,9 @@
   <ItemGroup>
     <Resource Include="Images\Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Native\Windows\" />
+  </ItemGroup>
   <Import Project="..\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
