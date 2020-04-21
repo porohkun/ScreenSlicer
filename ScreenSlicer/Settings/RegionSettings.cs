@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -74,7 +75,15 @@ namespace ScreenSlicer
         private void Presets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             NotifyPropertyChanged(nameof(Presets));
+            foreach (RegionsPreset item in (IEnumerable)e?.OldItems ?? Enumerable.Empty<RegionsPreset>())
+                item.PropertyChanged -= Preset_PropertyChanged;
+            foreach (RegionsPreset item in (IEnumerable)e?.NewItems ?? Enumerable.Empty<RegionsPreset>())
+                item.PropertyChanged += Preset_PropertyChanged;
         }
 
+        private void Preset_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged(nameof(Presets));
+        }
     }
 }

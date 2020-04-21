@@ -1,31 +1,55 @@
-﻿using ScreenSlicer.Native.Screens;
+﻿using ScreenSlicer.Commands;
+using ScreenSlicer.Native.Screens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ScreenSlicer.Managers
 {
     public class RegionsManager
     {
+        public ICommand ExitCommand { get; }
+        public ICommand EndSliceRegionsCommand { get; }
+
         public bool IsActive { get; private set; }
 
-        public RegionsManager()
+        private ScreenRegion[] _regions;
+        private Windows.SlicingWindow[] _windows;
+
+        public RegionsManager(ExitCommand exitCommand, EndSliceRegionsCommand endSliceRegionsCommand)
         {
+            ExitCommand = exitCommand;
+            EndSliceRegionsCommand = endSliceRegionsCommand;
+            endSliceRegionsCommand.SetManager(this);
             SyncCurrentPresetWithScreens();
         }
 
-        public void Activate()
+        public void BeginSlice()
         {
             SyncCurrentPresetWithScreens();
             ShowSlicingWindows();
         }
 
+        public void EndSlice(string name)
+        {
+            Settings.Instance.Regions.CurrentPreset.ScreenRegions = _regions;
+            ExitCommand.Execute(0);
+        }
+
         private void ShowSlicingWindows()
         {
-            var preset = Settings.Instance.Regions.CurrentPreset;
+            _regions = Settings.Instance.Regions.CurrentPreset.ScreenRegions.Select(r => r.Clone() as ScreenRegion).ToArray();
+            _windows = _regions.Select(region =>
+            {
+                var window = new Windows.SlicingWindow(region, EndSliceRegionsCommand);
+                window.Show();
+                region.Hook();
+                return window;
+            }).ToArray();
         }
 
         private void SyncCurrentPresetWithScreens()
@@ -39,7 +63,7 @@ namespace ScreenSlicer.Managers
                     "Current preset is not corresponds to available screens configuration. It will be replaced with empty preset.\r\n\r\nPress 'Cancel' for close app without any changes",
                     "Preset inconsistency",
                     MessageBoxButton.OKCancel) != MessageBoxResult.OK)
-                    Application.Current.Shutdown();
+                    ExitCommand.Execute(0);
                 preset = GetOrCreateDefaultPreset();
             }
         }

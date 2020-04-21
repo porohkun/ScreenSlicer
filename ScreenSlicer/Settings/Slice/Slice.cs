@@ -15,6 +15,8 @@ namespace ScreenSlicer
         }
 
         private Orientation _orientation;
+        private int _position;
+
         [XmlAttribute(nameof(Orientation))]
         public Orientation Orientation
         {
@@ -29,7 +31,6 @@ namespace ScreenSlicer
             }
         }
 
-        private int _position;
         [XmlAttribute(nameof(Position))]
         public int Position
         {

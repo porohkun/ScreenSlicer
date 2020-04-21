@@ -17,9 +17,34 @@ namespace ScreenSlicer
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(strPropertyName));
         }
 
+        private string _name;
+        private ScreenRegion[] _screenRegions;
+
         [XmlAttribute]
-        public string Name { get; set; }
-        public ScreenRegion[] ScreenRegions { get; set; }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    NotifyPropertyChanged(nameof(Name));
+                }
+            }
+        }
+        public ScreenRegion[] ScreenRegions
+        {
+            get => _screenRegions;
+            set
+            {
+                if (_screenRegions != value)
+                {
+                    _screenRegions = value;
+                    NotifyPropertyChanged(nameof(ScreenRegion));
+                }
+            }
+        }
 
         public RegionsPreset() { }
 

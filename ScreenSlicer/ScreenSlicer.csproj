@@ -108,9 +108,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\ActivateRegionsManagerCommand.cs" />
+    <Compile Include="Commands\EndSliceRegionsCommand.cs" />
+    <Compile Include="Commands\BeginSliceRegionsCommand.cs" />
+    <Compile Include="Commands\SliceRegionHorizontalCommand.cs" />
+    <Compile Include="Commands\GlueRegionCommand.cs" />
+    <Compile Include="Commands\SliceRegionVerticalCommand.cs" />
+    <Compile Include="Controls\RegionView.cs" />
     <Compile Include="Converters\CapitalizeConverter.cs" />
+    <Compile Include="Converters\ConvertersChain.cs" />
+    <Compile Include="Converters\IntToGridLengthConverter.cs" />
+    <Compile Include="Converters\RegionSlicePositionConverter.cs" />
     <Compile Include="Converters\LocFormatConverter.cs" />
+    <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\ReverseBooleanConverter.cs" />
     <Compile Include="Localization\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -119,6 +128,7 @@
     </Compile>
     <Compile Include="MainModule.cs" />
     <Compile Include="Managers\RegionsManager.cs" />
+    <Compile Include="Misc\LinqExtensions.cs" />
     <Compile Include="Misc\MarginSetter.cs" />
     <Compile Include="Misc\StringFormatProxy.cs" />
     <Compile Include="Native\Methods.cs" />

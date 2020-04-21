@@ -6,11 +6,11 @@ using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    public class ActivateRegionsManagerCommand : InjectableCommand
+    public class BeginSliceRegionsCommand : InjectableCommand
     {
         private readonly RegionsManager _manager;
 
-        public ActivateRegionsManagerCommand(RegionsManager manager)
+        public BeginSliceRegionsCommand(RegionsManager manager)
         {
             _manager = manager;
         }
@@ -22,7 +22,7 @@ namespace ScreenSlicer.Commands
 
         protected override void ExecuteInternal(object parameter)
         {
-            _manager.Activate();
+            _manager.BeginSlice();
         }
     }
 }

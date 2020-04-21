@@ -14,7 +14,13 @@ namespace ScreenSlicer.Commands
 
         protected override void ExecuteInternal(object parameter)
         {
-            Application.Current.Shutdown();
+            var code = 0;
+            if (parameter is int)
+                code = (int)parameter;
+            else if (parameter is int?)
+                code = ((int?)parameter).GetValueOrDefault(0);
+
+            Application.Current.Shutdown(code);
         }
     }
 }

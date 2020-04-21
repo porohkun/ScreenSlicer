@@ -3,10 +3,114 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ScreenSlicer.Windows"
+        xmlns:local="clr-namespace:ScreenSlicer" xmlns:c="clr-namespace:ScreenSlicer.Commands"
         mc:Ignorable="d"
-        Title="SlicingWindow" WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized">
-    <Grid>
+        d:DataContext="{StaticResource SlicingWindowDummy}"
+        Width="{Binding PhysicalBounds.Width}"
+        Height="{Binding PhysicalBounds.Height}"
+        Top="{Binding PhysicalBounds.Top}"
+        Left="{Binding PhysicalBounds.Left}"
+        WindowStyle="None"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <c:SliceRegionVerticalCommand x:Key="SliceRegionVerticalCommand"/>
+        <c:SliceRegionHorizontalCommand x:Key="SliceRegionHorizontalCommand"/>
+        <c:GlueRegionCommand x:Key="GlueRegionCommand"/>
+        <Style TargetType="{x:Type local:RegionView}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:RegionView}">
+                        <Grid>
+                            <WrapPanel x:Name="PART_SlicePanel"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center">
+                                <Button Content="--"
+                                                        Command="{DynamicResource SliceRegionHorizontalCommand}"
+                                                        CommandParameter="{TemplateBinding Region}"
+                                                        Width="24" Height="24" Padding="3,3,3,5"/>
+                                <Button Content="|"
+                                                        Command="{DynamicResource SliceRegionVerticalCommand}"
+                                                        CommandParameter="{TemplateBinding Region}"
+                                                        Width="24" Height="24" Padding="3,3,3,5"/>
+                            </WrapPanel>
 
-    </Grid>
+                            <Grid x:Name="PART_GridVerticalSplit">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <GridSplitter Grid.Column="1" Width="6" Margin="-3,0" ResizeBehavior="PreviousAndNext"/>
+                                <Button Content="X"
+                                                        Command="{DynamicResource GlueRegionCommand}"
+                                                        CommandParameter="{TemplateBinding Region}"
+                                                        Grid.Column="1"
+                                                        Width="24" Height="24" Padding="3,3,3,5" Margin="-12,-12" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                </Button>
+                            </Grid>
+
+                            <Grid x:Name="PART_GridHorizontalSplit">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="0"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <GridSplitter Grid.Row="1" Height="6" Margin="0,-3" ResizeBehavior="PreviousAndNext"/>
+                                <Button Content="X"
+                                                        Command="{DynamicResource GlueRegionCommand}"
+                                                        CommandParameter="{TemplateBinding Region}"
+                                                        Grid.Row="1"
+                                                        Width="24" Height="24" Padding="3,3,3,5" Margin="-12,-12" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Region.Slice, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="True">
+                                <Setter TargetName="PART_SlicePanel" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="PART_GridHorizontalSplit" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="PART_GridVerticalSplit" Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Region.Slice, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="False">
+                                <Setter TargetName="PART_SlicePanel" Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Region.Slice.Orientation}" Value="Horizontal">
+                                <Setter TargetName="PART_GridHorizontalSplit" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="PART_GridVerticalSplit" Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Region.Slice.Orientation}" Value="Vertical">
+                                <Setter TargetName="PART_GridVerticalSplit" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="PART_GridHorizontalSplit" Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <Grid x:Name="TopPanel" DockPanel.Dock="Top" Height="{Binding OffsetTop}"/>
+        <Grid x:Name="BottomPanel" DockPanel.Dock="Bottom" Height="{Binding OffsetBottom}"/>
+        <Grid x:Name="LeftPanel" DockPanel.Dock="Left" Width="{Binding OffsetLeft}"/>
+        <Grid x:Name="RightPanel" DockPanel.Dock="Right" Width="{Binding OffsetRight}"/>
+        <Grid>
+            <Border BorderThickness="1" BorderBrush="Black">
+                <local:RegionView Region="{Binding Region}">
+
+                </local:RegionView>
+            </Border>
+            <Grid x:Name="CenterPanel" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+                <WrapPanel x:Name="ControlsPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Content="end" Width="24" Height="24" Padding="3,3,3,5" Command="{Binding EndSliceRegionsCommand}" CommandParameter="55"/>
+                    <Button Width="240" Height="24" Padding="3,3,3,5">
+                        <TextBlock Text="{Binding EndSliceRegionsCommand}"/>
+                    </Button>
+                    <Button Width="24" Height="24" Padding="3,3,3,5"/>
+                    <Button Width="24" Height="24" Padding="3,3,3,5"/>
+                </WrapPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
 </Window>

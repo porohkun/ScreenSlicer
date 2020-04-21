@@ -17,9 +17,9 @@ namespace ScreenSlicer
 
         public ScreenRegion() { }
 
-        public ScreenRegion(Rectangle bounds, Rectangle physicalBounds, bool isMain) : base(bounds)
+        public ScreenRegion(Rectangle bounds, Rectangle physicalBounds, bool isPrimary) : base(bounds)
         {
-            IsPrimary = isMain;
+            IsPrimary = isPrimary;
             PhysicalBounds = physicalBounds;
         }
 
@@ -27,6 +27,12 @@ namespace ScreenSlicer
         {
             IsPrimary = isMain;
             PhysicalBounds = physicalBounds;
+        }
+
+        public void Hook()
+        {
+            NotifyPropertyChanged(nameof(Bounds));
+            NotifyPropertyChanged(nameof(PhysicalBounds));
         }
 
         public override object Clone()
