@@ -89,7 +89,7 @@ namespace ScreenSlicer
             get
             {
                 if (_regions == null)
-                    Regions = new RegionSettings();
+                    Regions = new RegionSettings() { MinRegionSize = new System.Drawing.Size(200, 60) };
                 return _regions;
             }
             set
@@ -154,12 +154,18 @@ namespace ScreenSlicer
         {
             return new OverrideXml()
                 .Override<System.Drawing.Rectangle>()
-                    .Member(nameof(System.Drawing.Rectangle.X)).XmlAttribute(nameof(System.Drawing.Rectangle.X))
-                    .Member(nameof(System.Drawing.Rectangle.Y)).XmlAttribute(nameof(System.Drawing.Rectangle.Y))
-                    .Member(nameof(System.Drawing.Rectangle.Width)).XmlAttribute(nameof(System.Drawing.Rectangle.Width))
-                    .Member(nameof(System.Drawing.Rectangle.Height)).XmlAttribute(nameof(System.Drawing.Rectangle.Height))
+                    .Member(nameof(System.Drawing.Rectangle.X)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Rectangle.Y)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Rectangle.Width)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Rectangle.Height)).XmlAttribute()
                     .Member(nameof(System.Drawing.Rectangle.Location)).XmlIgnore()
                     .Member(nameof(System.Drawing.Rectangle.Size)).XmlIgnore()
+                .Override<System.Drawing.Point>()
+                    .Member(nameof(System.Drawing.Point.X)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Point.Y)).XmlAttribute()
+                .Override<System.Drawing.Size>()
+                    .Member(nameof(System.Drawing.Size.Width)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Size.Height)).XmlAttribute()
                 .Commit();
         }
     }

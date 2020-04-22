@@ -68,6 +68,11 @@ namespace ScreenSlicer
 
         #endregion //Properties
 
+        public RegionView()
+        {
+
+        }
+
         #region Base Class Overrides
 
         public override void OnApplyTemplate()
@@ -84,14 +89,14 @@ namespace ScreenSlicer
 
         private void SetBindingsToSlice()
         {
-            foreach (var grid in new[] { GridVerticalSplit, GridHorizontalSplit })
-            {
-                var remove = grid.Children.Where(e => e is RegionView).Cast<UIElement>().ToArray();
-                foreach (var entry in remove)
-                    grid.Children.Remove(entry);
-            }
-
-            if (Region?.Slice != null)
+            if (Region?.Slice == null)
+                foreach (var grid in new[] { GridVerticalSplit, GridHorizontalSplit })
+                {
+                    var remove = grid.Children.Where(e => e is RegionView).Cast<UIElement>().ToArray();
+                    foreach (var entry in remove)
+                        grid.Children.Remove(entry);
+                }
+            else
             {
                 var binding = new Binding(nameof(Slice.Position))
                 {
@@ -117,7 +122,6 @@ namespace ScreenSlicer
                         break;
                 }
 
-                var views = Region.Regions.Select(r => new RegionView() { Region = r }).ToArray();
                 for (int i = 0; i < Region.Regions.Length; i++)
                 {
                     var view = new RegionView() { Region = Region.Regions[i] };

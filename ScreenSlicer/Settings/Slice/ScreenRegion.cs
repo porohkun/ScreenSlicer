@@ -40,8 +40,8 @@ namespace ScreenSlicer
             return new ScreenRegion(
                 Bounds,
                 PhysicalBounds,
-                Slice != null ? Slice.Clone() as Slice : null,
-                Regions.Select(r => r.Clone() as Region).ToArray(),
+                Slice?.Clone() as Slice,
+                Regions?.Select(r => r.Clone() as Region).ToArray(),
                 IsPrimary);
         }
     }

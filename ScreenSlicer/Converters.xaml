@@ -6,5 +6,5 @@
     <c:CapitalizeConverter x:Key="CapitalizeConverter"/>
     <c:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
     <c:IsNullConverter x:Key="IsNullConverter"/>
-    <c:RegionSlicePositionConverter x:Key="RegionSlicePositionConverter"/>
+    <c:PropertyExtractConverter x:Key="PropertyExtractConverter"/>
 </ResourceDictionary>

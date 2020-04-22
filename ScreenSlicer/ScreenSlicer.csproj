@@ -117,7 +117,7 @@
     <Compile Include="Converters\CapitalizeConverter.cs" />
     <Compile Include="Converters\ConvertersChain.cs" />
     <Compile Include="Converters\IntToGridLengthConverter.cs" />
-    <Compile Include="Converters\RegionSlicePositionConverter.cs" />
+    <Compile Include="Converters\PropertyExtractConverter.cs" />
     <Compile Include="Converters\LocFormatConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\ReverseBooleanConverter.cs" />

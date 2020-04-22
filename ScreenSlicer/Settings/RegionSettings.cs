@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace ScreenSlicer
         }
 
         private RegionsPreset _currentPreset;
+        private Size _minRegionSize;
 
         [XmlArray]
         public ObservableCollection<RegionsPreset> Presets { get; private set; } = new ObservableCollection<RegionsPreset>() { };
@@ -61,6 +63,18 @@ namespace ScreenSlicer
             }
         }
 
+        public Size MinRegionSize
+        {
+            get => _minRegionSize;
+            set
+            {
+                if (_minRegionSize != value)
+                {
+                    _minRegionSize = value;
+                    NotifyPropertyChanged(nameof(MinRegionSize));
+                }
+            }
+        }
 
         public RegionSettings()
         {
