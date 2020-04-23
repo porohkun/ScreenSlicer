@@ -9,9 +9,9 @@ namespace ScreenSlicer
     public class WindowStateSettings : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string strPropertyName)
+        protected void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(strPropertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private double _width = 640;

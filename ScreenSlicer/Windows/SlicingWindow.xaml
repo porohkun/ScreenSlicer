@@ -80,15 +80,25 @@
                                         VerticalAlignment="Center">
                                 </Button>
                             </Grid>
-                            <StackPanel Margin="0,130,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.Bounds.Width, StringFormat=Bounds.Width: {0}}"/>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinWidth, StringFormat=MinWidth: {0}}"/>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinHeight, StringFormat=MinHeight: {0}}"/>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinVerticalSlice, StringFormat=MinVerticalSlice: {0}}"/>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MaxVerticalSlice, StringFormat=MaxVerticalSlice: {0}}"/>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinHorizontalSlice, StringFormat=MinHorizontalSlice: {0}}"/>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MaxHorizontalSlice, StringFormat=MaxHorizontalSlice: {0}}"/>
-                            </StackPanel>
+                            <TextBlock Margin="0,54,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Run Text="Bounds: "/>
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.Bounds.Size}"/>
+                                <LineBreak/>
+                                <Run Text="Min Bounds: "/>
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinWidth, Mode=OneWay}"/>
+                                <Run Text=","/>
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinHeight, Mode=OneWay}"/>
+                                <LineBreak/>
+                                <Run Text="Vertical Slice: "/>
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinVerticalSlice, Mode=OneWay}"/>
+                                <Run Text="~"/>
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MaxVerticalSlice, Mode=OneWay}"/>
+                                <LineBreak/>
+                                <Run Text="Horizontal Slice: "/>
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinHorizontalSlice, Mode=OneWay}"/>
+                                <Run Text="~"/>
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MaxHorizontalSlice, Mode=OneWay}"/>
+                            </TextBlock>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding Region.Slice, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="True">

@@ -9,9 +9,9 @@ namespace ScreenSlicer
     public class Slice : INotifyPropertyChanged, ICloneable
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string strPropertyName)
+        protected void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(strPropertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private Orientation _orientation;
@@ -56,6 +56,28 @@ namespace ScreenSlicer
         public object Clone()
         {
             return new Slice(Orientation, Position);
+        }
+
+        public bool Bound(Region region)
+        {
+            var position = Position;
+            switch (Orientation)
+            {
+                case Orientation.Vertical:
+                    if (region.Bounds.Width < region.MinVerticalSlice * 2)
+                        return false;
+                    position = Math.Max(position, region.MinVerticalSlice);
+                    position = Math.Min(position, region.MaxVerticalSlice);
+                    break;
+                case Orientation.Horizontal:
+                    if (region.Bounds.Height < region.MinHorizontalSlice * 2)
+                        return false;
+                    position = Math.Max(position, region.MinHorizontalSlice);
+                    position = Math.Min(position, region.MaxHorizontalSlice);
+                    break;
+            }
+            Position = position;
+            return true;
         }
     }
 }

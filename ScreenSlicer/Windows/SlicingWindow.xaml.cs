@@ -29,9 +29,9 @@ namespace ScreenSlicer.Windows
     public class SlicingWindowViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string strPropertyName)
+        protected void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(strPropertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public ICommand EndSliceRegionsCommand { get; }
@@ -70,16 +70,16 @@ namespace ScreenSlicer.Windows
             DataContext = _viewModel;
             InitializeComponent();
 
-            Grid newRoot = null;
-            if (_viewModel.OffsetTop >= 20)
-                newRoot = TopPanel;
-            else if (_viewModel.OffsetBottom >= 20)
-                newRoot = BottomPanel;
-            else if (_viewModel.OffsetLeft >= 20)
-                newRoot = LeftPanel;
-            else if (_viewModel.OffsetRight >= 20)
-                newRoot = RightPanel;
-            var oldRoot = ControlsPanel.Parent as Grid;
+            //Grid newRoot = null;
+            //if (_viewModel.OffsetTop >= 20)
+            //    newRoot = TopPanel;
+            //else if (_viewModel.OffsetBottom >= 20)
+            //    newRoot = BottomPanel;
+            //else if (_viewModel.OffsetLeft >= 20)
+            //    newRoot = LeftPanel;
+            //else if (_viewModel.OffsetRight >= 20)
+            //    newRoot = RightPanel;
+            //var oldRoot = ControlsPanel.Parent as Grid;
             //oldRoot.Children.Remove(ControlsPanel);
             //newRoot.Children.Add(ControlsPanel);
         }

@@ -14,9 +14,9 @@ namespace ScreenSlicer
     public class Region : INotifyPropertyChanged, ICloneable
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string strPropertyName)
+        protected void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(strPropertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private Rectangle _bounds;
@@ -32,6 +32,11 @@ namespace ScreenSlicer
                 {
                     _bounds = value;
                     NotifyPropertyChanged(nameof(Bounds));
+                    if (Slice != null)
+                    {
+                        Slice.Bound(this);
+                        UpdateSubRegions(Slice);
+                    }
                     NotifyPropertyChanged(nameof(MaxVerticalSlice));
                     NotifyPropertyChanged(nameof(MaxHorizontalSlice));
                 }
@@ -51,6 +56,12 @@ namespace ScreenSlicer
                     if (_slice != null)
                         _slice.PropertyChanged += Slice_PropertyChanged;
                     NotifyPropertyChanged(nameof(Slice));
+                    NotifyPropertyChanged(nameof(MinWidth));
+                    NotifyPropertyChanged(nameof(MinHeight));
+                    NotifyPropertyChanged(nameof(MinVerticalSlice));
+                    NotifyPropertyChanged(nameof(MaxVerticalSlice));
+                    NotifyPropertyChanged(nameof(MinHorizontalSlice));
+                    NotifyPropertyChanged(nameof(MaxHorizontalSlice));
                 }
             }
         }
@@ -67,9 +78,10 @@ namespace ScreenSlicer
                             if (region != null)
                                 region.PropertyChanged -= Region_PropertyChanged;
                     _regions = value;
-                    foreach (var region in _regions)
-                        if (region != null)
-                            region.PropertyChanged += Region_PropertyChanged;
+                    if (_regions != null)
+                        foreach (var region in _regions)
+                            if (region != null)
+                                region.PropertyChanged += Region_PropertyChanged;
                     NotifyPropertyChanged(nameof(Regions));
                 }
             }
@@ -132,7 +144,7 @@ namespace ScreenSlicer
                     return MinHeight;
                 if (Slice.Orientation == Orientation.Vertical)
                     return 0;
-                return Regions[0].MinWidth;
+                return Regions[0].MinHeight;
             }
         }
 
@@ -170,6 +182,13 @@ namespace ScreenSlicer
                     NotifyPropertyChanged(nameof(MinHeight));
                     NotifyPropertyChanged(nameof(MinHorizontalSlice));
                     break;
+                    //case nameof(Region.Bounds):
+                    //    if (Slice != null)
+                    //    {
+                    //        Slice.Bound(this);
+                    //        UpdateSubRegions(Slice);
+                    //    }
+                    //    break;
             }
 
             NotifyPropertyChanged($"{nameof(Regions)}.{e.PropertyName}");
@@ -193,22 +212,9 @@ namespace ScreenSlicer
         {
             if (Slice == null)
             {
-                switch (orientation)
-                {
-                    case Orientation.Vertical:
-                        if (position < Settings.Instance.Regions.MinRegionSize.Width * 2)
-                            return;
-                        position = Math.Max(position, Settings.Instance.Regions.MinRegionSize.Width);
-                        position = Math.Min(position, Bounds.Width - Settings.Instance.Regions.MinRegionSize.Width);
-                        break;
-                    case Orientation.Horizontal:
-                        if (position < Settings.Instance.Regions.MinRegionSize.Height * 2)
-                            return;
-                        position = Math.Max(position, Settings.Instance.Regions.MinRegionSize.Height);
-                        position = Math.Min(position, Bounds.Height - Settings.Instance.Regions.MinRegionSize.Height);
-                        break;
-                }
                 var slice = new Slice(orientation, position);
+                if (!slice.Bound(this))
+                    return;
                 UpdateSubRegions(slice);
                 Slice = slice;
             }
