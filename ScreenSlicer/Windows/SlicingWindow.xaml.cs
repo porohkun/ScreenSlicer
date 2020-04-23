@@ -84,11 +84,11 @@ namespace ScreenSlicer.Windows
             newRoot.Children.Add(ControlsPanel);
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            Hide();
-            e.Cancel = true;
-            base.OnClosing(e);
-        }
+        //protected override void OnClosing(CancelEventArgs e)
+        //{
+        //    Hide();
+        //    e.Cancel = true;
+        //    base.OnClosing(e);
+        //}
     }
 }
