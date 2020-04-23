@@ -37,7 +37,8 @@ namespace ScreenSlicer.Managers
         public void EndSlice(string name)
         {
             Settings.Instance.Regions.CurrentPreset.ScreenRegions = _regions;
-            ExitCommand.Execute(0);
+            foreach (var window in _windows)
+                window.Close();
         }
 
         private void ShowSlicingWindows()
