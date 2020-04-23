@@ -14,10 +14,10 @@
     <local:TaskbarIcon.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Activated" Command="{Binding AppActivatedCommand}" />
-            <MenuItem Header="Edit slicing" Command="{Binding ShowSlicingWindowCommand}" />
+            <MenuItem Header="Edit slicing" Command="{Binding BeginSliceRegionsCommand}" />
             <MenuItem Header="Settings" Command="{Binding ShowSettingsWindowCommand}" />
             <Separator />
-            <MenuItem Header="Exit" Command="{Binding ExitCommand}" />
+            <MenuItem Header="Exit" Command="{Binding ExitCommand}" CommandParameter="0"/>
         </ContextMenu>
     </local:TaskbarIcon.ContextMenu>
 </local:TaskbarIcon>

@@ -23,17 +23,19 @@ namespace ScreenSlicer.NotifyIcon
     public partial class NotifyIcon : TaskbarIcon
     {
         public ICommand AppActivatedCommand { get; }
-        public ICommand ShowSlicingWindowCommand { get; }
+        public ICommand BeginSliceRegionsCommand { get; }
         public ICommand ShowSettingsWindowCommand { get; }
         public ICommand ExitCommand { get; }
 
-        public NotifyIcon(AppActivatedCommand appActivatedCommand,
-            ShowWindowCommand<Windows.SlicingWindow> showSlicingWindowCommand,
+        public NotifyIcon(
+            AppActivatedCommand appActivatedCommand,
+            BeginSliceRegionsCommand beginSliceRegionsCommand,
             ShowWindowCommand<Windows.SettingsWindow> showSettingsWindowCommand,
-            ExitCommand exitCommand)
+            ExitCommand exitCommand
+            )
         {
             AppActivatedCommand = appActivatedCommand;
-            ShowSlicingWindowCommand = showSlicingWindowCommand;
+            BeginSliceRegionsCommand = beginSliceRegionsCommand;
             ShowSettingsWindowCommand = showSettingsWindowCommand;
             ExitCommand = exitCommand;
 

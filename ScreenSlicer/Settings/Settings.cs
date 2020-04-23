@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ikriv.Xml;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -39,6 +40,8 @@ namespace ScreenSlicer
             }
             set
             {
+                if (_settingsWindow != null)
+                    _settingsWindow.PropertyChanged -= SaveByPropertyChanged;
                 _settingsWindow = value;
                 _settingsWindow.PropertyChanged += SaveByPropertyChanged;
             }
@@ -55,6 +58,8 @@ namespace ScreenSlicer
             }
             set
             {
+                if (_localization != null)
+                    _localization.PropertyChanged -= SaveByPropertyChanged;
                 _localization = value;
                 _localization.PropertyChanged += SaveByPropertyChanged;
             }
@@ -71,8 +76,28 @@ namespace ScreenSlicer
             }
             set
             {
+                if (_snaps != null)
+                    _snaps.PropertyChanged -= SaveByPropertyChanged;
                 _snaps = value;
                 _snaps.PropertyChanged += SaveByPropertyChanged;
+            }
+        }
+
+        private RegionSettings _regions;
+        public RegionSettings Regions
+        {
+            get
+            {
+                if (_regions == null)
+                    Regions = new RegionSettings() { MinRegionSize = new System.Drawing.Size(200, 60) };
+                return _regions;
+            }
+            set
+            {
+                if (_regions != null)
+                    _regions.PropertyChanged -= SaveByPropertyChanged;
+                _regions = value;
+                _regions.PropertyChanged += SaveByPropertyChanged;
             }
         }
 
@@ -87,7 +112,7 @@ namespace ScreenSlicer
 
         private static Settings Load()
         {
-            var serializer = new XmlSerializer(typeof(Settings));
+            var serializer = new XmlSerializer(typeof(Settings), GetOverrides());
             if (File.Exists(SettingsPath))
             {
                 using (var stream = File.OpenRead(SettingsPath))
@@ -96,7 +121,10 @@ namespace ScreenSlicer
                     {
                         return (Settings)serializer.Deserialize(stream);
                     }
-                    catch { }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                    }
                 }
             }
             return new Settings(true);
@@ -111,7 +139,7 @@ namespace ScreenSlicer
         {
             if (!Directory.Exists(AppDataPath))
                 Directory.CreateDirectory(AppDataPath);
-            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(Settings));
+            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(Settings), GetOverrides());
             try
             {
                 using (var stream = File.Open(SettingsPath, FileMode.Create))
@@ -120,6 +148,25 @@ namespace ScreenSlicer
                 }
             }
             catch { }
+        }
+
+        static XmlAttributeOverrides GetOverrides()
+        {
+            return new OverrideXml()
+                .Override<System.Drawing.Rectangle>()
+                    .Member(nameof(System.Drawing.Rectangle.X)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Rectangle.Y)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Rectangle.Width)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Rectangle.Height)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Rectangle.Location)).XmlIgnore()
+                    .Member(nameof(System.Drawing.Rectangle.Size)).XmlIgnore()
+                .Override<System.Drawing.Point>()
+                    .Member(nameof(System.Drawing.Point.X)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Point.Y)).XmlAttribute()
+                .Override<System.Drawing.Size>()
+                    .Member(nameof(System.Drawing.Size.Width)).XmlAttribute()
+                    .Member(nameof(System.Drawing.Size.Height)).XmlAttribute()
+                .Commit();
         }
     }
 }

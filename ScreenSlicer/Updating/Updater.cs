@@ -11,10 +11,11 @@ namespace ScreenSlicer.Updating
 {
     public class Updater
     {
-        AutoResetEvent _autoEvent;
-        Timer _timer;
-        DateTime _lastUpdateCheck = DateTime.Now;
-        TimeSpan _updateFrequency = new TimeSpan(1, 0, 0);
+        private readonly AutoResetEvent _autoEvent;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>")]
+        private readonly Timer _timer;
+        private DateTime _lastUpdateCheck = DateTime.Now;
+        private TimeSpan _updateFrequency = new TimeSpan(1, 0, 0);
 
         public Updater()
         {

@@ -1,4 +1,4 @@
-﻿<windows:HideableWindow x:Class="ScreenSlicer.Windows.SettingsWindow"
+﻿<mui:ModernWindow x:Class="ScreenSlicer.Windows.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,14 +17,14 @@
         IsTitleVisible="True"
         ContentSource="/Pages/SettingsWindow/SnapPage.xaml"
         WindowStartupLocation="CenterScreen">
-    <windows:HideableWindow.Title>
+    <mui:ModernWindow.Title>
         <MultiBinding Converter="{StaticResource LocFormatConverter}">
             <extensions:BLoc Key="SettingsWindow.Title"/>
             <Binding Source="{x:Static local:Settings.Instance}" Path="Version"/>
         </MultiBinding>
-    </windows:HideableWindow.Title>
+    </mui:ModernWindow.Title>
     <Grid/>
-    <windows:HideableWindow.MenuLinkGroups>
+    <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Snaps.GroupHeader}">
             <mui:LinkGroup.Links >
                 <mui:Link Source="/Pages/SettingsWindow/SnapPage.xaml"/>
@@ -50,5 +50,5 @@
                 <mui:Link Source="/Pages/SettingsWindow/AboutPage.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-    </windows:HideableWindow.MenuLinkGroups>
-</windows:HideableWindow>
+    </mui:ModernWindow.MenuLinkGroups>
+</mui:ModernWindow>
