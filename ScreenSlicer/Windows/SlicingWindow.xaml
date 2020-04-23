@@ -53,6 +53,7 @@
                                         Height="24"
                                         Padding="3,3,3,5"
                                         Margin="-12,-12"
+                                        Panel.ZIndex="100"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center">
                                 </Button>
@@ -68,7 +69,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <GridSplitter Grid.Row="1" Height="6" Margin="0,-3" ResizeBehavior="PreviousAndNext"/>
-                                <Button Content="X"
+                                <Button x:Name="PART_GlueButton" Content="X"
                                         Command="{DynamicResource GlueRegionCommand}"
                                         CommandParameter="{TemplateBinding Region}"
                                         Grid.Row="1"
@@ -76,11 +77,12 @@
                                         Height="24"
                                         Padding="3,3,3,5"
                                         Margin="-12,-12"
+                                        Panel.ZIndex="100"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center">
                                 </Button>
                             </Grid>
-                            <TextBlock Margin="0,54,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <!--<TextBlock Margin="0,54,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Run Text="Bounds: "/>
                                 <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.Bounds.Size}"/>
                                 <LineBreak/>
@@ -98,24 +100,17 @@
                                 <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MinHorizontalSlice, Mode=OneWay}"/>
                                 <Run Text="~"/>
                                 <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.MaxHorizontalSlice, Mode=OneWay}"/>
-                            </TextBlock>
+                            </TextBlock>-->
                         </Grid>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding Region.Slice, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="True">
                                 <Setter TargetName="PART_SlicePanel" Property="Visibility" Value="Visible"/>
-                                <!--<Setter TargetName="PART_GridHorizontalSplit" Property="Visibility" Value="Collapsed"/>
-                                <Setter TargetName="PART_GridVerticalSplit" Property="Visibility" Value="Collapsed"/>-->
                             </DataTrigger>
-                            <!--<DataTrigger Binding="{Binding Region.Slice, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="False">
-                                <Setter TargetName="PART_SlicePanel" Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>-->
                             <DataTrigger Binding="{Binding Region.Slice.Orientation, RelativeSource={RelativeSource Self}}" Value="Horizontal">
                                 <Setter TargetName="PART_GridHorizontalSplit" Property="Visibility" Value="Visible"/>
-                                <!--<Setter TargetName="PART_GridVerticalSplit" Property="Visibility" Value="Collapsed"/>-->
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Region.Slice.Orientation, RelativeSource={RelativeSource Self}}" Value="Vertical">
                                 <Setter TargetName="PART_GridVerticalSplit" Property="Visibility" Value="Visible"/>
-                                <!--<Setter TargetName="PART_GridHorizontalSplit" Property="Visibility" Value="Collapsed"/>-->
                             </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -140,8 +135,8 @@
             <Grid x:Name="CenterPanel" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                 <WrapPanel x:Name="ControlsPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button Content="end" Width="24" Height="24" Padding="3,3,3,5" Command="{Binding EndSliceRegionsCommand}" CommandParameter="55"/>
-                    <Button Width="240" Height="24" Padding="3,3,3,5">
-                        <TextBlock Text="{Binding EndSliceRegionsCommand}"/>
+                    <Button Width="24" Height="24" Padding="3,3,3,5">
+                        <!--<TextBlock Text="{Binding EndSliceRegionsCommand}"/>-->
                     </Button>
                     <Button Width="24" Height="24" Padding="3,3,3,5"/>
                     <Button Width="24" Height="24" Padding="3,3,3,5"/>

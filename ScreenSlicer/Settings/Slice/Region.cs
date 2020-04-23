@@ -21,7 +21,8 @@ namespace ScreenSlicer
 
         private Rectangle _bounds;
         private Slice _slice;
-        private Region[] _regions;
+        private Region _regionA;
+        private Region _regionB;
 
         public Rectangle Bounds
         {
@@ -66,23 +67,36 @@ namespace ScreenSlicer
             }
         }
 
-        public Region[] Regions
+        public Region RegionA
         {
-            get => _regions;
+            get => _regionA;
             set
             {
-                if (_regions != value)
+                if (_regionA != value)
                 {
-                    if (_regions != null)
-                        foreach (var region in _regions)
-                            if (region != null)
-                                region.PropertyChanged -= Region_PropertyChanged;
-                    _regions = value;
-                    if (_regions != null)
-                        foreach (var region in _regions)
-                            if (region != null)
-                                region.PropertyChanged += Region_PropertyChanged;
-                    NotifyPropertyChanged(nameof(Regions));
+                    if (_regionA != null)
+                        _regionA.PropertyChanged -= Region_PropertyChanged;
+                    _regionA = value;
+                    if (_regionA != null)
+                        _regionA.PropertyChanged += Region_PropertyChanged;
+                    NotifyPropertyChanged(nameof(RegionA));
+                }
+            }
+        }
+
+        public Region RegionB
+        {
+            get => _regionB;
+            set
+            {
+                if (_regionB != value)
+                {
+                    if (_regionB != null)
+                        _regionB.PropertyChanged -= Region_PropertyChanged;
+                    _regionB = value;
+                    if (_regionB != null)
+                        _regionB.PropertyChanged += Region_PropertyChanged;
+                    NotifyPropertyChanged(nameof(RegionB));
                 }
             }
         }
@@ -92,9 +106,11 @@ namespace ScreenSlicer
         {
             get
             {
-                if (Slice == null || Slice.Orientation == Orientation.Horizontal)
+                if (Slice == null)
                     return Settings.Instance.Regions.MinRegionSize.Width;
-                return Regions[0].MinWidth + Regions[1].MinWidth;
+                if (Slice.Orientation == Orientation.Horizontal)
+                    return Math.Max(RegionA.MinWidth, RegionB.MinWidth);
+                return RegionA.MinWidth + RegionB.MinWidth;
             }
         }
 
@@ -103,9 +119,11 @@ namespace ScreenSlicer
         {
             get
             {
-                if (Slice == null || Slice.Orientation == Orientation.Vertical)
+                if (Slice == null)
                     return Settings.Instance.Regions.MinRegionSize.Height;
-                return Regions[0].MinHeight + Regions[1].MinHeight;
+                if (Slice.Orientation == Orientation.Vertical)
+                    return Math.Max(RegionA.MinHeight, RegionB.MinHeight);
+                return RegionA.MinHeight + RegionB.MinHeight;
             }
         }
 
@@ -118,7 +136,7 @@ namespace ScreenSlicer
                     return MinWidth;
                 if (Slice.Orientation == Orientation.Horizontal)
                     return 0;
-                return Regions[0].MinWidth;
+                return RegionA.MinWidth;
             }
         }
 
@@ -131,7 +149,7 @@ namespace ScreenSlicer
                     return Bounds.Width - MinWidth;
                 if (Slice.Orientation == Orientation.Horizontal)
                     return Bounds.Width;
-                return Bounds.Width - Regions[1].MinWidth;
+                return Bounds.Width - RegionB.MinWidth;
             }
         }
 
@@ -144,7 +162,7 @@ namespace ScreenSlicer
                     return MinHeight;
                 if (Slice.Orientation == Orientation.Vertical)
                     return 0;
-                return Regions[0].MinHeight;
+                return RegionA.MinHeight;
             }
         }
 
@@ -157,7 +175,7 @@ namespace ScreenSlicer
                     return Bounds.Height - MinHeight;
                 if (Slice.Orientation == Orientation.Vertical)
                     return Bounds.Height;
-                return Bounds.Height - Regions[1].MinHeight;
+                return Bounds.Height - RegionB.MinHeight;
             }
         }
 
@@ -182,16 +200,12 @@ namespace ScreenSlicer
                     NotifyPropertyChanged(nameof(MinHeight));
                     NotifyPropertyChanged(nameof(MinHorizontalSlice));
                     break;
-                    //case nameof(Region.Bounds):
-                    //    if (Slice != null)
-                    //    {
-                    //        Slice.Bound(this);
-                    //        UpdateSubRegions(Slice);
-                    //    }
-                    //    break;
             }
 
-            NotifyPropertyChanged($"{nameof(Regions)}.{e.PropertyName}");
+            if (sender == RegionA)
+                NotifyPropertyChanged($"{nameof(RegionA)}.{e.PropertyName}");
+            if (sender == RegionB)
+                NotifyPropertyChanged($"{nameof(RegionB)}.{e.PropertyName}");
         }
 
         public Region() { }
@@ -201,11 +215,12 @@ namespace ScreenSlicer
             Bounds = bounds;
         }
 
-        protected Region(Rectangle bounds, Slice slice, Region[] regions)
+        protected Region(Rectangle bounds, Slice slice, Region regionA, Region regionB)
         {
             Bounds = bounds;
             Slice = slice;
-            Regions = regions;
+            RegionA = regionA;
+            RegionB = regionB;
         }
 
         public void SliceRegion(Orientation orientation, int position)
@@ -232,22 +247,23 @@ namespace ScreenSlicer
         {
             if (slice == null)
             {
-                Regions = null;
+                RegionA = null;
+                RegionB = null;
             }
             else
             {
-                if ((Regions?.Length ?? 0) != 2 || Regions[0] == null || Regions[1] == null)
-                    Regions = new Region[2] { new Region(), new Region() };
+                RegionA = RegionA ?? new Region();
+                RegionB = RegionB ?? new Region();
 
                 switch (slice.Orientation)
                 {
                     case Orientation.Vertical:
-                        Regions[0].Bounds = new Rectangle(Bounds.X, Bounds.Y, slice.Position, Bounds.Height);
-                        Regions[1].Bounds = new Rectangle(Bounds.X + slice.Position, Bounds.Y, Bounds.Width - slice.Position, Bounds.Height);
+                        RegionA.Bounds = new Rectangle(Bounds.X, Bounds.Y, slice.Position, Bounds.Height);
+                        RegionB.Bounds = new Rectangle(Bounds.X + slice.Position, Bounds.Y, Bounds.Width - slice.Position, Bounds.Height);
                         break;
                     case Orientation.Horizontal:
-                        Regions[0].Bounds = new Rectangle(Bounds.X, Bounds.Y, Bounds.Width, slice.Position);
-                        Regions[1].Bounds = new Rectangle(Bounds.X, Bounds.Y + slice.Position, Bounds.Width, Bounds.Height - slice.Position);
+                        RegionA.Bounds = new Rectangle(Bounds.X, Bounds.Y, Bounds.Width, slice.Position);
+                        RegionB.Bounds = new Rectangle(Bounds.X, Bounds.Y + slice.Position, Bounds.Width, Bounds.Height - slice.Position);
                         break;
                 }
                 //foreach (var region in Regions)
@@ -260,7 +276,8 @@ namespace ScreenSlicer
             return new Region(
                 Bounds,
                 Slice?.Clone() as Slice,
-                Regions?.Select(r => r.Clone() as Region).ToArray());
+                RegionA?.Clone() as Region,
+                RegionB?.Clone() as Region);
         }
     }
 }

@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 
 namespace ScreenSlicer
 {
+    [TemplatePart(Name = PART_GlueButton, Type = typeof(Button))]
     [TemplatePart(Name = PART_GridHorizontalSplit, Type = typeof(Grid))]
     [TemplatePart(Name = PART_GridVerticalSplit, Type = typeof(Grid))]
     public class RegionView : Control, INotifyPropertyChanged
@@ -23,9 +25,11 @@ namespace ScreenSlicer
 
         #region Template parts
 
+        internal const string PART_GlueButton = "PART_GlueButton";
         internal const string PART_GridHorizontalSplit = "PART_GridHorizontalSplit";
         internal const string PART_GridVerticalSplit = "PART_GridVerticalSplit";
 
+        protected Button GlueButton { get; private set; }
         protected Grid GridHorizontalSplit { get; private set; }
         protected Grid GridVerticalSplit { get; private set; }
 
@@ -79,6 +83,8 @@ namespace ScreenSlicer
         {
             base.OnApplyTemplate();
 
+
+            GlueButton = GetTemplateChild(PART_GlueButton) as Button;
             GridHorizontalSplit = GetTemplateChild(PART_GridHorizontalSplit) as Grid;
             GridVerticalSplit = GetTemplateChild(PART_GridVerticalSplit) as Grid;
 
@@ -122,12 +128,12 @@ namespace ScreenSlicer
                         break;
                 }
 
-                for (int i = 0; i < Region.Regions.Length; i++)
-                {
-                    var view = new RegionView() { Region = Region.Regions[i] };
-                    grid.Children.Add(view);
-                    setter(view, i * 2);
-                }
+                var viewA = new RegionView() { Region = Region.RegionA };
+                var viewB = new RegionView() { Region = Region.RegionB };
+                grid.Children.Add(viewA);
+                grid.Children.Add(viewB);
+                setter(viewA, 0);
+                setter(viewB, 2);
             }
 
         }

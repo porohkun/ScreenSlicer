@@ -57,7 +57,7 @@ namespace ScreenSlicer.Windows
     /// </summary>
     public partial class SlicingWindow : Window
     {
-        private SlicingWindowViewModel _viewModel;
+        private readonly SlicingWindowViewModel _viewModel;
 
         public SlicingWindow()
         {
@@ -70,18 +70,18 @@ namespace ScreenSlicer.Windows
             DataContext = _viewModel;
             InitializeComponent();
 
-            //Grid newRoot = null;
-            //if (_viewModel.OffsetTop >= 20)
-            //    newRoot = TopPanel;
-            //else if (_viewModel.OffsetBottom >= 20)
-            //    newRoot = BottomPanel;
-            //else if (_viewModel.OffsetLeft >= 20)
-            //    newRoot = LeftPanel;
-            //else if (_viewModel.OffsetRight >= 20)
-            //    newRoot = RightPanel;
-            //var oldRoot = ControlsPanel.Parent as Grid;
-            //oldRoot.Children.Remove(ControlsPanel);
-            //newRoot.Children.Add(ControlsPanel);
+            Grid newRoot = null;
+            if (_viewModel.OffsetTop >= 20)
+                newRoot = TopPanel;
+            else if (_viewModel.OffsetBottom >= 20)
+                newRoot = BottomPanel;
+            else if (_viewModel.OffsetLeft >= 20)
+                newRoot = LeftPanel;
+            else if (_viewModel.OffsetRight >= 20)
+                newRoot = RightPanel;
+            var oldRoot = ControlsPanel.Parent as Grid;
+            oldRoot.Children.Remove(ControlsPanel);
+            newRoot.Children.Add(ControlsPanel);
         }
 
         protected override void OnClosing(CancelEventArgs e)

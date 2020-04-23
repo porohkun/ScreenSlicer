@@ -23,7 +23,7 @@ namespace ScreenSlicer
             PhysicalBounds = physicalBounds;
         }
 
-        private ScreenRegion(Rectangle bounds, Rectangle physicalBounds, Slice slice, Region[] regions, bool isMain) : base(bounds, slice, regions)
+        private ScreenRegion(Rectangle bounds, Rectangle physicalBounds, Slice slice, Region regionA, Region regionB, bool isMain) : base(bounds, slice, regionA, regionB)
         {
             IsPrimary = isMain;
             PhysicalBounds = physicalBounds;
@@ -41,7 +41,8 @@ namespace ScreenSlicer
                 Bounds,
                 PhysicalBounds,
                 Slice?.Clone() as Slice,
-                Regions?.Select(r => r.Clone() as Region).ToArray(),
+                RegionA?.Clone() as Region,
+                RegionB?.Clone() as Region,
                 IsPrimary);
         }
     }
