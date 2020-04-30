@@ -51,5 +51,23 @@ namespace ScreenSlicer.Native
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool PostMessage(IntPtr windowHandle, uint message, IntPtr parameterW, IntPtr parameterL);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr windowHandle, uint message, IntPtr parameterW, IntPtr parameterL);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetWindowPos(
+            IntPtr windowHandle,
+            IntPtr insertAfterWindowHandle,
+            int x,
+            int y,
+            int width,
+            int height,
+            uint flags);
+
     }
 }

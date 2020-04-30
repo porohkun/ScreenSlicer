@@ -3,6 +3,7 @@ using ScreenSlicer.Native;
 using ScreenSlicer.Native.Windows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -30,10 +31,11 @@ namespace ScreenSlicer.Windows
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private CollectionView _view;
+        private readonly ProcessesWatcher _watcher;
+        private readonly CollectionView _view;
         private ISystemWindow _selectedWindow;
 
-        public ProcessesWatcher Watcher { get; private set; }
+        public ObservableCollection<ISystemWindow> Windows { get; private set; } = new ObservableCollection<ISystemWindow>();
 
         public ISystemWindow SelectedWindow
         {
@@ -57,8 +59,8 @@ namespace ScreenSlicer.Windows
 
         public WinListWindow(ProcessesWatcher _watcher) : this()
         {
-            Watcher = _watcher;
-            _view = (CollectionView)CollectionViewSource.GetDefaultView(Watcher.Windows);
+            this._watcher = _watcher;
+            _view = (CollectionView)CollectionViewSource.GetDefaultView(Windows);
             _view.Filter = ViewFilter;
         }
 
@@ -68,9 +70,9 @@ namespace ScreenSlicer.Windows
                 return false;
             //if (string.IsNullOrEmpty(window.Title))
             //    return false;
-            //if (!window.Visible)
-            //    return false;
-            if (window.Style.HasFlag(Native.WindowStyle.Popup))
+            if (!window.Visible)
+                return false;
+            if (window.Style.HasFlag(Native.WindowStyle.Popup) && !window.Style.HasFlag(Native.WindowStyle.PopupWindow))
                 return false;
             return true;
         }
@@ -78,7 +80,7 @@ namespace ScreenSlicer.Windows
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
             GridViewColumnHeader colHeader = (GridViewColumnHeader)e.OriginalSource;
-            string colName = colHeader.Content.ToString();
+            var colName = colHeader.Content.ToString();
 
             var prevDescription = _view.SortDescriptions.FirstOrDefault(d => d.PropertyName == colName);
             _view.SortDescriptions.Clear();
@@ -115,6 +117,21 @@ namespace ScreenSlicer.Windows
             SHOWNA = 8,
             RESTORE = 9,
             SHOWDEFAULT = 10
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var newWindows = _watcher.GetDesktopWindows().ToList();
+            var closedWindows = new List<ISystemWindow>();
+            foreach (var win in Windows)
+                if (newWindows.Contains(win))
+                    newWindows.Remove(win);
+                else
+                    closedWindows.Add(win);
+            foreach (var win in closedWindows)
+                Windows.Remove(win);
+            foreach (var win in newWindows)
+                Windows.Add(win);
         }
     }
 }

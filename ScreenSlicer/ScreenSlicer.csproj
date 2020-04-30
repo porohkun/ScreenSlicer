@@ -138,6 +138,8 @@
     <Compile Include="Native\GetWindowLongOffset.cs" />
     <Compile Include="Native\Methods.cs" />
     <Compile Include="Native\NativeRectangle.cs" />
+    <Compile Include="Native\ShowWindowPosition.cs" />
+    <Compile Include="Native\WindowMessage.cs" />
     <Compile Include="Native\WindowStyle.cs" />
     <Compile Include="Native\Screens\MonitorInfo.cs" />
     <Compile Include="Native\Screens\Screen.cs" />

@@ -58,6 +58,21 @@ namespace ScreenSlicer.Native.Windows
             Handle = hWnd;
         }
 
+        public void PostMessage(WindowMessage message, IntPtr wParam = default, IntPtr lParam = default)
+        {
+            PostMessage((uint)message, wParam, lParam);
+        }
+
+        public void PostMessage(uint message, IntPtr wParam = default, IntPtr lParam = default)
+        {
+            Methods.PostMessage(Handle, message, wParam, lParam);
+        }
+
+        public void SetPosition(Rectangle rectangle, ShowWindowPosition flags, ISystemWindow behindWindow = null)
+        {
+            Methods.SetWindowPos(Handle, behindWindow != null ? behindWindow.Handle : IntPtr.Zero, rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height, (uint)flags);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)

@@ -8,9 +8,10 @@
         Title="WinListWindow" Height="450" Width="600">
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
+            <Button Content="Update" Click="Button_Click_1"/>
             <Button Content="{Binding SelectedWindow.Title, StringFormat=Move `{0}`}" Click="Button_Click"/>
         </StatusBar>
-        <ListView x:Name="listView" DockPanel.Dock="Bottom" ItemsSource="{Binding Watcher.Windows, Mode=OneWay}" SelectedItem="{Binding SelectedWindow}">
+        <ListView x:Name="listView" DockPanel.Dock="Bottom" ItemsSource="{Binding Windows, Mode=OneWay}" SelectedItem="{Binding SelectedWindow}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Title}">
