@@ -47,6 +47,9 @@
     <Reference Include="DeltaCompressionDotNet.PatchApi, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3e8888ee913ed789, processorArchitecture=MSIL">
       <HintPath>..\packages\DeltaCompressionDotNet.1.1.0\lib\net20\DeltaCompressionDotNet.PatchApi.dll</HintPath>
     </Reference>
+    <Reference Include="FirstFloor.ModernUI, Version=1.0.9.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
+      <HintPath>..\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
+    </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
     </Reference>
@@ -79,6 +82,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -88,24 +93,103 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFLocalizeExtension, Version=3.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFLocalizeExtension.3.3.1\lib\net452\WPFLocalizeExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="XAMLMarkupExtensions, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XAMLMarkupExtensions.1.5.1\lib\net452\XAMLMarkupExtensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\EndSliceRegionsCommand.cs" />
+    <Compile Include="Commands\BeginSliceRegionsCommand.cs" />
+    <Compile Include="Commands\SliceRegionHorizontalCommand.cs" />
+    <Compile Include="Commands\GlueRegionCommand.cs" />
+    <Compile Include="Commands\SliceRegionVerticalCommand.cs" />
+    <Compile Include="Controls\RegionView.cs" />
+    <Compile Include="Converters\CapitalizeConverter.cs" />
+    <Compile Include="Converters\ConvertersChain.cs" />
+    <Compile Include="Converters\IntToGridLengthConverter.cs" />
+    <Compile Include="Converters\PropertyExtractConverter.cs" />
+    <Compile Include="Converters\LocFormatConverter.cs" />
+    <Compile Include="Converters\IsNullConverter.cs" />
+    <Compile Include="Converters\ReverseBooleanConverter.cs" />
+    <Compile Include="Localization\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="MainModule.cs" />
+    <Compile Include="Managers\ProcessesWatcher.cs" />
+    <Compile Include="Managers\RegionsManager.cs" />
+    <Compile Include="Misc\LinqExtensions.cs" />
+    <Compile Include="Misc\MarginSetter.cs" />
+    <Compile Include="Misc\StringFormatProxy.cs" />
+    <Compile Include="Native\AsyncKeyStateResult.cs" />
+    <Compile Include="Native\GetAncestorFlag.cs" />
+    <Compile Include="Native\GetWindowLongOffset.cs" />
+    <Compile Include="Native\Keys.cs" />
+    <Compile Include="Native\Methods.cs" />
+    <Compile Include="Native\NativePoint.cs" />
+    <Compile Include="Native\NativeRectangle.cs" />
+    <Compile Include="Native\ShowWindowCommand.cs" />
+    <Compile Include="Native\ShowWindowPosition.cs" />
+    <Compile Include="Native\WindowMessage.cs" />
+    <Compile Include="Native\WindowStyle.cs" />
+    <Compile Include="Native\Screens\MonitorInfo.cs" />
+    <Compile Include="Native\Screens\Screen.cs" />
+    <Compile Include="Native\WindowPlacement.cs" />
+    <Compile Include="Native\WindowShowStyle.cs" />
+    <Compile Include="Native\Windows\ISystemWindow.cs" />
+    <Compile Include="Native\Windows\SystemWindow.cs" />
+    <Compile Include="OverrideXml.cs" />
+    <Compile Include="Pages\SettingsWindow\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsWindow\LocalesPage.xaml.cs">
+      <DependentUpon>LocalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsWindow\SnapPage.xaml.cs">
+      <DependentUpon>SnapPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsWindow\SystemPage.xaml.cs">
+      <DependentUpon>SystemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsWindow\UpdatesPage.xaml.cs">
+      <DependentUpon>UpdatesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\RegionSettings.cs" />
+    <Compile Include="Settings\Slice\Region.cs" />
+    <Compile Include="Settings\Slice\RegionsPreset.cs" />
+    <Compile Include="Settings\Slice\ScreenRegion.cs" />
+    <Compile Include="Settings\Slice\Slice.cs" />
+    <Compile Include="Settings\SnapSettings.cs" />
+    <Compile Include="Settings\LocalizationSettings.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\WindowStateSettings.cs" />
     <Compile Include="Updating\Updater.cs" />
-    <Compile Include="Windows\HideableWindow.cs" />
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SlicingWindow.xaml.cs">
       <DependentUpon>SlicingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WinListWindow.xaml.cs">
+      <DependentUpon>WinListWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,7 +207,31 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MuiModify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NotifyIcon\NotifyIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsWindow\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsWindow\LocalesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsWindow\SnapPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsWindow\SystemPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsWindow\UpdatesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SlicingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WinListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,6 +265,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Localization\Strings.ru.resx" />
+    <EmbeddedResource Include="Localization\Strings.en.resx" />
+    <EmbeddedResource Include="Localization\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -170,6 +288,8 @@
   <ItemGroup>
     <Resource Include="Images\Icon.ico" />
   </ItemGroup>
+  <ItemGroup />
+  <Import Project="..\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

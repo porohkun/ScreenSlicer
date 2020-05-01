@@ -1,12 +1,54 @@
-﻿<local:HideableWindow x:Class="ScreenSlicer.Windows.SettingsWindow"
+﻿<mui:ModernWindow x:Class="ScreenSlicer.Windows.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ScreenSlicer.Windows"
-        mc:Ignorable="d"
-        Title="SettingsWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
-</local:HideableWindow>
+        xmlns:local="clr-namespace:ScreenSlicer"
+        xmlns:windows="clr-namespace:ScreenSlicer.Windows"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        xmlns:extensions="http://wpflocalizeextension.codeplex.com"
+        xmlns:lex ="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+        lex:LocalizeDictionary.IncludeInvariantCulture="False"
+        extensions:ResxLocalizationProvider.DefaultAssembly="ScreenSlicer"
+        extensions:ResxLocalizationProvider.DefaultDictionary="Strings"
+        Width="{Binding Source={x:Static local:Settings.Instance}, Path=SettingsWindow.Width, Mode=TwoWay}" MinWidth="600"
+        Height="{Binding Source={x:Static local:Settings.Instance}, Path=SettingsWindow.Height, Mode=TwoWay}" MinHeight="400"
+        BorderThickness="1" 
+        IsTitleVisible="True"
+        ContentSource="/Pages/SettingsWindow/SnapPage.xaml"
+        WindowStartupLocation="CenterScreen">
+    <mui:ModernWindow.Title>
+        <MultiBinding Converter="{StaticResource LocFormatConverter}">
+            <extensions:BLoc Key="SettingsWindow.Title"/>
+            <Binding Source="{x:Static local:Settings.Instance}" Path="Version"/>
+        </MultiBinding>
+    </mui:ModernWindow.Title>
+    <Grid/>
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Snaps.GroupHeader}">
+            <mui:LinkGroup.Links >
+                <mui:Link Source="/Pages/SettingsWindow/SnapPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.System.GroupHeader}">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/SystemPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Localization.GroupHeader}">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/LocalesPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Updates.GroupHeader}">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/UpdatesPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.About.GroupHeader}">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/AboutPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+</mui:ModernWindow>

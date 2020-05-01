@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ScreenSlicer"
+                    xmlns:c="clr-namespace:ScreenSlicer.Converters">
+    <c:LocFormatConverter x:Key="LocFormatConverter"/>
+    <c:CapitalizeConverter x:Key="CapitalizeConverter"/>
+    <c:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+    <c:IsNullConverter x:Key="IsNullConverter"/>
+    <c:PropertyExtractConverter x:Key="PropertyExtractConverter"/>
+</ResourceDictionary>

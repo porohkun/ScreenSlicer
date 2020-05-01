@@ -14,7 +14,10 @@ namespace ScreenSlicer
             Bind<NotifyIcon.NotifyIcon>().ToSelf().InSingletonScope();
             Bind<Windows.SettingsWindow>().ToSelf().InSingletonScope();
             Bind<Windows.SlicingWindow>().ToSelf().InSingletonScope();
+            Bind<Windows.WinListWindow>().ToSelf().InSingletonScope();
             Bind<Updating.Updater>().ToSelf().InSingletonScope();
+            Bind<Managers.RegionsManager>().ToSelf().InSingletonScope();
+            Bind<Managers.ProcessesWatcher>().ToSelf().InSingletonScope();
         }
     }
 }

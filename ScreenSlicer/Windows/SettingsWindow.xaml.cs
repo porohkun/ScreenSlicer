@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FirstFloor.ModernUI.Windows.Controls;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +19,18 @@ namespace ScreenSlicer.Windows
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml
     /// </summary>
-    public partial class SettingsWindow : HideableWindow
+    public partial class SettingsWindow : ModernWindow
     {
         public SettingsWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+            base.OnClosing(e);
         }
     }
 }
