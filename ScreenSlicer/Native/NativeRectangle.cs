@@ -29,5 +29,10 @@ namespace ScreenSlicer.Native
         public static implicit operator NativeRectangle(Rectangle rect) => FromRectangle(rect);
 
         public static implicit operator Rectangle(NativeRectangle rect) => rect.ToRectangle();
+
+        public override string ToString()
+        {
+            return $"{{{Left};{Top};{Width};{Height}}}";
+        }
     }
 }

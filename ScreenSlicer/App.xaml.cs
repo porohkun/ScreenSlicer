@@ -24,6 +24,7 @@ namespace ScreenSlicer
             ConfigureContainer();
             ComposeObjects();
             _notifyIcon.BeginInit();
+            _container.Get<Managers.ProcessesWatcher>();
         }
 
         private void ConfigureContainer()
@@ -35,7 +36,7 @@ namespace ScreenSlicer
         {
             _notifyIcon = _container.Get<NotifyIcon.NotifyIcon>();
             _container.Get<Updating.Updater>().CheckUpdates();
-            _container.Get<Windows.SettingsWindow>().Show();
+            _container.Get<Windows.WinListWindow>().Show();
         }
 
         protected override void OnExit(ExitEventArgs e)

@@ -93,6 +93,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -127,14 +129,27 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="MainModule.cs" />
+    <Compile Include="Managers\ProcessesWatcher.cs" />
     <Compile Include="Managers\RegionsManager.cs" />
     <Compile Include="Misc\LinqExtensions.cs" />
     <Compile Include="Misc\MarginSetter.cs" />
     <Compile Include="Misc\StringFormatProxy.cs" />
+    <Compile Include="Native\AsyncKeyStateResult.cs" />
+    <Compile Include="Native\GetAncestorFlag.cs" />
+    <Compile Include="Native\GetWindowLongOffset.cs" />
+    <Compile Include="Native\Keys.cs" />
     <Compile Include="Native\Methods.cs" />
+    <Compile Include="Native\NativePoint.cs" />
     <Compile Include="Native\NativeRectangle.cs" />
+    <Compile Include="Native\ShowWindowPosition.cs" />
+    <Compile Include="Native\WindowMessage.cs" />
+    <Compile Include="Native\WindowStyle.cs" />
     <Compile Include="Native\Screens\MonitorInfo.cs" />
     <Compile Include="Native\Screens\Screen.cs" />
+    <Compile Include="Native\WindowPlacement.cs" />
+    <Compile Include="Native\WindowShowStyle.cs" />
+    <Compile Include="Native\Windows\ISystemWindow.cs" />
+    <Compile Include="Native\Windows\SystemWindow.cs" />
     <Compile Include="OverrideXml.cs" />
     <Compile Include="Pages\SettingsWindow\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -166,6 +181,9 @@
     </Compile>
     <Compile Include="Windows\SlicingWindow.xaml.cs">
       <DependentUpon>SlicingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WinListWindow.xaml.cs">
+      <DependentUpon>WinListWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Converters.xaml">
       <SubType>Designer</SubType>
@@ -224,6 +242,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\WinListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NotifyIcon\NotifyIcon.xaml.cs">
@@ -265,9 +287,7 @@
   <ItemGroup>
     <Resource Include="Images\Icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Native\Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="..\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
