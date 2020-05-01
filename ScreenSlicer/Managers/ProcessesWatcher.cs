@@ -145,6 +145,7 @@ namespace ScreenSlicer.Managers
         {
             //    window.Move(region);
             window.PostMessage(WindowMessage.EnterSizeMove, IntPtr.Zero, IntPtr.Zero);
+            Methods.ShowWindow(window.Handle, ShowWindowCommand.ShowNormal);
             window.SetPosition(region, ShowWindowPosition.NoSendChanging | ShowWindowPosition.NoZOrder, (ISystemWindow)null);
             window.PostMessage(WindowMessage.ExitSizeMove, IntPtr.Zero, IntPtr.Zero);
         }
