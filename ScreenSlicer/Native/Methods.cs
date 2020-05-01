@@ -70,6 +70,9 @@ namespace ScreenSlicer.Native
             uint flags);
 
         [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, ShowWindowCommand nCmdShow);
+
+        [DllImport("user32.dll")]
         public static extern AsyncKeyStateResult GetAsyncKeyState(Keys vKey);
 
         [DllImport("user32.dll", SetLastError = true)]

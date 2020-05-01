@@ -141,6 +141,7 @@
     <Compile Include="Native\Methods.cs" />
     <Compile Include="Native\NativePoint.cs" />
     <Compile Include="Native\NativeRectangle.cs" />
+    <Compile Include="Native\ShowWindowCommand.cs" />
     <Compile Include="Native\ShowWindowPosition.cs" />
     <Compile Include="Native\WindowMessage.cs" />
     <Compile Include="Native\WindowStyle.cs" />

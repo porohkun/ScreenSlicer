@@ -96,28 +96,13 @@ namespace ScreenSlicer.Windows
         {
             var handle = SelectedWindow.Handle;
             SetForegroundWindow(handle);
-            ShowWindow(handle, SW.SHOWNA);
+            Methods.ShowWindow(handle, ShowWindowCommand.ShowNoActive);
         }
 
         [DllImport("user32.dll")]
         public static extern long SetForegroundWindow(IntPtr hWnd);
-        [DllImport("user32.dll")]
-        public static extern bool ShowWindow(IntPtr hWnd, SW cmd);
 
-        public enum SW : int
-        {
-            HIDE = 0,
-            SHOWNORMAL = 1,
-            SHOWMINIMIZED = 2,
-            SHOWMAXIMIZED = 3,
-            SHOWNOACTIVATE = 4,
-            SHOW = 5,
-            MINIMIZE = 6,
-            SHOWMINNOACTIVE = 7,
-            SHOWNA = 8,
-            RESTORE = 9,
-            SHOWDEFAULT = 10
-        }
+
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {

@@ -134,12 +134,10 @@
             </Border>
             <Grid x:Name="CenterPanel" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                 <WrapPanel x:Name="ControlsPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button Content="end" Width="24" Height="24" Padding="3,3,3,5" Command="{Binding EndSliceRegionsCommand}" CommandParameter="55"/>
-                    <Button Width="24" Height="24" Padding="3,3,3,5">
-                        <!--<TextBlock Text="{Binding EndSliceRegionsCommand}"/>-->
-                    </Button>
+                    <Button Content="Save and Close" Padding="3,3,3,5" Command="{Binding EndSliceRegionsCommand}" CommandParameter="55"/>
+                    <!--<Button Width="24" Height="24" Padding="3,3,3,5"/>
                     <Button Width="24" Height="24" Padding="3,3,3,5"/>
-                    <Button Width="24" Height="24" Padding="3,3,3,5"/>
+                    <Button Width="24" Height="24" Padding="3,3,3,5"/>-->
                 </WrapPanel>
             </Grid>
         </Grid>

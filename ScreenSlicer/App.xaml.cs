@@ -36,7 +36,9 @@ namespace ScreenSlicer
         {
             _notifyIcon = _container.Get<NotifyIcon.NotifyIcon>();
             _container.Get<Updating.Updater>().CheckUpdates();
+#if DEBUG
             _container.Get<Windows.WinListWindow>().Show();
+#endif
         }
 
         protected override void OnExit(ExitEventArgs e)

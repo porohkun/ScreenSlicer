@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows.Automation;
 using System.Windows.Input;
@@ -132,19 +133,26 @@ namespace ScreenSlicer.Managers
         private Rectangle SelectSuitableRegion(ISystemWindow window)
         {
             var rect = window.ClientRectangle;
-            //var point = new Point(rect.Top, rect.Right);
+            var pos = window.Position;
+            var offset = Point.Add(rect.Location, new Size(pos.Location));
+            offset.Y = 0;
+            var expand = Size.Subtract(pos.Size, rect.Size);
             if (Methods.GetCursorPos(out NativePoint point))
             {
                 var region = _regionsManager.Regions.FirstOrDefault(r => r.Contains((int)point.X, (int)point.Y));
+                region.Offset(offset);
+                region.Size = Size.Add(region.Size, expand);
                 return region;
             }
-            return new Rectangle(200, 200, 800, 600);
+            Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
+            return rect;
         }
 
         private void MoveToRectangle(ISystemWindow window, Rectangle region)
         {
             //    window.Move(region);
             window.PostMessage(WindowMessage.EnterSizeMove, IntPtr.Zero, IntPtr.Zero);
+            Methods.ShowWindow(window.Handle, ShowWindowCommand.ShowNormal);
             window.SetPosition(region, ShowWindowPosition.NoSendChanging | ShowWindowPosition.NoZOrder, (ISystemWindow)null);
             window.PostMessage(WindowMessage.ExitSizeMove, IntPtr.Zero, IntPtr.Zero);
         }
