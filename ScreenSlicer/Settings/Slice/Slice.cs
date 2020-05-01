@@ -61,21 +61,22 @@ namespace ScreenSlicer
         public bool Bound(Region region)
         {
             var position = Position;
-            switch (Orientation)
-            {
-                case Orientation.Vertical:
-                    if (region.Bounds.Width < region.MinVerticalSlice * 2)
-                        return false;
-                    position = Math.Max(position, region.MinVerticalSlice);
-                    position = Math.Min(position, region.MaxVerticalSlice);
-                    break;
-                case Orientation.Horizontal:
-                    if (region.Bounds.Height < region.MinHorizontalSlice * 2)
-                        return false;
-                    position = Math.Max(position, region.MinHorizontalSlice);
-                    position = Math.Min(position, region.MaxHorizontalSlice);
-                    break;
-            }
+            if (region.RegionA != null && region.RegionB != null)
+                switch (Orientation)
+                {
+                    case Orientation.Vertical:
+                        if (region.Bounds.Width < region.MinVerticalSlice * 2)
+                            return false;
+                        position = Math.Max(position, region.MinVerticalSlice);
+                        position = Math.Min(position, region.MaxVerticalSlice);
+                        break;
+                    case Orientation.Horizontal:
+                        if (region.Bounds.Height < region.MinHorizontalSlice * 2)
+                            return false;
+                        position = Math.Max(position, region.MinHorizontalSlice);
+                        position = Math.Min(position, region.MaxHorizontalSlice);
+                        break;
+                }
             Position = position;
             return true;
         }

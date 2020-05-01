@@ -13,6 +13,8 @@ namespace ScreenSlicer
     {
         [XmlAttribute]
         public bool IsPrimary { get; set; }
+
+        [XmlElement(Order = 1)]
         public Rectangle PhysicalBounds { get; set; }
 
         public ScreenRegion() { }

@@ -24,6 +24,7 @@ namespace ScreenSlicer
         private Region _regionA;
         private Region _regionB;
 
+        [XmlElement(Order = 0)]
         public Rectangle Bounds
         {
             get => _bounds;
@@ -44,6 +45,7 @@ namespace ScreenSlicer
             }
         }
 
+        [XmlElement(Order = 2)]
         public Slice Slice
         {
             get => _slice;
@@ -67,6 +69,7 @@ namespace ScreenSlicer
             }
         }
 
+        [XmlElement(Order = 3)]
         public Region RegionA
         {
             get => _regionA;
@@ -84,6 +87,7 @@ namespace ScreenSlicer
             }
         }
 
+        [XmlElement(Order = 4)]
         public Region RegionB
         {
             get => _regionB;
