@@ -271,6 +271,15 @@ namespace ScreenSlicer
             }
         }
 
+        public IEnumerable<Rectangle> GetTopRegions()
+        {
+            if (Slice == null)
+                yield return Bounds;
+            else
+                foreach (var region in RegionA.GetTopRegions().Union(RegionB.GetTopRegions()))
+                    yield return region;
+        }
+
         public virtual object Clone()
         {
             return new Region(

@@ -2,6 +2,8 @@
 using ScreenSlicer.Native.Screens;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,7 @@ namespace ScreenSlicer.Managers
         public ICommand EndSliceRegionsCommand { get; }
 
         public bool IsActive { get; private set; }
+        public IReadOnlyCollection<Rectangle> Regions { get; private set; }
 
         private ScreenRegion[] _regions;
         private Windows.SlicingWindow[] _windows;
@@ -39,6 +42,7 @@ namespace ScreenSlicer.Managers
             Settings.Instance.Regions.CurrentPreset.ScreenRegions = _regions;
             foreach (var window in _windows)
                 window.Close();
+            Regions = new ReadOnlyCollection<Rectangle>(_regions.Select(r => r.GetTopRegions()).SelectMany(r => r).ToList());
         }
 
         private void ShowSlicingWindows()
@@ -67,6 +71,7 @@ namespace ScreenSlicer.Managers
                     ExitCommand.Execute(0);
                 preset = GetOrCreateDefaultPreset();
             }
+            Regions = new ReadOnlyCollection<Rectangle>(preset.ScreenRegions.Select(r => r.GetTopRegions()).SelectMany(r => r).ToList());
         }
 
         private bool IsPresetCorrespondsToScreens(RegionsPreset preset, Screen[] screens)

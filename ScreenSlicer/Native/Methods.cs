@@ -69,5 +69,11 @@ namespace ScreenSlicer.Native
             int height,
             uint flags);
 
+        [DllImport("user32.dll")]
+        public static extern AsyncKeyStateResult GetAsyncKeyState(Keys vKey);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetCursorPos(out NativePoint lpPoint);
     }
 }

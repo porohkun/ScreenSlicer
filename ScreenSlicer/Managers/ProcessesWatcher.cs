@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Timers;
 using System.Windows.Automation;
+using System.Windows.Input;
 using SendOrPostCallback = System.Threading.SendOrPostCallback;
 
 namespace ScreenSlicer.Managers
@@ -15,12 +16,15 @@ namespace ScreenSlicer.Managers
     {
         private readonly HashSet<ISystemWindow> _windows = new HashSet<ISystemWindow>();
 
+        private readonly RegionsManager _regionsManager;
         private readonly Timer _syncTimer;
         private readonly AsyncOperation _asyncOperation;
         private readonly SendOrPostCallback _tickReporter;
 
-        public ProcessesWatcher()
+        public ProcessesWatcher(RegionsManager regionsManager)
         {
+            _regionsManager = regionsManager;
+
             _asyncOperation = AsyncOperationManager.CreateOperation((object)null);
             _tickReporter = new SendOrPostCallback(SyncedTick);
 
@@ -93,8 +97,8 @@ namespace ScreenSlicer.Managers
         {
             if (!window.Visible)
                 return false;
-            if (!window.Style.HasFlag(Native.WindowStyle.PopupWindow)
-                && window.Style.HasFlag(Native.WindowStyle.Popup))
+            if (!window.Style.HasFlag(WindowStyle.PopupWindow)
+                && window.Style.HasFlag(WindowStyle.Popup))
                 return false;
             return true;
         }
@@ -114,15 +118,27 @@ namespace ScreenSlicer.Managers
         {
             if (src is AutomationElement automation)
             {
-                if (e.NewValue.Equals(WindowVisualState.Maximized))
+                if (e.NewValue.Equals(WindowVisualState.Maximized) && !Methods.GetAsyncKeyState(Keys.ShiftKey).HasFlag(AsyncKeyStateResult.Pressed))
                 {
                     var handle = (IntPtr)(int)automation.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
                     var window = _windows.FirstOrDefault(w => w.Handle.Equals(handle));
 
-                    MoveToRectangle(window, new Rectangle(200, 200, 800, 600));
+                    MoveToRectangle(window, SelectSuitableRegion(window));
 
                 }
             }
+        }
+
+        private Rectangle SelectSuitableRegion(ISystemWindow window)
+        {
+            var rect = window.ClientRectangle;
+            //var point = new Point(rect.Top, rect.Right);
+            if (Methods.GetCursorPos(out NativePoint point))
+            {
+                var region = _regionsManager.Regions.FirstOrDefault(r => r.Contains((int)point.X, (int)point.Y));
+                return region;
+            }
+            return new Rectangle(200, 200, 800, 600);
         }
 
         private void MoveToRectangle(ISystemWindow window, Rectangle region)
