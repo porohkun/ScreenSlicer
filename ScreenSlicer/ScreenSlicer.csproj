@@ -176,6 +176,7 @@
     <Compile Include="Settings\LocalizationSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\WindowStateSettings.cs" />
+    <Compile Include="Updating\RunAtWindowsStartupEvent.cs" />
     <Compile Include="Updating\Updater.cs" />
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
