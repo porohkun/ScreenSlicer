@@ -15,6 +15,8 @@ namespace ScreenSlicer.Managers
 {
     public class ProcessesWatcher
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private readonly HashSet<ISystemWindow> _windows = new HashSet<ISystemWindow>();
 
         private readonly RegionsManager _regionsManager;
@@ -68,30 +70,41 @@ namespace ScreenSlicer.Managers
         {
             try
             {
+                Logger.Info($"Window '{window.CachedTitle}'({window.Handle}) closed.");
+
                 var windowElement = AutomationElement.FromHandle(window.Handle);
                 if (windowElement != null)
                 {
                     Automation.RemoveAutomationPropertyChangedEventHandler(windowElement, Window_VisualStateChanged);
                 }
+
+                Logger.Info($"Window '{window.CachedTitle}'({window.Handle}) handlers removed.");
             }
-            catch { }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"Window '{window.CachedTitle}'({window.Handle}) cant remove handlers.");
+            }
         }
 
         private void OnWindowOpened(ISystemWindow window)
         {
             try
             {
+                Logger.Info($"Window '{window.CachedTitle}'({window.Handle}) opened.");
+
                 var windowElement = AutomationElement.FromHandle(window.Handle);
                 if (windowElement != null)
                 {
-                    //Automation.AddAutomationPropertyChangedEventHandler(
-                    //    windowElement,
-                    //    TreeScope.Element, this.handlePropertyChange,
-                    //    AutomationElement.ItemStatusProperty);
+                    //Automation.AddAutomationPropertyChangedEventHandler(windowElement, TreeScope.Element, this.handlePropertyChange, AutomationElement.ItemStatusProperty);
                     Automation.AddAutomationPropertyChangedEventHandler(windowElement, TreeScope.Element, Window_VisualStateChanged, WindowPattern.WindowVisualStateProperty);
                 }
+
+                Logger.Info($"Window '{window.CachedTitle}'({window.Handle}) handlers added.");
             }
-            catch { }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"Window '{window.CachedTitle}'({window.Handle}) cant add handlers.");
+            }
         }
 
         private bool FilterWindows(ISystemWindow window)

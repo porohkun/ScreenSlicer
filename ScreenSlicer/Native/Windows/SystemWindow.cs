@@ -11,6 +11,8 @@ namespace ScreenSlicer.Native.Windows
 {
     public class SystemWindow : ISystemWindow
     {
+        private string _cachedTitle;
+
         public IntPtr Handle { get; }
 
         public ISystemWindow Root => new SystemWindow(Methods.GetAncestor(Handle, GetAncestorFlag.GetRoot));
@@ -32,7 +34,19 @@ namespace ScreenSlicer.Native.Windows
                 var length = Methods.GetWindowTextLength(Handle) + 1;
                 var builder = new StringBuilder(length);
                 Methods.GetWindowText(Handle, builder, length);
-                return builder.ToString();
+                var title = builder.ToString();
+                _cachedTitle = title;
+                return title;
+            }
+        }
+        public string CachedTitle
+        {
+            get
+            {
+                if (_cachedTitle == null)
+                    return Title;
+                else
+                    return _cachedTitle;
             }
         }
 

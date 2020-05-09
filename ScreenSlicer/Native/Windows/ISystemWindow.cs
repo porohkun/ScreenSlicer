@@ -12,6 +12,7 @@ namespace ScreenSlicer.Native.Windows
         Rectangle Position { get; }
         Rectangle ClientRectangle { get; }
         string Title { get; }
+        string CachedTitle { get; }
         bool Visible { get; }
         WindowStyle Style { get; }
         WindowPlacement Placement { get; }
