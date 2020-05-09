@@ -1,11 +1,5 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ScreenSlicer
@@ -35,8 +29,8 @@ namespace ScreenSlicer
         private void ComposeObjects()
         {
             _notifyIcon = _container.Get<NotifyIcon.NotifyIcon>();
-            _container.Get<Updating.Updater>().CheckUpdates();
 #if DEBUG
+            _container.Get<Updating.Updater>().CheckUpdates();
             _container.Get<Windows.WinListWindow>().Show();
 #endif
         }

@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    public class SliceRegionVerticalCommand : InjectableCommand
+    public class SliceRegionVerticalCommand : InjectableCommand<SliceRegionVerticalCommand>
     {
         protected override bool CanExecuteInternal(object parameter)
         {

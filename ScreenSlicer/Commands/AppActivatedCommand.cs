@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    public class AppActivatedCommand : InjectableCommand
+    public class AppActivatedCommand : InjectableCommand<AppActivatedCommand>
     {
         protected override bool CanExecuteInternal(object parameter)
         {

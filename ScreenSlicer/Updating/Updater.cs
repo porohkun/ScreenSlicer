@@ -19,6 +19,9 @@ namespace ScreenSlicer.Updating
 
         public Updater()
         {
+#if DEBUG
+            return;
+#endif
             _autoEvent = new AutoResetEvent(false);
             _timer = new Timer(CheckStatus, _autoEvent, 60000, 5000);
         }

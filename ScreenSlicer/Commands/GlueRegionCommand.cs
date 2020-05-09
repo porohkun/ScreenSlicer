@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    public class GlueRegionCommand : InjectableCommand
+    public class GlueRegionCommand : InjectableCommand<GlueRegionCommand>
     {
         protected override bool CanExecuteInternal(object parameter)
         {
