@@ -44,6 +44,7 @@ namespace ScreenSlicer
         protected override void OnExit(ExitEventArgs e)
         {
             _notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
+            NLog.LogManager.Shutdown();
             base.OnExit(e);
         }
     }
