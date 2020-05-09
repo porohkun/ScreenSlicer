@@ -1,4 +1,5 @@
-﻿using ScreenSlicer.Native;
+﻿using ScreenSlicer.Commands;
+using ScreenSlicer.Native;
 using ScreenSlicer.Native.Windows;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,15 @@ namespace ScreenSlicer.Managers
         private readonly HashSet<ISystemWindow> _windows = new HashSet<ISystemWindow>();
 
         private readonly RegionsManager _regionsManager;
+        private readonly MoveWindowCommand _moveWindowCommand;
         private readonly Timer _syncTimer;
         private readonly AsyncOperation _asyncOperation;
         private readonly SendOrPostCallback _tickReporter;
 
-        public ProcessesWatcher(RegionsManager regionsManager)
+        public ProcessesWatcher(RegionsManager regionsManager, MoveWindowCommand moveWindowCommand)
         {
             _regionsManager = regionsManager;
+            _moveWindowCommand = moveWindowCommand;
 
             _asyncOperation = AsyncOperationManager.CreateOperation((object)null);
             _tickReporter = new SendOrPostCallback(SyncedTick);
@@ -136,38 +139,24 @@ namespace ScreenSlicer.Managers
                 {
                     var handle = (IntPtr)(int)automation.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
                     var window = _windows.FirstOrDefault(w => w.Handle.Equals(handle));
+                    var rect = SelectSuitableRegion(window);
 
-                    MoveToRectangle(window, SelectSuitableRegion(window));
-
+                    if (_moveWindowCommand.CanExecute(window, rect))
+                        _moveWindowCommand.Execute(window, rect);
                 }
             }
         }
 
         private Rectangle SelectSuitableRegion(ISystemWindow window)
         {
-            var rect = window.ClientRectangle;
-            var pos = window.Position;
-            var offset = Point.Add(rect.Location, new Size(pos.Location));
-            offset.Y = 0;
-            var expand = Size.Subtract(pos.Size, rect.Size);
             if (Methods.GetCursorPos(out NativePoint point))
             {
+                Logger.Info($"cursor position: {point}");
                 var region = _regionsManager.Regions.FirstOrDefault(r => r.Contains((int)point.X, (int)point.Y));
-                region.Offset(offset);
-                region.Size = Size.Add(region.Size, expand);
                 return region;
             }
             Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
-            return rect;
-        }
-
-        private void MoveToRectangle(ISystemWindow window, Rectangle region)
-        {
-            //    window.Move(region);
-            window.PostMessage(WindowMessage.EnterSizeMove, IntPtr.Zero, IntPtr.Zero);
-            Methods.ShowWindow(window.Handle, ShowWindowCommand.ShowNormal);
-            window.SetPosition(region, ShowWindowPosition.NoSendChanging | ShowWindowPosition.NoZOrder, (ISystemWindow)null);
-            window.PostMessage(WindowMessage.ExitSizeMove, IntPtr.Zero, IntPtr.Zero);
+            return default;
         }
 
     }

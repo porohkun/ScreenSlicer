@@ -118,6 +118,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\MoveWindowCommand.cs" />
     <Compile Include="Commands\EndSliceRegionsCommand.cs" />
     <Compile Include="Commands\BeginSliceRegionsCommand.cs" />
     <Compile Include="Commands\SliceRegionHorizontalCommand.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="MainModule.cs" />
     <Compile Include="Managers\ProcessesWatcher.cs" />
     <Compile Include="Managers\RegionsManager.cs" />
+    <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Misc\LinqExtensions.cs" />
     <Compile Include="Misc\MarginSetter.cs" />
     <Compile Include="Misc\StringFormatProxy.cs" />
@@ -284,6 +286,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

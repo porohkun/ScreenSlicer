@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    public class ExitCommand : InjectableCommand
+    public class ExitCommand : InjectableCommand<ExitCommand>
     {
         protected override bool CanExecuteInternal(object parameter)
         {

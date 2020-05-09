@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    public class BeginSliceRegionsCommand : InjectableCommand
+    public class BeginSliceRegionsCommand : InjectableCommand<BeginSliceRegionsCommand>
     {
         private readonly RegionsManager _manager;
 

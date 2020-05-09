@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    public class ShowWindowCommand<T> : InjectableCommand where T : Window
+    public class ShowWindowCommand<T> : InjectableCommand<ShowWindowCommand<T>> where T : Window
     {
         protected T _window;
 
