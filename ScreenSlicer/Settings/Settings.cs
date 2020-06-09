@@ -101,6 +101,24 @@ namespace ScreenSlicer
             }
         }
 
+        private CompatibilitySettings _compat;
+        public CompatibilitySettings Compat
+        {
+            get
+            {
+                if (_compat == null)
+                    Compat = new CompatibilitySettings();
+                return _compat;
+            }
+            set
+            {
+                if (_compat != null)
+                    _compat.PropertyChanged -= SaveByPropertyChanged;
+                _compat = value;
+                _compat.PropertyChanged += SaveByPropertyChanged;
+            }
+        }
+
         public Settings() { }
         private Settings(bool defaultValues)
         {
