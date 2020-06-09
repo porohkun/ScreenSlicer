@@ -1,4 +1,6 @@
-﻿using Ikriv.Xml;
+﻿using ExtendedXmlSerializer;
+using ExtendedXmlSerializer.Configuration;
+using Ikriv.Xml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
 using System.Xml.Serialization;
 using WPFLocalizeExtension.Engine;
 
@@ -112,14 +115,14 @@ namespace ScreenSlicer
 
         private static Settings Load()
         {
-            var serializer = new XmlSerializer(typeof(Settings), GetOverrides());
+            var serializer = GetSerializer();
             if (File.Exists(SettingsPath))
             {
                 using (var stream = File.OpenRead(SettingsPath))
                 {
                     try
                     {
-                        return (Settings)serializer.Deserialize(stream);
+                        return serializer.Deserialize<Settings>(stream);
                     }
                     catch (Exception e)
                     {
@@ -139,15 +142,32 @@ namespace ScreenSlicer
         {
             if (!Directory.Exists(AppDataPath))
                 Directory.CreateDirectory(AppDataPath);
-            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(Settings), GetOverrides());
+            var serializer = GetSerializer();
             try
             {
                 using (var stream = File.Open(SettingsPath, FileMode.Create))
                 {
-                    serializer.Serialize(stream, Instance);
+                    serializer.Serialize(new XmlWriterSettings() { Indent = true }, stream, Instance);
                 }
             }
             catch { }
+        }
+
+        static IExtendedXmlSerializer GetSerializer()
+        {
+            return new ConfigurationContainer()
+                .Type<System.Drawing.Rectangle>()
+                    .Member(x => x.X).Name("X").Attribute()
+                    .Member(x => x.Y).Name("Y").Attribute()
+                    .Member(x => x.Width).Name("Width").Attribute()
+                    .Member(x => x.Height).Name("Height").Attribute()
+                .Type<System.Drawing.Point>()
+                    .Member(x => x.X).Name("X").Attribute()
+                    .Member(x => x.Y).Name("Y").Attribute()
+                .Type<System.Drawing.Size>()
+                    .Member(x => x.Width).Name("Width").Attribute()
+                    .Member(x => x.Height).Name("Height").Attribute()
+                    .Create();
         }
 
         static XmlAttributeOverrides GetOverrides()
