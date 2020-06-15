@@ -1,4 +1,6 @@
 ﻿using Ikriv.Xml;
+using Newtonsoft.Json;
+using ScreenSlicer.SettingsConverters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Xml.Serialization;
 using WPFLocalizeExtension.Engine;
 
@@ -28,6 +29,8 @@ namespace ScreenSlicer
         public static string SettingsPath => Path.Combine(AppDataPath, "settings.xml");
 
         public static Settings Instance { get; set; } = Load();
+
+        private static JsonSerializer _serializer;
 
         private WindowStateSettings _settingsWindow;
         public WindowStateSettings SettingsWindow
@@ -112,21 +115,22 @@ namespace ScreenSlicer
 
         private static Settings Load()
         {
-            var serializer = new XmlSerializer(typeof(Settings), GetOverrides());
             if (File.Exists(SettingsPath))
             {
-                using (var stream = File.OpenRead(SettingsPath))
+                using (JsonTextReader file = new JsonTextReader(File.OpenText(SettingsPath)))
                 {
+                    var serializer = GetSerializer();
                     try
                     {
-                        return (Settings)serializer.Deserialize(stream);
+                        return serializer.Deserialize<Settings>(file);
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show(e.Message);
+                        System.Windows.MessageBox.Show(e.Message, "settings deserialization fault");
                     }
                 }
             }
+
             return new Settings(true);
         }
 
@@ -139,34 +143,35 @@ namespace ScreenSlicer
         {
             if (!Directory.Exists(AppDataPath))
                 Directory.CreateDirectory(AppDataPath);
-            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(Settings), GetOverrides());
-            try
+
+            using (StreamWriter file = File.CreateText(SettingsPath))
             {
-                using (var stream = File.Open(SettingsPath, FileMode.Create))
+                var serializer = GetSerializer();
+                try
                 {
-                    serializer.Serialize(stream, Instance);
+                    serializer.Serialize(file, Instance);
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show(e.Message, "settings serialization fault");
                 }
             }
-            catch { }
         }
 
-        static XmlAttributeOverrides GetOverrides()
+        private static JsonSerializer GetSerializer()
         {
-            return new OverrideXml()
-                .Override<System.Drawing.Rectangle>()
-                    .Member(nameof(System.Drawing.Rectangle.X)).XmlAttribute()
-                    .Member(nameof(System.Drawing.Rectangle.Y)).XmlAttribute()
-                    .Member(nameof(System.Drawing.Rectangle.Width)).XmlAttribute()
-                    .Member(nameof(System.Drawing.Rectangle.Height)).XmlAttribute()
-                    .Member(nameof(System.Drawing.Rectangle.Location)).XmlIgnore()
-                    .Member(nameof(System.Drawing.Rectangle.Size)).XmlIgnore()
-                .Override<System.Drawing.Point>()
-                    .Member(nameof(System.Drawing.Point.X)).XmlAttribute()
-                    .Member(nameof(System.Drawing.Point.Y)).XmlAttribute()
-                .Override<System.Drawing.Size>()
-                    .Member(nameof(System.Drawing.Size.Width)).XmlAttribute()
-                    .Member(nameof(System.Drawing.Size.Height)).XmlAttribute()
-                .Commit();
+            if (_serializer == null)
+            {
+                _serializer = new JsonSerializer()
+                {
+                    TypeNameHandling = TypeNameHandling.Auto,
+                    Formatting = Formatting.Indented
+                };
+                _serializer.Converters.Add(RectangleConverter.Default);
+                _serializer.Converters.Add(PointConverter.Default);
+                _serializer.Converters.Add(SizeConverter.Default);
+            }
+            return _serializer;
         }
     }
 }

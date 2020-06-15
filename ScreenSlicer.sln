@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSlicer", "ScreenSlice
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WPF.Controls.IntUpDown", "WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.shproj", "{E087D350-D4C7-45F3-89CC-55DC0F1EDE75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab", "Lab\Lab.csproj", "{163C9355-D140-4942-B937-8C48CB062B25}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.projitems*{e087d350-d4c7-45f3-89cc-55dc0f1ede75}*SharedItemsImports = 13
@@ -21,6 +23,10 @@ Global
 		{E7858322-789F-4857-AE95-B1FEE4075DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7858322-789F-4857-AE95-B1FEE4075DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7858322-789F-4857-AE95-B1FEE4075DCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{163C9355-D140-4942-B937-8C48CB062B25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{163C9355-D140-4942-B937-8C48CB062B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{163C9355-D140-4942-B937-8C48CB062B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{163C9355-D140-4942-B937-8C48CB062B25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
