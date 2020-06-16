@@ -1,6 +1,5 @@
 ﻿using Ikriv.Xml;
 using Newtonsoft.Json;
-using ScreenSlicer.SettingsConverters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +7,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -26,81 +26,59 @@ namespace ScreenSlicer
 #else
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ScreenSlicer");
 #endif
-        public static string SettingsPath => Path.Combine(AppDataPath, "settings.xml");
+        public static string SettingsPath => Path.Combine(AppDataPath, "settings.json");
 
         public static Settings Instance { get; set; } = Load();
 
         private static JsonSerializer _serializer;
 
+        private event Action PropertyChanged;
+
+        [XmlElement(nameof(SettingsWindow))]
         private WindowStateSettings _settingsWindow;
+
+        [XmlElement(nameof(Localization))]
+        private LocalizationSettings _localization;
+
+        [XmlElement(nameof(Snaps))]
+        private SnapSettings _snaps;
+
+        [XmlElement(nameof(Regions))]
+        private RegionSettings _regions;
+
         public WindowStateSettings SettingsWindow
         {
             get
             {
-                if (_settingsWindow == null)
-                    SettingsWindow = new WindowStateSettings() { Width = 640, Height = 480 };
+                _settingsWindow = CheckSettingsPartExistAndSubscribe<WindowStateSettings>(_settingsWindow);
                 return _settingsWindow;
-            }
-            set
-            {
-                if (_settingsWindow != null)
-                    _settingsWindow.PropertyChanged -= SaveByPropertyChanged;
-                _settingsWindow = value;
-                _settingsWindow.PropertyChanged += SaveByPropertyChanged;
             }
         }
 
-        private LocalizationSettings _localization;
         public LocalizationSettings Localization
         {
             get
             {
-                if (_localization == null)
-                    Localization = new LocalizationSettings();
+                _localization = CheckSettingsPartExistAndSubscribe<LocalizationSettings>(_localization);
                 return _localization;
-            }
-            set
-            {
-                if (_localization != null)
-                    _localization.PropertyChanged -= SaveByPropertyChanged;
-                _localization = value;
-                _localization.PropertyChanged += SaveByPropertyChanged;
             }
         }
 
-        private SnapSettings _snaps;
         public SnapSettings Snaps
         {
             get
             {
-                if (_snaps == null)
-                    Snaps = new SnapSettings();
+                _snaps = CheckSettingsPartExistAndSubscribe<SnapSettings>(_snaps);
                 return _snaps;
-            }
-            set
-            {
-                if (_snaps != null)
-                    _snaps.PropertyChanged -= SaveByPropertyChanged;
-                _snaps = value;
-                _snaps.PropertyChanged += SaveByPropertyChanged;
             }
         }
 
-        private RegionSettings _regions;
         public RegionSettings Regions
         {
             get
             {
-                if (_regions == null)
-                    Regions = new RegionSettings() { MinRegionSize = new System.Drawing.Size(200, 60) };
+                _regions = CheckSettingsPartExistAndSubscribe<RegionSettings>(_regions);
                 return _regions;
-            }
-            set
-            {
-                if (_regions != null)
-                    _regions.PropertyChanged -= SaveByPropertyChanged;
-                _regions = value;
-                _regions.PropertyChanged += SaveByPropertyChanged;
             }
         }
 
@@ -109,12 +87,28 @@ namespace ScreenSlicer
         {
             if (!defaultValues)
                 return;
-            Localization = new LocalizationSettings() { Culture = CultureInfo.GetCultureInfo("en") };
-            Snaps = new SnapSettings() { SnapDistance = 10, SnapToMonitors = true, SnapToRegions = true };
+            //Localization = new LocalizationSettings() { Culture = CultureInfo.GetCultureInfo("en") };
+        }
+
+        private T CheckSettingsPartExistAndSubscribe<T>(ISettingsPartWithNotifier part) where T : SettingsPartWithNotifier
+        {
+            if (part == null)
+                part = Activator.CreateInstance<T>();
+            else if (!(part is T))
+                throw new ArgumentException();
+            if (!part.NotifierSubscribed)
+                part.SubscribeNotifier(PartChanged);
+            return (T)part;
+        }
+
+        private void PartChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke();
         }
 
         private static Settings Load()
         {
+            Settings result = null;
             if (File.Exists(SettingsPath))
             {
                 using (JsonTextReader file = new JsonTextReader(File.OpenText(SettingsPath)))
@@ -122,7 +116,9 @@ namespace ScreenSlicer
                     var serializer = GetSerializer();
                     try
                     {
-                        return serializer.Deserialize<Settings>(file);
+                        result = serializer.Deserialize<Settings>(file);
+                        if (result == null)
+                            throw new SerializationException("cant read settings.xml");
                     }
                     catch (Exception e)
                     {
@@ -130,13 +126,9 @@ namespace ScreenSlicer
                     }
                 }
             }
-
-            return new Settings(true);
-        }
-
-        private void SaveByPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            Save();
+            result = result ?? new Settings(true);
+            result.PropertyChanged += Save;
+            return result;
         }
 
         public static void Save()
@@ -167,9 +159,10 @@ namespace ScreenSlicer
                     TypeNameHandling = TypeNameHandling.Auto,
                     Formatting = Formatting.Indented
                 };
-                _serializer.Converters.Add(RectangleConverter.Default);
-                _serializer.Converters.Add(PointConverter.Default);
-                _serializer.Converters.Add(SizeConverter.Default);
+                _serializer.Converters.Add(SettingsConverters.RectangleConverter.Default);
+                _serializer.Converters.Add(SettingsConverters.PointConverter.Default);
+                _serializer.Converters.Add(SettingsConverters.SizeConverter.Default);
+                _serializer.Converters.Add(SettingsConverters.CultureInfoConverter.Default);
             }
             return _serializer;
         }

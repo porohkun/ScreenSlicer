@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace ScreenSlicer
 {
-    [Serializable]
     public class ScreenRegion : Region
     {
-        [XmlAttribute]
         public bool IsPrimary { get; set; }
 
-        [XmlElement(Order = 1)]
-        public Rectangle PhysicalBounds { get; set; }
+        [JsonProperty(nameof(PhysicalBounds), Order = 1)]
+        public Rectangle PhysicalBounds { get; private set; }
 
         public ScreenRegion() { }
 

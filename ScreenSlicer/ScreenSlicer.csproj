@@ -180,10 +180,12 @@
     <Compile Include="Pages\SettingsWindow\UpdatesPage.xaml.cs">
       <DependentUpon>UpdatesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings\Converters\CultureInfoConverter.cs" />
     <Compile Include="Settings\Converters\SizeConverter.cs" />
     <Compile Include="Settings\Converters\PointConverter.cs" />
     <Compile Include="Settings\Converters\RectangleConverter.cs" />
     <Compile Include="Settings\RegionSettings.cs" />
+    <Compile Include="Settings\SettingsPartWithNotifier.cs" />
     <Compile Include="Settings\Slice\Region.cs" />
     <Compile Include="Settings\Slice\RegionsPreset.cs" />
     <Compile Include="Settings\Slice\ScreenRegion.cs" />
