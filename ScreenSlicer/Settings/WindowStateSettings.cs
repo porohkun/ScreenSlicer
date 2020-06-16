@@ -1,24 +1,20 @@
-﻿using System;
-using System.ComponentModel;
+﻿using Newtonsoft.Json;
 using System.Windows;
-using System.Xml.Serialization;
 
 namespace ScreenSlicer
 {
-    [Serializable]
-    public class WindowStateSettings : INotifyPropertyChanged
+    public class WindowStateSettings : SettingsPartWithNotifier
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        [JsonProperty(nameof(Width))]
         private double _width = 640;
-        private double _height = 480;
-        private WindowState _state;
 
-        [XmlAttribute]
+        [JsonProperty(nameof(Height))]
+        private double _height = 480;
+
+        [JsonProperty(nameof(State))]
+        private WindowState _state = WindowState.Normal;
+
+        [JsonIgnore]
         public double Width
         {
             get => _width;
@@ -32,7 +28,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlAttribute]
+        [JsonIgnore]
         public double Height
         {
             get => _height;
@@ -46,7 +42,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlAttribute]
+        [JsonIgnore]
         public WindowState State
         {
             get => _state;

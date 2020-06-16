@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace ScreenSlicer
 {
-    [Serializable]
     public class RegionsPreset : INotifyPropertyChanged, ICloneable
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -17,10 +13,13 @@ namespace ScreenSlicer
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        [JsonProperty(nameof(Name))]
         private string _name;
+
+        [JsonProperty(nameof(ScreenRegions))]
         private ScreenRegion[] _screenRegions;
 
-        [XmlAttribute]
+        [JsonIgnore]
         public string Name
         {
             get => _name;
@@ -33,6 +32,8 @@ namespace ScreenSlicer
                 }
             }
         }
+
+        [JsonIgnore]
         public ScreenRegion[] ScreenRegions
         {
             get => _screenRegions;
@@ -57,6 +58,23 @@ namespace ScreenSlicer
         public object Clone()
         {
             return new RegionsPreset(Name, ScreenRegions.Select(r => r.Clone() as ScreenRegion).ToArray());
+        }
+
+        public class Converter : JsonConverter<RegionsPreset>
+        {
+            public Converter()
+            { }
+
+            public override RegionsPreset ReadJson(JsonReader reader, Type objectType, RegionsPreset existingValue, bool hasExistingValue, JsonSerializer serializer)
+            {
+                var data = (string)reader.Value;
+                return new RegionsPreset(data, null);
+            }
+
+            public override void WriteJson(JsonWriter writer, RegionsPreset value, JsonSerializer serializer)
+            {
+                writer.WriteValue(value.Name);
+            }
         }
     }
 }

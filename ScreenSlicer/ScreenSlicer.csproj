@@ -65,6 +65,9 @@
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -227,7 +230,12 @@
     <Compile Include="Settings\Compatibility\Conditions\IntCondition.cs" />
     <Compile Include="Settings\Compatibility\Rule.cs" />
     <Compile Include="Settings\Compatibility\Conditions\StringCondition.cs" />
+    <Compile Include="Settings\Converters\CultureInfoConverter.cs" />
+    <Compile Include="Settings\Converters\SizeConverter.cs" />
+    <Compile Include="Settings\Converters\PointConverter.cs" />
+    <Compile Include="Settings\Converters\RectangleConverter.cs" />
     <Compile Include="Settings\RegionSettings.cs" />
+    <Compile Include="Settings\SettingsPartWithNotifier.cs" />
     <Compile Include="Settings\Slice\Region.cs" />
     <Compile Include="Settings\Slice\RegionsPreset.cs" />
     <Compile Include="Settings\Slice\ScreenRegion.cs" />

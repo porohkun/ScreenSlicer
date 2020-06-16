@@ -1,68 +1,44 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using WPFLocalizeExtension.Engine;
 
 namespace ScreenSlicer
 {
-    [Serializable]
-    public class RegionSettings : INotifyPropertyChanged
+    public class RegionSettings : SettingsPartWithNotifier
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private RegionsPreset _currentPreset;
-        private Size _minRegionSize;
 
-        [XmlArray]
-        public ObservableCollection<RegionsPreset> Presets { get; private set; } = new ObservableCollection<RegionsPreset>() { };
+        [JsonProperty(nameof(MinRegionSize), Order = 0)]
+        private Size _minRegionSize = new Size(200, 60);
 
-        [XmlAttribute]
-        public string CurrentPresetName
-        {
-            get => CurrentPreset?.Name;
-            set
-            {
-                if (CurrentPresetName != value)
-                    CurrentPreset = GetPresetByName(value);
-            }
-        }
+        [JsonProperty(Order = 1)]
+        public ObservableCollection<RegionsPreset> Presets { get; private set; }
 
-        [XmlIgnore]
+        [JsonProperty(Order = 2)]
+        [JsonConverter(typeof(RegionsPreset.Converter))]
         public RegionsPreset CurrentPreset
         {
             get
             {
                 if (_currentPreset == null)
-                    CurrentPreset = GetPresetByName(string.Empty);
+                    _currentPreset = GetPresetByName(string.Empty);
                 return _currentPreset;
             }
             set
             {
-                if (_currentPreset != value)
+                var selected = GetPresetByName(value?.Name ?? string.Empty);
+                if (_currentPreset != selected)
                 {
-                    if (value != null)
-                        _currentPreset = value;
-                    else
-                        _currentPreset = GetPresetByName(string.Empty);
-
+                    _currentPreset = selected;
                     NotifyPropertyChanged(nameof(CurrentPreset));
-                    NotifyPropertyChanged(nameof(CurrentPresetName));
                 }
             }
         }
 
+        [JsonIgnore]
         public Size MinRegionSize
         {
             get => _minRegionSize;
@@ -78,6 +54,7 @@ namespace ScreenSlicer
 
         public RegionSettings()
         {
+            Presets = new ObservableCollection<RegionsPreset>();
             Presets.CollectionChanged += Presets_CollectionChanged;
         }
 
@@ -88,11 +65,11 @@ namespace ScreenSlicer
 
         private void Presets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            NotifyPropertyChanged(nameof(Presets));
             foreach (RegionsPreset item in (IEnumerable)e?.OldItems ?? Enumerable.Empty<RegionsPreset>())
                 item.PropertyChanged -= Preset_PropertyChanged;
             foreach (RegionsPreset item in (IEnumerable)e?.NewItems ?? Enumerable.Empty<RegionsPreset>())
                 item.PropertyChanged += Preset_PropertyChanged;
+            NotifyPropertyChanged(nameof(Presets));
         }
 
         private void Preset_PropertyChanged(object sender, PropertyChangedEventArgs e)

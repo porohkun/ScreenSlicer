@@ -116,6 +116,8 @@ namespace ScreenSlicer.Managers
         {
             if (!window.Visible)
                 return false;
+            if (window.Position.Size == default)//HACK: костыль для окон с замороженным интерфейсом https://stackoverflow.com/questions/9537171/automationelement-fromhandle-execution-time-is-intermittently-slow
+                return false;
             if (!window.Style.HasFlag(WindowStyle.PopupWindow)
                 && window.Style.HasFlag(WindowStyle.Popup))
                 return false;
