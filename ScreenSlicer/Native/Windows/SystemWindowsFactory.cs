@@ -13,7 +13,7 @@ namespace ScreenSlicer.Native.Windows
         public ISystemWindow Create(IntPtr handle)
         {
             var window = new SystemWindow(handle);
-            var rule = Settings.Instance.Compat.GetRuleForWindow(window);
+            var rule = Settings.Instance.Compatibility.GetRuleForWindow(window);
 
             window.SetRule(rule);
 

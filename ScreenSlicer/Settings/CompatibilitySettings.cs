@@ -1,4 +1,5 @@
-﻿using ScreenSlicer.Compatibility;
+﻿using Newtonsoft.Json;
+using ScreenSlicer.Compatibility;
 using ScreenSlicer.Native.Windows;
 using System;
 using System.Collections;
@@ -15,16 +16,9 @@ using WPFLocalizeExtension.Engine;
 
 namespace ScreenSlicer
 {
-    [Serializable]
-    public class CompatibilitySettings : INotifyPropertyChanged
+    public class CompatibilitySettings : SettingsPartWithNotifier
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        [XmlArray]
+        [JsonProperty]
         public ObservableCollection<Rule> Rules { get; private set; } = new ObservableCollection<Rule>() { };
 
         public CompatibilitySettings()

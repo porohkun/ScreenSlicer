@@ -1,17 +1,9 @@
-﻿using Ikriv.Xml;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
-using WPFLocalizeExtension.Engine;
 
 namespace ScreenSlicer
 {
@@ -45,6 +37,9 @@ namespace ScreenSlicer
 
         [XmlElement(nameof(Regions))]
         private RegionSettings _regions;
+
+        [XmlElement(nameof(Compatibility))]
+        private CompatibilitySettings _compatibility;
 
         public WindowStateSettings SettingsWindow
         {
@@ -82,21 +77,12 @@ namespace ScreenSlicer
             }
         }
 
-        private CompatibilitySettings _compat;
-        public CompatibilitySettings Compat
+        public CompatibilitySettings Compatibility
         {
             get
             {
-                if (_compat == null)
-                    Compat = new CompatibilitySettings();
-                return _compat;
-            }
-            set
-            {
-                if (_compat != null)
-                    _compat.PropertyChanged -= SaveByPropertyChanged;
-                _compat = value;
-                _compat.PropertyChanged += SaveByPropertyChanged;
+                _compatibility = CheckSettingsPartExistAndSubscribe<CompatibilitySettings>(_compatibility);
+                return _compatibility;
             }
         }
 
