@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using System.Xml.Serialization;
 
 namespace ScreenSlicer
 {
-    [Serializable]
     public class Slice : INotifyPropertyChanged, ICloneable
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -17,11 +16,11 @@ namespace ScreenSlicer
         private Orientation _orientation;
         private int _position;
 
-        [XmlAttribute(nameof(Orientation))]
+        [JsonProperty(nameof(Orientation))]
         public Orientation Orientation
         {
             get => _orientation;
-            set
+            private set
             {
                 if (_orientation != value)
                 {
@@ -31,7 +30,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlAttribute(nameof(Position))]
+        [JsonProperty(nameof(Position))]
         public int Position
         {
             get => _position;

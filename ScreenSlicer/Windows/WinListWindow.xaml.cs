@@ -68,6 +68,8 @@ namespace ScreenSlicer.Windows
         {
             if (!(item is ISystemWindow window))
                 return false;
+            if (window.Position.Size == default)
+                return false;
             //if (string.IsNullOrEmpty(window.Title))
             //    return false;
             if (!window.Visible)
