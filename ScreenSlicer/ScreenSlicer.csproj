@@ -160,6 +160,7 @@
     <Compile Include="Commands\GlueRegionCommand.cs" />
     <Compile Include="Commands\SliceRegionVerticalCommand.cs" />
     <Compile Include="Controls\RegionView.cs" />
+    <Compile Include="Converters\LocalizeConverter.cs" />
     <Compile Include="Converters\CapitalizeConverter.cs" />
     <Compile Include="Converters\ConvertersChain.cs" />
     <Compile Include="Converters\IntToGridLengthConverter.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Native\WindowPlacement.cs" />
     <Compile Include="Native\WindowShowStyle.cs" />
     <Compile Include="Native\Windows\ExplorerWindow.cs" />
+    <Compile Include="Native\Windows\ICanUseRules.cs" />
     <Compile Include="Native\Windows\ISystemWindow.cs" />
     <Compile Include="Native\Windows\SystemWindow.cs" />
     <Compile Include="Native\Windows\SystemWindowsFactory.cs" />
@@ -209,6 +211,9 @@
     <Compile Include="Pages\SettingsWindow\SnapPage.xaml.cs">
       <DependentUpon>SnapPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SettingsWindow\CompatibilityPage.xaml.cs">
+      <DependentUpon>CompatibilityPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsWindow\SystemPage.xaml.cs">
       <DependentUpon>SystemPage.xaml</DependentUpon>
     </Compile>
@@ -216,6 +221,7 @@
       <DependentUpon>UpdatesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\CompatibilitySettings.cs" />
+    <Compile Include="Settings\Compatibility\Actions\ActionDataBase.cs" />
     <Compile Include="Settings\Compatibility\Actions\CorrectTargetRegionData.cs" />
     <Compile Include="Settings\Compatibility\Actions\IActionData.cs" />
     <Compile Include="Settings\Compatibility\Actions\ModifyTargetRegionData.cs" />
@@ -295,6 +301,10 @@
     <Page Include="Pages\SettingsWindow\SnapPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsWindow\CompatibilityPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\SettingsWindow\SystemPage.xaml">
       <SubType>Designer</SubType>

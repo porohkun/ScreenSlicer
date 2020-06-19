@@ -10,7 +10,7 @@
       mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
 
     <DockPanel>
-        <ComboBox ItemsSource="{Binding Source={x:Static local:Settings.Instance}, Path=Localization.MergedAvailableCultures}"
+        <ComboBox ItemsSource="{Binding Source={x:Static lex:LocalizeDictionary.Instance}, Path=MergedAvailableCultures}"
                   SelectedItem="{Binding Source={x:Static local:Settings.Instance}, Path=Localization.Culture}" 
                   Width="200" HorizontalAlignment="Left" DockPanel.Dock="Top">
             <ComboBox.ItemTemplate>

@@ -1,14 +1,25 @@
-﻿using ScreenSlicer.Native;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using ScreenSlicer.Native;
 
 namespace ScreenSlicer.Compatibility.Actions
 {
-    public class User32SetWindowPosData : IActionData
+    public class User32SetWindowPosData : ActionDataBase
     {
-        public ShowWindowPosition Flags { get; set; }
+        private ShowWindowPosition _flags;
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ShowWindowPosition Flags
+        {
+            get => _flags;
+            set
+            {
+                if (_flags != value)
+                {
+                    _flags = value;
+                    NotifyPropertyChanged(nameof(Flags));
+                }
+            }
+        }
     }
 }

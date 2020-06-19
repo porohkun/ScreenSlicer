@@ -7,4 +7,5 @@
     <c:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
     <c:IsNullConverter x:Key="IsNullConverter"/>
     <c:PropertyExtractConverter x:Key="PropertyExtractConverter"/>
+    <c:LocalizeConverter x:Key="LocalizeConverter"/>
 </ResourceDictionary>

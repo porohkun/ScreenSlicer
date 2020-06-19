@@ -1,0 +1,146 @@
+﻿<Page x:Class="ScreenSlicer.Pages.SettingsWindow.CompatibilityPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ScreenSlicer"
+      xmlns:n="clr-namespace:ScreenSlicer.Native"
+      xmlns:s="clr-namespace:System;assembly=mscorlib"
+      xmlns:extensions="http://wpflocalizeextension.codeplex.com"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+      xmlns:settingswindow="clr-namespace:ScreenSlicer.Pages.SettingsWindow"
+      lex:ResxLocalizationProvider.DefaultAssembly="ScreenSlicer"
+      lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+      mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
+      d:DataContext="{StaticResource CompatibilityPageDummy}">
+    <Page.Resources>
+        <ObjectDataProvider x:Key="WindowMessage" MethodName="GetValues"
+                            ObjectType="{x:Type s:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="n:WindowMessage"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="ShowWindowPosition" MethodName="GetValues"
+                            ObjectType="{x:Type s:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="n:ShowWindowPosition"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="ShowWindowCommand" MethodName="GetValues"
+                            ObjectType="{x:Type s:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="n:ShowWindowCommand"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding Rules}" SelectedItem="{Binding SelectedRule}"
+                  Grid.Column="0" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="64">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="64"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" BorderThickness="1" BorderBrush="Black">
+                            <Image />
+                        </Border>
+                        <TextBlock Text="{Binding Path=Name, Converter={StaticResource CapitalizeConverter}}"
+                                   Grid.Column="1" VerticalAlignment="Center" FontSize="16" Margin="4"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TabControl Grid.Column="1" Grid.Row="1">
+            <TabItem Header="Common">
+                <StackPanel Orientation="Vertical" Width="220" HorizontalAlignment="Left">
+                    <TextBlock Text="Rule name"/>
+                    <TextBox Text="{Binding SelectedRule.Name, Mode=TwoWay}" IsReadOnly="{Binding SelectedRule.IsDefault}"/>
+                    <Button Content="Remove rule" Margin="40,4"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Conditions">
+
+            </TabItem>
+            <TabItem Header="Move window sequence">
+                <ListView ItemsSource="{Binding SelectedRule.MoveWindowSequence}" Grid.Column="0" Grid.Row="1"
+                          xmlns:a="clr-namespace:ScreenSlicer.Compatibility.Actions">
+                    <!--https://stackoverflow.com/questions/24238901/how-to-set-multiple-data-template-to-a-listbox-->
+                    <ListView.Resources>
+                        <DataTemplate DataType="{x:Type a:CorrectTargetRegionData}">
+                            <TextBlock TextWrapping="WrapWithOverflow">
+                                <Run Text="This action changes the target region to compensate"/>
+                                <LineBreak/>
+                                <Run Text="the difference between the actual and visible window sizes."/>
+                            </TextBlock>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type a:ModifyTargetRegionData}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="This action changes the target region"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Left: "/>
+                                    <TextBox Text="{Binding Left}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type a:User32MoveWindowData}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="user32.MoveWindow"/>
+                                <CheckBox Content="Should repaint" IsChecked="{Binding ShouldRepaint}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type a:User32PostMessageData}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="user32.PostMessage"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Message: "/>
+                                    <ComboBox ItemsSource="{Binding Source={StaticResource WindowMessage}}"
+                                              SelectedItem="{Binding Message}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type a:User32SetWindowPosData}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="user32.SetWindowPos"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Flags: "/>
+                                    <ComboBox ItemsSource="{Binding Source={StaticResource ShowWindowPosition}}"
+                                              SelectedItem="{Binding Flags}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type a:User32ShowWindowData}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="user32.ShowWindow"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Command: "/>
+                                    <ComboBox ItemsSource="{Binding Source={StaticResource ShowWindowCommand}}"
+                                              SelectedItem="{Binding Command}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.Resources>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="1">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Converter={StaticResource LocalizeConverter}}"/>
+                                    <ContentControl Content="{Binding}" Margin="12,0,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

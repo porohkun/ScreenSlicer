@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ScreenSlicer.Native.Windows
 {
-    public class SystemWindow : ISystemWindow
+    public class SystemWindow : ISystemWindow, ICanUseRules
     {
         private string _cachedTitle;
         private Rule _rule;

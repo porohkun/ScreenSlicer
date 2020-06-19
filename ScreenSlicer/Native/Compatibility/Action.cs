@@ -22,7 +22,7 @@ namespace ScreenSlicer.Native.Compatibility
                 if (parameters.Length != 3) return false;
                 if (!typeof(IActionData).IsAssignableFrom(parameters[0].ParameterType)) return false;
                 if (parameters[1].ParameterType != typeof(ISystemWindow)) return false;
-                if (parameters[2].ParameterType != typeof(Rectangle)) return false;
+                if (parameters[2].ParameterType != typeof(Rectangle).MakeByRefType()) return false;
                 if (!parameters[2].ParameterType.IsByRef) return false;
                 return true;
             }).ToDictionary(m => m.GetParameters()[0].ParameterType);

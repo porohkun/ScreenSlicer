@@ -10,16 +10,20 @@ namespace ScreenSlicer.Native.Windows
     {
 
 
-        public ISystemWindow Create(IntPtr handle)
+        public ISystemWindow Create(IntPtr handle, bool setRule = false)
         {
             var window = new SystemWindow(handle);
-            var rule = Settings.Instance.Compatibility.GetRuleForWindow(window);
 
-            window.SetRule(rule);
+            if (setRule)
+                SetRule(window);
 
             return new ExplorerWindow(handle);
         }
 
-
+        public void SetRule(ISystemWindow window)
+        {
+            if (window is ICanUseRules ruledWindow)
+                ruledWindow.SetRule(Settings.Instance.Compatibility.GetRuleForWindow(window));
+        }
     }
 }

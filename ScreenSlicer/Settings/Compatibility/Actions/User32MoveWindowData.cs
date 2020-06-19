@@ -1,14 +1,23 @@
-﻿using ScreenSlicer.Native;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace ScreenSlicer.Compatibility.Actions
 {
-    public class User32MoveWindowData : IActionData
+    public class User32MoveWindowData : ActionDataBase
     {
-        public bool ShouldRepaint { get; set; }
+        private bool _shouldRepaint;
+
+        [JsonProperty(nameof(ShouldRepaint))]
+        public bool ShouldRepaint
+        {
+            get => _shouldRepaint;
+            set
+            {
+                if (_shouldRepaint != value)
+                {
+                    _shouldRepaint = value;
+                    NotifyPropertyChanged(nameof(ShouldRepaint));
+                }
+            }
+        }
     }
 }

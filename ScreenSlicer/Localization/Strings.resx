@@ -117,8 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData" xml:space="preserve">
+    <value>Correct target region</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData" xml:space="preserve">
+    <value>Modify target region</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.User32MoveWindowData" xml:space="preserve">
+    <value>[User32.dl] MoveWindow</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.User32PostMessageData" xml:space="preserve">
+    <value>[User32.dll] PostMessage</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.User32SetWindowPosData" xml:space="preserve">
+    <value>[User32.dll] SetWindowPos</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.User32ShowWindowData" xml:space="preserve">
+    <value>[User32.dll] ShowWindow</value>
+  </data>
   <data name="SettingsWindow.About.GroupHeader" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="SettingsWindow.Compatibility.GroupHeader" xml:space="preserve">
+    <value>Compatibility</value>
   </data>
   <data name="SettingsWindow.Localization.GroupHeader" xml:space="preserve">
     <value>Localization</value>
