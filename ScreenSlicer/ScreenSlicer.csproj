@@ -159,7 +159,9 @@
     <Compile Include="Commands\SliceRegionHorizontalCommand.cs" />
     <Compile Include="Commands\GlueRegionCommand.cs" />
     <Compile Include="Commands\SliceRegionVerticalCommand.cs" />
-    <Compile Include="Controls\RegionView.cs" />
+    <Compile Include="Controls\RegionView.cs">
+      <DependentUpon>RegionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\LocalizeConverter.cs" />
     <Compile Include="Converters\CapitalizeConverter.cs" />
     <Compile Include="Converters\ConvertersChain.cs" />
@@ -261,6 +263,10 @@
     <Compile Include="Windows\WinListWindow.xaml.cs">
       <DependentUpon>WinListWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\RegionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -370,7 +376,6 @@
   <ItemGroup>
     <Resource Include="Images\Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="..\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
