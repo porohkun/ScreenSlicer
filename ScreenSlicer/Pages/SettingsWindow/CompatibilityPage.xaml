@@ -72,74 +72,76 @@
 
             </TabItem>
             <TabItem Header="Move window sequence">
-                <ListView ItemsSource="{Binding SelectedRule.MoveWindowSequence}" Grid.Column="0" Grid.Row="1"
-                          xmlns:a="clr-namespace:ScreenSlicer.Compatibility.Actions">
-                    <!--https://stackoverflow.com/questions/24238901/how-to-set-multiple-data-template-to-a-listbox-->
-                    <ListView.Resources>
-                        <DataTemplate DataType="{x:Type a:CorrectTargetRegionData}">
-                            <TextBlock TextWrapping="WrapWithOverflow">
-                                <Run Text="This action changes the target region to compensate"/>
-                                <LineBreak/>
-                                <Run Text="the difference between the actual and visible window sizes."/>
-                            </TextBlock>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type a:ModifyTargetRegionData}">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="This action changes the target region"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Left: "/>
-                                    <TextBox Text="{Binding Left}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type a:User32MoveWindowData}">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="user32.MoveWindow"/>
-                                <CheckBox Content="Should repaint" IsChecked="{Binding ShouldRepaint}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type a:User32PostMessageData}">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="user32.PostMessage"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Message: "/>
-                                    <ComboBox ItemsSource="{Binding Source={StaticResource WindowMessage}}"
-                                              SelectedItem="{Binding Message}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type a:User32SetWindowPosData}">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="user32.SetWindowPos"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Flags: "/>
-                                    <ComboBox ItemsSource="{Binding Source={StaticResource ShowWindowPosition}}"
-                                              SelectedItem="{Binding Flags}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type a:User32ShowWindowData}">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="user32.ShowWindow"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Command: "/>
-                                    <ComboBox ItemsSource="{Binding Source={StaticResource ShowWindowCommand}}"
-                                              SelectedItem="{Binding Command}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="AntiqueWhite" BorderThickness="1">
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding SelectedRule.MoveWindowSequence}" Grid.Column="0" Grid.Row="1"
+                                  xmlns:a="clr-namespace:ScreenSlicer.Compatibility.Actions">
+                        <!--https://stackoverflow.com/questions/24238901/how-to-set-multiple-data-template-to-a-listbox-->
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type a:CorrectTargetRegionData}">
+                                <TextBlock TextWrapping="WrapWithOverflow">
+                                    <Run Text="This action changes the target region to compensate"/>
+                                    <LineBreak/>
+                                    <Run Text="the difference between the actual and visible window sizes."/>
+                                </TextBlock>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type a:ModifyTargetRegionData}">
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="{Binding Converter={StaticResource LocalizeConverter}}"/>
-                                    <ContentControl Content="{Binding}" Margin="12,0,0,0"/>
+                                    <TextBlock Text="This action changes the target region"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Left: "/>
+                                        <TextBox Text="{Binding Left}"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type a:User32MoveWindowData}">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="user32.MoveWindow"/>
+                                    <CheckBox Content="Should repaint" IsChecked="{Binding ShouldRepaint}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type a:User32PostMessageData}">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="user32.PostMessage"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Message: "/>
+                                        <ComboBox ItemsSource="{Binding Source={StaticResource WindowMessage}}"
+                                                  SelectedItem="{Binding Message}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type a:User32SetWindowPosData}">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="user32.SetWindowPos"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Flags: "/>
+                                        <local:MultiSelectComboBox ItemsSource="{Binding Source={StaticResource ShowWindowPosition}}"
+                                                                   SelectedItems="{Binding Flags, Mode=TwoWay}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type a:User32ShowWindowData}">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="user32.ShowWindow"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Command: "/>
+                                        <ComboBox ItemsSource="{Binding Source={StaticResource ShowWindowCommand}}"
+                                                  SelectedItem="{Binding Command}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="AntiqueWhite" BorderThickness="1" Margin="4,4,4,0">
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Converter={StaticResource LocalizeConverter}}"/>
+                                        <ContentControl Content="{Binding}" Margin="12,0,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>
