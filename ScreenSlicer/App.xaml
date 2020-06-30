@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="Converters.xaml"/>
                 <ResourceDictionary Source="IntUpDown.xaml"/>
                 <ResourceDictionary Source="Controls/RegionView.xaml"/>
+                <ResourceDictionary Source="Controls/MultiSelectComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <w:SlicingWindowDummy x:Key="SlicingWindowDummy"/>
