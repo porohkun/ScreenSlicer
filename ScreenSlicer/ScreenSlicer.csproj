@@ -138,6 +138,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\NewCompatibilityRuleCommand.cs" />
     <Compile Include="Commands\RemoveItemCommand.cs" />
     <Compile Include="Commands\MoveWindowCommand.cs" />
     <Compile Include="Commands\EndSliceRegionsCommand.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Controls\RegionView.cs">
       <DependentUpon>RegionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DoubleToGridLengthConverter.cs" />
     <Compile Include="Converters\OffsetConverter.cs" />
     <Compile Include="Converters\LocalizeConverter.cs" />
     <Compile Include="Converters\CapitalizeConverter.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Settings\Converters\RectangleConverter.cs" />
     <Compile Include="Settings\RegionSettings.cs" />
     <Compile Include="Settings\SettingsPartWithNotifier.cs" />
+    <Compile Include="Settings\SettingsWindowSettings.cs" />
     <Compile Include="Settings\Slice\Region.cs" />
     <Compile Include="Settings\Slice\RegionsPreset.cs" />
     <Compile Include="Settings\Slice\ScreenRegion.cs" />

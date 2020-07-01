@@ -3,6 +3,7 @@ using ScreenSlicer.Compatibility.Actions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ScreenSlicer.Pages.SettingsWindow
 {
@@ -36,6 +37,7 @@ namespace ScreenSlicer.Pages.SettingsWindow
             });
             Rules.Add(rule);
             SelectedRule = rule;
+            Rules.Add(new Rule() { Name = "MyRule super crazy" });
         }
     }
 
@@ -66,6 +68,13 @@ namespace ScreenSlicer.Pages.SettingsWindow
         public CompatibilityPageViewModel()
         {
             Rules = Settings.Instance.Compatibility.Rules;
+            Rules.CollectionChanged += Rules_CollectionChanged;
+        }
+
+        private void Rules_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && e.NewItems.Count > 0)
+                SelectedRule = e.NewItems[0] as Rule;
         }
     }
 
@@ -78,6 +87,15 @@ namespace ScreenSlicer.Pages.SettingsWindow
         {
             DataContext = new CompatibilityPageViewModel();
             InitializeComponent();
+        }
+
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return && sender is TextBox tb)
+            {
+                Keyboard.ClearFocus();
+                tb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            }
         }
     }
 }

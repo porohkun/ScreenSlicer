@@ -20,11 +20,25 @@ namespace ScreenSlicer.Compatibility
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        [JsonProperty(nameof(Name))]
+        private string _name;
+
         [JsonIgnore]
         public bool IsDefault => Name == "Default";
 
-        [JsonProperty]
-        public string Name { get; set; }
+        [JsonIgnore]
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    NotifyPropertyChanged(nameof(Name));
+                }
+            }
+        }
 
         public ICondition[] Conditions { get; set; }
 

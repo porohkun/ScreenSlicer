@@ -8,6 +8,7 @@
       xmlns:s="clr-namespace:System;assembly=mscorlib"
       xmlns:a="clr-namespace:ScreenSlicer.Compatibility.Actions"
       xmlns:c="clr-namespace:ScreenSlicer.Commands"
+      xmlns:cr="clr-namespace:ScreenSlicer.Converters"
       xmlns:extensions="http://wpflocalizeextension.codeplex.com"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
       xmlns:settingswindow="clr-namespace:ScreenSlicer.Pages.SettingsWindow"
@@ -18,6 +19,7 @@
       d:DataContext="{StaticResource CompatibilityPageDummy}">
     <Page.Resources>
         <c:RemoveItemCommand x:Key="RemoveItemCommand"/>
+        <c:NewCompatibilityRuleCommand x:Key="NewCompatibilityRuleCommand"/>
 
         <ObjectDataProvider x:Key="WindowMessage" MethodName="GetValues"
                             ObjectType="{x:Type s:Enum}">
@@ -43,18 +45,40 @@
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
+            <ColumnDefinition MinWidth="100" MaxWidth="420">
+                <ColumnDefinition.Width>
+                    <Binding Source="{x:Static local:Settings.Instance}"
+                             Path="SettingsWindow.CompatibilityPage_RuleTab_Width"
+                             Mode="TwoWay"
+                             Converter="{StaticResource DoubleToGridLengthConverter}"/>
+                </ColumnDefinition.Width>
+            </ColumnDefinition>
+            <ColumnDefinition Width="4"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="22"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="4"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding Rules}" SelectedItem="{Binding SelectedRule}"
-                  Grid.Column="0" Grid.Row="1">
+        <Button Grid.Column="0" Grid.Row="0" Content="+ New Rule" Command="{StaticResource NewCompatibilityRuleCommand}"/>
+        <ListView Grid.Column="0" Grid.Row="2"
+                  ItemsSource="{Binding Rules}"
+                  SelectedItem="{Binding SelectedRule}"
+                  ScrollViewer.CanContentScroll="False"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  dd:DragDrop.IsDragSource="True"
+                  dd:DragDrop.IsDropTarget="True"
+                  dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="64">
+                    <Grid Height="64" HorizontalAlignment="Left">
+                        <Grid.MaxWidth>
+                            <Binding Path="ActualWidth"
+                                     RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}"
+                                     Converter="{StaticResource OffsetConverter}"
+                                     ConverterParameter="-20"/>
+                        </Grid.MaxWidth>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="64"/>
                             <ColumnDefinition Width="*"/>
@@ -62,18 +86,36 @@
                         <Border Grid.Column="0" BorderThickness="1" BorderBrush="Black">
                             <Image />
                         </Border>
-                        <TextBlock Text="{Binding Path=Name, Converter={StaticResource CapitalizeConverter}}"
-                                   Grid.Column="1" VerticalAlignment="Center" FontSize="16" Margin="4"/>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center"
+                                   TextWrapping="WrapWithOverflow"
+                                   Text="{Binding Path=Name, Converter={StaticResource CapitalizeConverter}}"
+                                   FontSize="16" Margin="4"/>
+                        <Button Grid.Column="0" Width="20" Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Content="X" Padding="0"
+                                Visibility="{Binding IsDefault,Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                                Command="{StaticResource RemoveItemCommand}">
+                            <Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource RemoveItemCommandConverter}"
+                                              ConverterParameter="">
+                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}"
+                                             Path="DataContext.Rules"/>
+                                    <Binding />
+                                    <Binding Path="Name"/>
+                                </MultiBinding>
+                            </Button.CommandParameter>
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TabControl Grid.Column="1" Grid.Row="1">
+        <GridSplitter Grid.Column="1" Grid.Row="2" ResizeBehavior="PreviousAndNext" Background="{DynamicResource ButtonBackground}"/>
+        <TabControl Grid.Column="2" Grid.Row="2">
             <TabItem Header="Common">
                 <StackPanel Orientation="Vertical" Width="220" HorizontalAlignment="Left">
                     <TextBlock Text="Rule name"/>
-                    <TextBox Text="{Binding SelectedRule.Name, Mode=TwoWay}" IsReadOnly="{Binding SelectedRule.IsDefault}"/>
-                    <Button Content="Remove rule" Margin="40,4"/>
+                    <TextBox Text="{Binding SelectedRule.Name, Mode=TwoWay}" IsReadOnly="{Binding SelectedRule.IsDefault}" KeyUp="TextBox_KeyUp"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Conditions">

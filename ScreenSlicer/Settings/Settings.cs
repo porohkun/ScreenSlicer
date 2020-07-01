@@ -27,7 +27,7 @@ namespace ScreenSlicer
         private event Action PropertyChanged;
 
         [XmlElement(nameof(SettingsWindow))]
-        private WindowStateSettings _settingsWindow;
+        private SettingsWindowSettings _settingsWindow;
 
         [XmlElement(nameof(Localization))]
         private LocalizationSettings _localization;
@@ -41,11 +41,11 @@ namespace ScreenSlicer
         [XmlElement(nameof(Compatibility))]
         private CompatibilitySettings _compatibility;
 
-        public WindowStateSettings SettingsWindow
+        public SettingsWindowSettings SettingsWindow
         {
             get
             {
-                _settingsWindow = CheckSettingsPartExistAndSubscribe<WindowStateSettings>(_settingsWindow);
+                _settingsWindow = CheckSettingsPartExistAndSubscribe<SettingsWindowSettings>(_settingsWindow);
                 return _settingsWindow;
             }
         }
