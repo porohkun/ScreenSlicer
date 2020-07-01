@@ -104,10 +104,10 @@ namespace ScreenSlicer
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             if (ListBox != null)
                 ListBox.SelectionChanged -= ListBox_SelectionChanged;
+
+            base.OnApplyTemplate();
 
             ListBox = GetTemplateChild(PART_ListBox) as ListBox;
             ListBox.SelectedItems.Clear();

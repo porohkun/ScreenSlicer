@@ -61,56 +61,128 @@ namespace ScreenSlicer.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Removing.
+        /// </summary>
+        internal static string RemoveItemCommand_Popup_Caption {
+            get {
+                return ResourceManager.GetString("RemoveItemCommand.Popup.Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to remove item &apos;{0}&apos;?.
+        /// </summary>
+        internal static string RemoveItemCommand_Popup_Message {
+            get {
+                return ResourceManager.GetString("RemoveItemCommand.Popup.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action changes the target region to compensate the difference between the actual and visible window sizes..
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_Actions_CorrectTargetRegionData_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Correct target region.
         /// </summary>
-        internal static string ScreenSlicer_Compatibility_Actions_CorrectTargetRegionData {
+        internal static string ScreenSlicer_Compatibility_Actions_CorrectTargetRegionData_Name {
             get {
-                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData", resourceCulture);
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action changes the target region.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_Actions_ModifyTargetRegionData_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Modify target region.
         /// </summary>
-        internal static string ScreenSlicer_Compatibility_Actions_ModifyTargetRegionData {
+        internal static string ScreenSlicer_Compatibility_Actions_ModifyTargetRegionData_Name {
             get {
-                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData", resourceCulture);
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to user32.MoveWindow.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_Actions_User32MoveWindowData_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32MoveWindowData.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to [User32.dl] MoveWindow.
         /// </summary>
-        internal static string ScreenSlicer_Compatibility_Actions_User32MoveWindowData {
+        internal static string ScreenSlicer_Compatibility_Actions_User32MoveWindowData_Name {
             get {
-                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32MoveWindowData", resourceCulture);
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32MoveWindowData.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to user32.PostMessage.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_Actions_User32PostMessageData_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32PostMessageData.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to [User32.dll] PostMessage.
         /// </summary>
-        internal static string ScreenSlicer_Compatibility_Actions_User32PostMessageData {
+        internal static string ScreenSlicer_Compatibility_Actions_User32PostMessageData_Name {
             get {
-                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32PostMessageData", resourceCulture);
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32PostMessageData.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to user32.SetWindowPos.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_Actions_User32SetWindowPosData_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32SetWindowPosData.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to [User32.dll] SetWindowPos.
         /// </summary>
-        internal static string ScreenSlicer_Compatibility_Actions_User32SetWindowPosData {
+        internal static string ScreenSlicer_Compatibility_Actions_User32SetWindowPosData_Name {
             get {
-                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32SetWindowPosData", resourceCulture);
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32SetWindowPosData.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to user32.ShowWindow.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_Actions_User32ShowWindowData_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32ShowWindowData.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to [User32.dll] ShowWindow.
         /// </summary>
-        internal static string ScreenSlicer_Compatibility_Actions_User32ShowWindowData {
+        internal static string ScreenSlicer_Compatibility_Actions_User32ShowWindowData_Name {
             get {
-                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32ShowWindowData", resourceCulture);
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.Actions.User32ShowWindowData.Name", resourceCulture);
             }
         }
         

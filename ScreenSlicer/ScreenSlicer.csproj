@@ -50,6 +50,9 @@
     <Reference Include="FirstFloor.ModernUI, Version=1.0.9.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
       <HintPath>..\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
     </Reference>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <HintPath>..\packages\gong-wpf-dragdrop.2.2.0\lib\net47\GongSolutions.WPF.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
     </Reference>
@@ -135,6 +138,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RemoveItemCommand.cs" />
     <Compile Include="Commands\MoveWindowCommand.cs" />
     <Compile Include="Commands\EndSliceRegionsCommand.cs" />
     <Compile Include="Commands\BeginSliceRegionsCommand.cs" />
@@ -147,6 +151,7 @@
     <Compile Include="Controls\RegionView.cs">
       <DependentUpon>RegionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\OffsetConverter.cs" />
     <Compile Include="Converters\LocalizeConverter.cs" />
     <Compile Include="Converters\CapitalizeConverter.cs" />
     <Compile Include="Converters\ConvertersChain.cs" />
@@ -154,6 +159,7 @@
     <Compile Include="Converters\PropertyExtractConverter.cs" />
     <Compile Include="Converters\LocFormatConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
+    <Compile Include="Converters\RemoveItemCommandConverter.cs" />
     <Compile Include="Converters\ReverseBooleanConverter.cs" />
     <Compile Include="Localization\Strings.Designer.cs">
       <AutoGen>True</AutoGen>

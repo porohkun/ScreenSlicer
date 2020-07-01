@@ -16,6 +16,12 @@ namespace ScreenSlicer.Converters
                 return string.Empty;
             var sb = new StringBuilder();
             var svalue = value.ToString();
+            if (parameter != null)
+            {
+                var sparam = parameter.ToString();
+                if (!string.IsNullOrWhiteSpace(sparam))
+                    svalue = $"{svalue}.{sparam}";
+            }
             var res = LocExtension.GetLocalizedValue<string>(svalue, Settings.Instance.Localization.Culture);
             return res;
         }

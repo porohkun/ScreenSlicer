@@ -117,22 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData" xml:space="preserve">
+  <data name="RemoveItemCommand.Popup.Caption" xml:space="preserve">
+    <value>Removing</value>
+  </data>
+  <data name="RemoveItemCommand.Popup.Message" xml:space="preserve">
+    <value>Do you really want to remove item '{0}'?</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData.Description" xml:space="preserve">
+    <value>This action changes the target region to compensate the difference between the actual and visible window sizes.</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData.Name" xml:space="preserve">
     <value>Correct target region</value>
   </data>
-  <data name="ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData" xml:space="preserve">
+  <data name="ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData.Description" xml:space="preserve">
+    <value>This action changes the target region</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData.Name" xml:space="preserve">
     <value>Modify target region</value>
   </data>
-  <data name="ScreenSlicer.Compatibility.Actions.User32MoveWindowData" xml:space="preserve">
+  <data name="ScreenSlicer.Compatibility.Actions.User32MoveWindowData.Description" xml:space="preserve">
+    <value>user32.MoveWindow</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.User32MoveWindowData.Name" xml:space="preserve">
     <value>[User32.dl] MoveWindow</value>
   </data>
-  <data name="ScreenSlicer.Compatibility.Actions.User32PostMessageData" xml:space="preserve">
+  <data name="ScreenSlicer.Compatibility.Actions.User32PostMessageData.Description" xml:space="preserve">
+    <value>user32.PostMessage</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.User32PostMessageData.Name" xml:space="preserve">
     <value>[User32.dll] PostMessage</value>
   </data>
-  <data name="ScreenSlicer.Compatibility.Actions.User32SetWindowPosData" xml:space="preserve">
+  <data name="ScreenSlicer.Compatibility.Actions.User32SetWindowPosData.Description" xml:space="preserve">
+    <value>user32.SetWindowPos</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.User32SetWindowPosData.Name" xml:space="preserve">
     <value>[User32.dll] SetWindowPos</value>
   </data>
-  <data name="ScreenSlicer.Compatibility.Actions.User32ShowWindowData" xml:space="preserve">
+  <data name="ScreenSlicer.Compatibility.Actions.User32ShowWindowData.Description" xml:space="preserve">
+    <value>user32.ShowWindow</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.Actions.User32ShowWindowData.Name" xml:space="preserve">
     <value>[User32.dll] ShowWindow</value>
   </data>
   <data name="SettingsWindow.About.GroupHeader" xml:space="preserve">

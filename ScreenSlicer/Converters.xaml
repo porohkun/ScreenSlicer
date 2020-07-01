@@ -8,4 +8,6 @@
     <c:IsNullConverter x:Key="IsNullConverter"/>
     <c:PropertyExtractConverter x:Key="PropertyExtractConverter"/>
     <c:LocalizeConverter x:Key="LocalizeConverter"/>
+    <c:RemoveItemCommandConverter x:Key="RemoveItemCommandConverter"/>
+    <c:OffsetConverter x:Key="OffsetConverter"/>
 </ResourceDictionary>

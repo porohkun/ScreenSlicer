@@ -17,6 +17,7 @@ namespace ScreenSlicer.Pages.SettingsWindow
                 Conditions = new ICondition[0]
             };
             rule.MoveWindowSequence.Add(new CorrectTargetRegionData());
+            rule.MoveWindowSequence.Add(new ModifyTargetRegionData());
             rule.MoveWindowSequence.Add(new User32PostMessageData()
             {
                 Message = Native.WindowMessage.EnterSizeMove
