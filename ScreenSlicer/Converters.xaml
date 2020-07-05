@@ -2,9 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ScreenSlicer"
                     xmlns:c="clr-namespace:ScreenSlicer.Converters">
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <c:ConvertersChain x:Key="ReverseBooleanToVisibilityConverter">
+        <c:ReverseBooleanConverter/>
+        <BooleanToVisibilityConverter/>
+    </c:ConvertersChain>
     <c:LocFormatConverter x:Key="LocFormatConverter"/>
     <c:CapitalizeConverter x:Key="CapitalizeConverter"/>
     <c:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
     <c:IsNullConverter x:Key="IsNullConverter"/>
     <c:PropertyExtractConverter x:Key="PropertyExtractConverter"/>
+    <c:LocalizeConverter x:Key="LocalizeConverter"/>
+    <c:RemoveItemCommandConverter x:Key="RemoveItemCommandConverter"/>
+    <c:OffsetConverter x:Key="OffsetConverter"/>
+    <c:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter"/>
 </ResourceDictionary>

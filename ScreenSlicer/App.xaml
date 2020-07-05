@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ScreenSlicer"
              xmlns:w="clr-namespace:ScreenSlicer.Windows"
+             xmlns:sp="clr-namespace:ScreenSlicer.Pages.SettingsWindow"
              Startup="Application_Startup">
     <Application.Resources>
         <ResourceDictionary>
@@ -12,9 +13,12 @@
                 <ResourceDictionary Source="MuiModify.xaml"/>
                 <ResourceDictionary Source="Converters.xaml"/>
                 <ResourceDictionary Source="IntUpDown.xaml"/>
+                <ResourceDictionary Source="Controls/RegionView.xaml"/>
+                <ResourceDictionary Source="Controls/MultiSelectComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <w:SlicingWindowDummy x:Key="SlicingWindowDummy"/>
+            <sp:CompatibilityPageDummy x:Key="CompatibilityPageDummy"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

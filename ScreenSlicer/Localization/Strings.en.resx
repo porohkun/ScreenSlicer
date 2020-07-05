@@ -120,6 +120,9 @@
   <data name="SettingsWindow.About.GroupHeader" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="SettingsWindow.Compatibility.GroupHeader" xml:space="preserve">
+    <value>Compatibility</value>
+  </data>
   <data name="SettingsWindow.Localization.GroupHeader" xml:space="preserve">
     <value>Localization</value>
   </data>

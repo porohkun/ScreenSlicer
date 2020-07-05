@@ -30,6 +30,11 @@
                 <mui:Link Source="/Pages/SettingsWindow/SnapPage.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Compatibility.GroupHeader}">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/CompatibilityPage.xaml"/>
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
         <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.System.GroupHeader}">
             <mui:LinkGroup.Links>
                 <mui:Link Source="/Pages/SettingsWindow/SystemPage.xaml"/>

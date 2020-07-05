@@ -17,6 +17,12 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Title}">
                         <GridViewColumnHeader Content="Title" Click="GridViewColumnHeader_Click"/>
                     </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding WindowClass}">
+                        <GridViewColumnHeader Content="WindowClass" Click="GridViewColumnHeader_Click"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProcessName}">
+                        <GridViewColumnHeader Content="ProcessName" Click="GridViewColumnHeader_Click"/>
+                    </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Visible}">
                         <GridViewColumnHeader Content="Visible" Click="GridViewColumnHeader_Click"/>
                     </GridViewColumn>

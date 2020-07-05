@@ -21,14 +21,16 @@ namespace ScreenSlicer.Managers
         private readonly HashSet<ISystemWindow> _windows = new HashSet<ISystemWindow>();
 
         private readonly RegionsManager _regionsManager;
+        private readonly SystemWindowsFactory _windowsFactory;
         private readonly MoveWindowCommand _moveWindowCommand;
         private readonly Timer _syncTimer;
         private readonly AsyncOperation _asyncOperation;
         private readonly SendOrPostCallback _tickReporter;
 
-        public ProcessesWatcher(RegionsManager regionsManager, MoveWindowCommand moveWindowCommand)
+        public ProcessesWatcher(RegionsManager regionsManager, SystemWindowsFactory windowsFactory, MoveWindowCommand moveWindowCommand)
         {
             _regionsManager = regionsManager;
+            _windowsFactory = windowsFactory;
             _moveWindowCommand = moveWindowCommand;
 
             _asyncOperation = AsyncOperationManager.CreateOperation((object)null);
@@ -95,6 +97,8 @@ namespace ScreenSlicer.Managers
             {
                 Logger.Info($"Window '{window.CachedTitle}'({window.Handle}) opened.");
 
+                _windowsFactory.SetRule(window);
+
                 var windowElement = AutomationElement.FromHandle(window.Handle);
                 if (windowElement != null)
                 {
@@ -130,7 +134,7 @@ namespace ScreenSlicer.Managers
                 hWnds.Add(hWnd);
                 return true;
             }, IntPtr.Zero);
-            return hWnds.Select(h => new SystemWindow(h));
+            return hWnds.Select(h => _windowsFactory.Create(h));
         }
 
         private void Window_VisualStateChanged(object src, AutomationPropertyChangedEventArgs e)
