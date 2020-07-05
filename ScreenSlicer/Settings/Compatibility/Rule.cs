@@ -40,15 +40,32 @@ namespace ScreenSlicer.Compatibility
             }
         }
 
-        public ICondition[] Conditions { get; set; }
+        public ObservableCollection<ICondition> Conditions { get; private set; }
 
         [JsonProperty]
         public ObservableCollection<IActionData> MoveWindowSequence { get; private set; }
 
         public Rule()
         {
+            Conditions = new ObservableCollection<ICondition>();
+            Conditions.CollectionChanged += Conditions_CollectionChanged;
+
             MoveWindowSequence = new ObservableCollection<IActionData>();
             MoveWindowSequence.CollectionChanged += MoveWindowSequences_CollectionChanged;
+        }
+
+        private void Conditions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            foreach (ICondition item in (IEnumerable)e?.OldItems ?? Enumerable.Empty<ICondition>())
+                item.PropertyChanged -= Condition_PropertyChanged;
+            foreach (ICondition item in (IEnumerable)e?.NewItems ?? Enumerable.Empty<ICondition>())
+                item.PropertyChanged += Condition_PropertyChanged;
+            NotifyPropertyChanged(nameof(Conditions));
+        }
+
+        private void Condition_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged(nameof(Conditions));
         }
 
         private void MoveWindowSequences_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

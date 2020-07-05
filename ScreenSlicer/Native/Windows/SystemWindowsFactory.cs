@@ -17,7 +17,7 @@ namespace ScreenSlicer.Native.Windows
             if (setRule)
                 SetRule(window);
 
-            return new ExplorerWindow(handle);
+            return window;
         }
 
         public void SetRule(ISystemWindow window)

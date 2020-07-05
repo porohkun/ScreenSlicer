@@ -1,13 +1,9 @@
 ﻿using ScreenSlicer.Native.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace ScreenSlicer.Compatibility
 {
-    public interface ICondition
+    public interface ICondition : INotifyPropertyChanged
     {
         bool Check(ISystemWindow window);
     }

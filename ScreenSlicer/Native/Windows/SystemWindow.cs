@@ -1,12 +1,13 @@
 ﻿using ScreenSlicer.Compatibility;
 using ScreenSlicer.Native.Compatibility;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace ScreenSlicer.Native.Windows
 {
+    [DebuggerDisplay(nameof(CachedTitle))]
     public class SystemWindow : ISystemWindow, ICanUseRules
     {
         private string _cachedTitle;

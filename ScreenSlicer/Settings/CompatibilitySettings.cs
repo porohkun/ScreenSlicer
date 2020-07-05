@@ -36,7 +36,7 @@ namespace ScreenSlicer
 
         public Rule GetRuleForWindow(ISystemWindow window)
         {
-            var result = Rules.FirstOrDefault(rule => rule.Conditions.All(c => c.Check(window))) ?? Rules.FirstOrDefault(rule => rule.Name == "Default");
+            var result = Rules.FirstOrDefault(rule => (rule.Conditions.Any() && rule.Conditions.All(c => c.Check(window)))) ?? Rules.FirstOrDefault(rule => rule.Name == "Default");
             if (result == null)
                 throw new KeyNotFoundException("Compatibility rule 'Default' is missing");
             return result;

@@ -187,6 +187,78 @@ namespace ScreenSlicer.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FileInfo Property.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_FileInfoPropertyCondition_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.FileInfoPropertyCondition.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FileInfo Property.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_FileInfoPropertyCondition_Name {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.FileInfoPropertyCondition.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filename of filepath.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_FilenameCondition_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.FilenameCondition.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filename.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_FilenameCondition_Name {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.FilenameCondition.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window title.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_TitleCondition_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.TitleCondition.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window title.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_TitleCondition_Name {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.TitleCondition.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to user32.GetClassName.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_WindowClassCondition_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.WindowClassCondition.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [User32.dll] GetClassName.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_WindowClassCondition_Name {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.WindowClassCondition.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         internal static string SettingsWindow_About_GroupHeader {

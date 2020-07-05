@@ -8,7 +8,8 @@
       xmlns:s="clr-namespace:System;assembly=mscorlib"
       xmlns:a="clr-namespace:ScreenSlicer.Compatibility.Actions"
       xmlns:c="clr-namespace:ScreenSlicer.Commands"
-      xmlns:cr="clr-namespace:ScreenSlicer.Converters"
+      xmlns:co="clr-namespace:ScreenSlicer.Compatibility"
+      xmlns:w="clr-namespace:WPF.Controls"
       xmlns:extensions="http://wpflocalizeextension.codeplex.com"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
       xmlns:settingswindow="clr-namespace:ScreenSlicer.Pages.SettingsWindow"
@@ -42,6 +43,15 @@
         <ObjectDataProvider x:Key="IActionData" MethodName="GetAll"
                             ObjectType="{x:Type a:ActionDataBase}">
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="FileVersionInfoProperties" MethodName="GetValues"
+                            ObjectType="{x:Type s:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="co:FileVersionInfoProperties"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="ICondition" MethodName="GetAll"
+                            ObjectType="{x:Type co:ConditionBase}">
+        </ObjectDataProvider>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -65,6 +75,7 @@
         <ListView Grid.Column="0" Grid.Row="2"
                   ItemsSource="{Binding Rules}"
                   SelectedItem="{Binding SelectedRule}"
+                  SelectedIndex="0"
                   ScrollViewer.CanContentScroll="False"
                   ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                   dd:DragDrop.IsDragSource="True"
@@ -113,13 +124,145 @@
         <GridSplitter Grid.Column="1" Grid.Row="2" ResizeBehavior="PreviousAndNext" Background="{DynamicResource ButtonBackground}"/>
         <TabControl Grid.Column="2" Grid.Row="2">
             <TabItem Header="Common">
-                <StackPanel Orientation="Vertical" Width="220" HorizontalAlignment="Left">
-                    <TextBlock Text="Rule name"/>
-                    <TextBox Text="{Binding SelectedRule.Name, Mode=TwoWay}" IsReadOnly="{Binding SelectedRule.IsDefault}" KeyUp="TextBox_KeyUp"/>
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Conditions">
-
+                <DockPanel LastChildFill="True">
+                    <TextBlock DockPanel.Dock="Top" Text="Rule name"/>
+                    <TextBox DockPanel.Dock="Top"
+                             Text="{Binding SelectedRule.Name, Mode=TwoWay}"
+                             IsReadOnly="{Binding SelectedRule.IsDefault}"
+                             KeyUp="TextBox_KeyUp"/>
+                    <TextBlock DockPanel.Dock="Top" Margin="0,5,0,0" Text="Conditions"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="180"/>
+                        </Grid.ColumnDefinitions>
+                        <ListView Grid.Column="0"
+                              ItemsSource="{Binding SelectedRule.Conditions}"
+                              Background="{DynamicResource ItemBackgroundHover}"
+                              ScrollViewer.CanContentScroll="False"
+                              dd:DragDrop.IsDragSource="True"
+                              dd:DragDrop.IsDropTarget="True"
+                              dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
+                            <ListView.Resources>
+                                <DataTemplate DataType="{x:Type co:FileInfoPropertyCondition}">
+                                    <DockPanel>
+                                        <CheckBox DockPanel.Dock="Top" Content="Use regular expression" IsChecked="{Binding RegularExpression}"/>
+                                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                            <TextBlock Text="Property:"/>
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource FileVersionInfoProperties}}"
+                                                      SelectedItem="{Binding Property}" Margin="4,0,0,0"/>
+                                        </StackPanel>
+                                        <TextBlock DockPanel.Dock="Left" Text="Expression:" Visibility="{Binding RegularExpression, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Value:" Visibility="{Binding RegularExpression, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"/>
+                                        <TextBox Text="{Binding TargetValue, Mode=TwoWay}" Margin="4,0,0,0" KeyUp="TextBox_KeyUp"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type co:FilenameCondition}">
+                                    <DockPanel>
+                                        <CheckBox DockPanel.Dock="Top" Content="Use regular expression" IsChecked="{Binding RegularExpression}"/>
+                                        <CheckBox DockPanel.Dock="Top" Content="Use full path" IsChecked="{Binding FullPath}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Filepath:" Visibility="{Binding FullPath, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Filename:" Visibility="{Binding FullPath, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"/>
+                                        <TextBox Text="{Binding TargetValue, Mode=TwoWay}" Margin="4,0,0,0" KeyUp="TextBox_KeyUp"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type co:WindowClassCondition}">
+                                    <DockPanel>
+                                        <CheckBox DockPanel.Dock="Top" Content="Use regular expression" IsChecked="{Binding RegularExpression}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Expression:" Visibility="{Binding RegularExpression, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Value:" Visibility="{Binding RegularExpression, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"/>
+                                        <TextBox Text="{Binding TargetValue, Mode=TwoWay}" Margin="4,0,0,0" KeyUp="TextBox_KeyUp"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type co:TitleCondition}">
+                                    <DockPanel>
+                                        <CheckBox DockPanel.Dock="Top" Content="Use regular expression" IsChecked="{Binding RegularExpression}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Expression:" Visibility="{Binding RegularExpression, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Value:" Visibility="{Binding RegularExpression, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"/>
+                                        <TextBox Text="{Binding TargetValue, Mode=TwoWay}" Margin="4,0,0,0" KeyUp="TextBox_KeyUp"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListView.Resources>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Focusable" Value="false"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Border BorderBrush="{DynamicResource InputBorder}"
+                                                    Background="{DynamicResource InputBackground}"
+                                                    BorderThickness="1"
+                                                    Margin="4,2"
+                                                    Padding="4">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="4"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="20"/>
+                                                            <RowDefinition Height="*"/>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Column="0" Grid.Row="0"
+                                                               Text="{Binding Converter={StaticResource LocalizeConverter}, ConverterParameter=Name}"/>
+                                                        <Button Grid.Column="2" Grid.Row="0" Content="X" Padding="0"
+                                                            Command="{StaticResource RemoveItemCommand}">
+                                                            <Button.CommandParameter>
+                                                                <MultiBinding Converter="{StaticResource RemoveItemCommandConverter}"
+                                                                          ConverterParameter="">
+                                                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}"
+                                                                         Path="DataContext.SelectedRule.Conditions"/>
+                                                                    <Binding />
+                                                                    <Binding Converter="{StaticResource LocalizeConverter}" ConverterParameter="Name"/>
+                                                                </MultiBinding>
+                                                            </Button.CommandParameter>
+                                                        </Button>
+                                                        <StackPanel Grid.Column="0" Grid.Row="1" Margin="16,0,0,0">
+                                                            <ContentControl Content="{Binding}"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                        <ListView Grid.Column="2"
+                              ItemsSource="{Binding Source={StaticResource ICondition}}"
+                              Background="{DynamicResource ItemBackgroundHover}"
+                              ScrollViewer.CanContentScroll="False"
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                              dd:DragDrop.IsDragSource="True"
+                              dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Focusable" Value="false"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Button Margin="4,2"
+                                                    Padding="10,3,10,5"
+                                                    ToolTip="{Binding Converter={StaticResource LocalizeConverter}, ConverterParameter=Description}" >
+                                                    <Button.MaxWidth>
+                                                        <Binding Path="ActualWidth"
+                                                             RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}}"
+                                                             Converter="{StaticResource OffsetConverter}"
+                                                             ConverterParameter="-12"/>
+                                                    </Button.MaxWidth>
+                                                    <TextBlock TextWrapping="WrapWithOverflow"
+                                                               Text="{Binding Converter={StaticResource LocalizeConverter}, ConverterParameter=Name}"/>
+                                                </Button>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </Grid>
+                </DockPanel>
             </TabItem>
             <TabItem Header="Move window sequence">
                 <Grid>
@@ -143,19 +286,19 @@
                                 <DockPanel HorizontalAlignment="Left">
                                     <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center" Orientation="Horizontal">
                                         <TextBlock Text="Left:"/>
-                                        <TextBox Text="{Binding Left}" MinWidth="50" Margin="4,0"/>
+                                        <w:IntUpDown Value="{Binding Left}" MinWidth="50" Margin="4,0"/>
                                     </StackPanel>
                                     <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Horizontal">
                                         <TextBlock Text="Right:"/>
-                                        <TextBox Text="{Binding Right}" MinWidth="50" Margin="4,0"/>
+                                        <w:IntUpDown Value="{Binding Right}" MinWidth="50" Margin="4,0"/>
                                     </StackPanel>
                                     <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
                                         <TextBlock Text="Top:"/>
-                                        <TextBox Text="{Binding Top}" MinWidth="50" Margin="4,0"/>
+                                        <w:IntUpDown Value="{Binding Top}" MinWidth="50" Margin="4,0"/>
                                     </StackPanel>
                                     <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
                                         <TextBlock Text="Bottom:"/>
-                                        <TextBox Text="{Binding Bottom}" MinWidth="50" Margin="4,0"/>
+                                        <w:IntUpDown Value="{Binding Bottom}" MinWidth="50" Margin="4,0"/>
                                     </StackPanel>
                                 </DockPanel>
                             </DataTemplate>

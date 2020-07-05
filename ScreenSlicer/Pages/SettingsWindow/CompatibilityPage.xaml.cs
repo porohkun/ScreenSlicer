@@ -15,8 +15,11 @@ namespace ScreenSlicer.Pages.SettingsWindow
             var rule = new Rule()
             {
                 Name = "Default",
-                Conditions = new ICondition[0]
             };
+            rule.Conditions.Add(new FileInfoPropertyCondition() { Property = FileVersionInfoProperties.CompanyName, TargetValue = "aaa" });
+            rule.Conditions.Add(new TitleCondition());
+            rule.Conditions.Add(new WindowClassCondition());
+            rule.Conditions.Add(new FilenameCondition() { TargetValue = "app.exe" });
             rule.MoveWindowSequence.Add(new CorrectTargetRegionData());
             rule.MoveWindowSequence.Add(new ModifyTargetRegionData());
             rule.MoveWindowSequence.Add(new User32PostMessageData()

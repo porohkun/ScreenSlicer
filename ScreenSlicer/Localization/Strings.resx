@@ -159,6 +159,30 @@
   <data name="ScreenSlicer.Compatibility.Actions.User32ShowWindowData.Name" xml:space="preserve">
     <value>[User32.dll] ShowWindow</value>
   </data>
+  <data name="ScreenSlicer.Compatibility.FileInfoPropertyCondition.Description" xml:space="preserve">
+    <value>FileInfo Property</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.FileInfoPropertyCondition.Name" xml:space="preserve">
+    <value>FileInfo Property</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.FilenameCondition.Description" xml:space="preserve">
+    <value>Filename of filepath</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.FilenameCondition.Name" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.TitleCondition.Description" xml:space="preserve">
+    <value>Window title</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.TitleCondition.Name" xml:space="preserve">
+    <value>Window title</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.WindowClassCondition.Description" xml:space="preserve">
+    <value>user32.GetClassName</value>
+  </data>
+  <data name="ScreenSlicer.Compatibility.WindowClassCondition.Name" xml:space="preserve">
+    <value>[User32.dll] GetClassName</value>
+  </data>
   <data name="SettingsWindow.About.GroupHeader" xml:space="preserve">
     <value>About</value>
   </data>

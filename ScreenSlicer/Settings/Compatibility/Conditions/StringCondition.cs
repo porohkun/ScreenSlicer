@@ -1,23 +1,30 @@
 ﻿using ScreenSlicer.Native.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ScreenSlicer.Compatibility
 {
-    public abstract class StringCondition : ICondition
+    public abstract class StringCondition : ConditionBase<string>
     {
-        public string TargetValue { get; set; }
+        private bool _regularExpression;
 
-        public bool Check(ISystemWindow window)
+        public bool RegularExpression
+        {
+            get => _regularExpression;
+            set
+            {
+                if (_regularExpression != value)
+                {
+                    _regularExpression = value;
+                    NotifyPropertyChanged(nameof(RegularExpression));
+                }
+            }
+        }
+
+        public override bool Check(ISystemWindow window)
         {
             if (string.IsNullOrWhiteSpace(TargetValue))
                 return true;
-            return TargetValue == GetValue(window);
+            return RegularExpression ? Regex.IsMatch(GetValue(window), TargetValue) : GetValue(window) == TargetValue;
         }
-
-        protected abstract string GetValue(ISystemWindow window);
     }
 }

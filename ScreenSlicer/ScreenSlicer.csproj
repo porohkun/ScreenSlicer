@@ -192,7 +192,6 @@
     <Compile Include="Native\Screens\Screen.cs" />
     <Compile Include="Native\WindowPlacement.cs" />
     <Compile Include="Native\WindowShowStyle.cs" />
-    <Compile Include="Native\Windows\ExplorerWindow.cs" />
     <Compile Include="Native\Windows\ICanUseRules.cs" />
     <Compile Include="Native\Windows\ISystemWindow.cs" />
     <Compile Include="Native\Windows\SystemWindow.cs" />
@@ -225,8 +224,10 @@
     <Compile Include="Settings\Compatibility\Actions\User32SetWindowPosData.cs" />
     <Compile Include="Settings\Compatibility\Actions\User32ShowWindowData.cs" />
     <Compile Include="Settings\Compatibility\Actions\User32PostMessageData.cs" />
-    <Compile Include="Settings\Compatibility\Conditions\AppInfoPropertyIntCondition.cs" />
-    <Compile Include="Settings\Compatibility\Conditions\AppInfoStringPropertyCondition.cs" />
+    <Compile Include="Settings\Compatibility\Conditions\TitleCondition.cs" />
+    <Compile Include="Settings\Compatibility\Conditions\WindowClassCondition.cs" />
+    <Compile Include="Settings\Compatibility\Conditions\AppInfoPropertyCondition.cs" />
+    <Compile Include="Settings\Compatibility\Conditions\ConditionBase.cs" />
     <Compile Include="Settings\Compatibility\Conditions\ICondition.cs" />
     <Compile Include="Settings\Compatibility\Conditions\FilenameCondition.cs" />
     <Compile Include="Settings\Compatibility\Conditions\IntCondition.cs" />
