@@ -26,21 +26,27 @@ namespace ScreenSlicer
 
         private event Action PropertyChanged;
 
-        [XmlElement(nameof(SettingsWindow))]
+
+        [JsonProperty(nameof(SettingsWindow))]
         private SettingsWindowSettings _settingsWindow;
 
-        [XmlElement(nameof(Localization))]
+        [JsonProperty(nameof(Localization))]
         private LocalizationSettings _localization;
 
-        [XmlElement(nameof(Snaps))]
+        [JsonProperty(nameof(Snaps))]
         private SnapSettings _snaps;
 
-        [XmlElement(nameof(Regions))]
+        [JsonProperty(nameof(Regions))]
         private RegionSettings _regions;
 
-        [XmlElement(nameof(Compatibility))]
+        [JsonProperty(nameof(Compatibility))]
         private CompatibilitySettings _compatibility;
 
+        [JsonProperty(nameof(Updates))]
+        private UpdatesSettings _updates;
+
+
+        [JsonIgnore]
         public SettingsWindowSettings SettingsWindow
         {
             get
@@ -50,6 +56,7 @@ namespace ScreenSlicer
             }
         }
 
+        [JsonIgnore]
         public LocalizationSettings Localization
         {
             get
@@ -59,6 +66,7 @@ namespace ScreenSlicer
             }
         }
 
+        [JsonIgnore]
         public SnapSettings Snaps
         {
             get
@@ -68,6 +76,7 @@ namespace ScreenSlicer
             }
         }
 
+        [JsonIgnore]
         public RegionSettings Regions
         {
             get
@@ -77,12 +86,23 @@ namespace ScreenSlicer
             }
         }
 
+        [JsonIgnore]
         public CompatibilitySettings Compatibility
         {
             get
             {
                 _compatibility = CheckSettingsPartExistAndSubscribe<CompatibilitySettings>(_compatibility);
                 return _compatibility;
+            }
+        }
+
+        [JsonIgnore]
+        public UpdatesSettings Updates
+        {
+            get
+            {
+                _updates = CheckSettingsPartExistAndSubscribe<UpdatesSettings>(_updates);
+                return _updates;
             }
         }
 

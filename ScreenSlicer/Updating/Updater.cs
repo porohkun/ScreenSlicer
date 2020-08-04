@@ -38,7 +38,7 @@ namespace ScreenSlicer.Updating
 
             try
             {
-                using (var mgr = new UpdateManager(@"https://github.com/porohkun/ScreenSlicer/releases/latest/download/"))
+                using (var mgr = new UpdateManager(Settings.Instance.Updates.Path))
                 {
                     SquirrelAwareApp.HandleEvents(
                         onInitialInstall: v =>
@@ -54,7 +54,7 @@ namespace ScreenSlicer.Updating
                         },
                         onFirstRun: () => { });
 
-                    if (!true/*Updates.Enabled*/) //updates are not enabled, skipping update
+                    if (!Settings.Instance.Updates.AutoUpdate) //updates are not enabled, skipping update
                         return;
                     if (!mgr.IsInstalledApp) //not installed during Squirrel, skipping update
                         return;
@@ -80,6 +80,26 @@ namespace ScreenSlicer.Updating
             {
                 var errorMessage = $"{ex.Message}\r\n\r\n{ex.StackTrace}\r\n\r\nCopy error message to clipboard?";
                 if (MessageBox.Show(errorMessage, "Error before update/install process", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    Clipboard.SetText(errorMessage);
+            }
+        }
+
+        public void SetStartup(bool enable)
+        {
+            try
+            {
+                using (var mgr = new UpdateManager(Settings.Instance.Updates.Path))
+                {
+                    if (enable)
+                        mgr.CreateRunAtWindowsStartupRegistry();
+                    else
+                        mgr.RemoveRunAtWindowsStartupRegistry();
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = $"{ex.Message}\r\n\r\n{ex.StackTrace}\r\n\r\nCopy error message to clipboard?";
+                if (MessageBox.Show(errorMessage, "Error on startup changing process", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     Clipboard.SetText(errorMessage);
             }
         }
