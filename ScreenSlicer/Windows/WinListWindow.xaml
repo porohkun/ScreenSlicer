@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenSlicer.Windows"
         mc:Ignorable="d"
-        Title="WinListWindow" Height="450" Width="600">
+        Title="Rules test" Height="450" Width="600">
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
             <Button Content="Refresh" Command="{Binding RefreshCommand}"/>
