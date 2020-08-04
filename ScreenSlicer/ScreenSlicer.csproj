@@ -245,6 +245,7 @@
     <Compile Include="Settings\Slice\RegionsPreset.cs" />
     <Compile Include="Settings\Slice\ScreenRegion.cs" />
     <Compile Include="Settings\Slice\Slice.cs" />
+    <Compile Include="Settings\UpdatesSettings.cs" />
     <Compile Include="Settings\SnapSettings.cs" />
     <Compile Include="Settings\LocalizationSettings.cs" />
     <Compile Include="Settings\Settings.cs" />

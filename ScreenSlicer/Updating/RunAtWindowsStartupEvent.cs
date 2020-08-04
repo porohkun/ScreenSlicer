@@ -7,8 +7,7 @@ namespace ScreenSlicer.Updating
     public static class RunAtWindowsStartupEvent
     {
         private static RegistryKey OpenRunAtWindowsStartupRegistryKey() =>
-        Registry.CurrentUser.OpenSubKey(
-            "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
         public static void CreateRunAtWindowsStartupRegistry(this UpdateManager updateManager)
         {
