@@ -9,7 +9,7 @@ namespace ScreenSlicer
     /// </summary>
     public partial class App : Application
     {
-        private IKernel _container;
+        public static IKernel Container { get; private set; }
 
         private TaskbarIcon _notifyIcon;
 
@@ -18,20 +18,20 @@ namespace ScreenSlicer
             ConfigureContainer();
             ComposeObjects();
             _notifyIcon.BeginInit();
-            _container.Get<Managers.ProcessesWatcher>();
+            Container.Get<Managers.ProcessesWatcher>();
         }
 
         private void ConfigureContainer()
         {
-            _container = new StandardKernel(new MainModule());
+            Container = new StandardKernel(new MainModule());
         }
 
         private void ComposeObjects()
         {
-            _notifyIcon = _container.Get<NotifyIcon.NotifyIcon>();
+            _notifyIcon = Container.Get<NotifyIcon.NotifyIcon>();
 #if DEBUG
-            _container.Get<Updating.Updater>().CheckUpdates();
-            _container.Get<Windows.SettingsWindow>().Show();
+            Container.Get<Updating.Updater>().CheckUpdates();
+            Container.Get<Windows.SettingsWindow>().Show();
 #endif
         }
 

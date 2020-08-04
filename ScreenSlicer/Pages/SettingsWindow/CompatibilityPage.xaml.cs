@@ -1,4 +1,6 @@
-﻿using ScreenSlicer.Compatibility;
+﻿using Ninject;
+using ScreenSlicer.Commands;
+using ScreenSlicer.Compatibility;
 using ScreenSlicer.Compatibility.Actions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -68,6 +70,13 @@ namespace ScreenSlicer.Pages.SettingsWindow
             }
         }
 
+        public ICommand ShowListWindowCommand { get; private set; }
+
+        public CompatibilityPageViewModel(ICommand showListWindowCommand) : this()
+        {
+            ShowListWindowCommand = showListWindowCommand;
+        }
+
         public CompatibilityPageViewModel()
         {
             Rules = Settings.Instance.Compatibility.Rules;
@@ -86,9 +95,10 @@ namespace ScreenSlicer.Pages.SettingsWindow
     /// </summary>
     public partial class CompatibilityPage : Page
     {
+
         public CompatibilityPage()
         {
-            DataContext = new CompatibilityPageViewModel();
+            DataContext = new CompatibilityPageViewModel(App.Container.Get<ShowWindowCommand<Windows.WinListWindow>>());
             InitializeComponent();
         }
 

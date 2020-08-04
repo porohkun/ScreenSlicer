@@ -224,6 +224,9 @@ namespace ScreenSlicer.Native
 
 
         [DllImport("user32.dll")]
+        public static extern long SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, ShowWindowCommand nCmdShow);
 
         [DllImport("user32.dll")]

@@ -72,6 +72,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Content="+ New Rule" Command="{StaticResource NewCompatibilityRuleCommand}"/>
+        <Button Grid.Column="2" Grid.Row="0" Width="160" Command="{Binding ShowListWindowCommand}" CommandParameter="{Binding SelectedRule}" Content="Test window" HorizontalAlignment="Left"/>
         <ListView Grid.Column="0" Grid.Row="2"
                   ItemsSource="{Binding Rules}"
                   SelectedItem="{Binding SelectedRule}"
