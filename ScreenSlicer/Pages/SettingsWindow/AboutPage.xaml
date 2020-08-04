@@ -3,13 +3,108 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ScreenSlicer.Pages.SettingsWindow"
+      xmlns:local="clr-namespace:ScreenSlicer"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+      xmlns:sw="clr-namespace:ScreenSlicer.Pages.SettingsWindow"
+      xmlns:c="clr-namespace:ScreenSlicer.Commands"
       lex:ResxLocalizationProvider.DefaultAssembly="ScreenSlicer"
       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
       mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
+    <Page.Resources>
+        <c:HyperlinkCommand x:Key="HyperlinkCommand"/>
+    </Page.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+        <DockPanel local:MarginSetter.Margin="4" HorizontalAlignment="Left">
+            <TextBlock DockPanel.Dock="Top">
+            <Run FontSize="30" Text="Screen Slicer"/><LineBreak/>
+            <Run Text="Version"/>
+            <Run Text="{Binding Source={x:Static local:Settings.Instance}, Path=Version, Mode=OneWay}"/>
+            <Run Text="- alpha"/>
+            </TextBlock>
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="0" Grid.Column="0">
+                <Run Text="ScreenSlicer (C) 2020 porohkun"/><LineBreak/>
+                <Run Text="This program comes with ABSOLUTELY NO WARRANTY;"/><LineBreak/>
+                <Run Text="This is free software, and you are welcome to redistribute it"/><LineBreak/>
+                <Run Text="under certain conditions; See"/>
+                <Hyperlink NavigateUri="https://raw.githubusercontent.com/porohkun/ScreenSlicer/master/LICENSE" RequestNavigate="Hyperlink_RequestNavigate">full license text.</Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="0" Grid.Column="1">
+                <Run Text="Project page"/><LineBreak/>
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate">https://github.com/porohkun/ScreenSlicer</Hyperlink><LineBreak/>
+                <Run Text="Contact"/><LineBreak/>
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate">poroh.kun@gmail.com</Hyperlink><LineBreak/>
+                </TextBlock>
+            </Grid>
+            <TextBlock DockPanel.Dock="Top" Text="ScreenSlicer cannot be used without these libraries:" />
+            <ItemsControl DockPanel.Dock="Top" Width="500" HorizontalAlignment="Left">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" Margin="0,5">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Icon}" Visibility="{Binding ShowIcon}" MaxWidth="60" MaxHeight="60"/>
+                                <TextBlock Margin="10,0">
+                                    <Run FontSize="16" Text="{Binding Name}" FontWeight="Bold"/><LineBreak/>
+                                    <Run Text="by "/><Run Text="{Binding Authors}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" local:MarginSetter.Margin="5,0" Margin="0,5">
+                                <Button Content="Website" Command="{StaticResource HyperlinkCommand}" CommandParameter="{Binding Site}"/>
+                                <Button Content="License" Command="{StaticResource HyperlinkCommand}" CommandParameter="{Binding License}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <sw:LibData Name="gong-wpf-dragdrop"
+                            Authors="Jan Karger, Steven Kirk, mitchell.jon"
+                            Site="https://github.com/punker76/gong-wpf-dragdrop"
+                            License="https://raw.githubusercontent.com/punker76/gong-wpf-dragdrop/dev/LICENSE"
+                            Icon="https://api.nuget.org/v3-flatcontainer/gong-wpf-dragdrop/2.2.0/icon"/>
 
-    <Grid>
-        <TextBlock Text="AboutPage"/>
-    </Grid>
+                <sw:LibData Name="Hardcodet.NotifyIcon.Wpf"
+                            Authors="Philipp Sumi"
+                            Site="https://www.codeproject.com/Articles/36468/WPF-NotifyIcon-2"
+                            License="https://raw.githubusercontent.com/hardcodet/wpf-notifyicon/master/LICENSE"/>
+
+                <sw:LibData Name="ModernUI.Wpf"
+                            Authors="First Floor Software"
+                            Site="https://github.com/firstfloorsoftware/mui"
+                            License="https://raw.githubusercontent.com/firstfloorsoftware/mui/master/LICENSE.md"
+                            Icon="https://api.nuget.org/v3-flatcontainer/modernui.wpf/1.0.9/icon"/>
+
+                <sw:LibData Name="Newtonsoft.Json"
+                            Authors="James Newton-King"
+                            Site="https://www.newtonsoft.com/json"
+                            License="https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md"
+                            Icon="https://api.nuget.org/v3-flatcontainer/newtonsoft.json/12.0.3/icon"/>
+
+                <sw:LibData Name="Ninject"
+                            Authors="Ian Davis, Remo Glor, Daniel Marbach"
+                            Site="http://www.ninject.org/"
+                            License="https://raw.githubusercontent.com/ninject/ninject/master/LICENSE.txt"
+                            Icon="https://api.nuget.org/v3-flatcontainer/ninject/3.3.4/icon"/>
+
+                <sw:LibData Name="NLog"
+                            Authors="Jarek Kowalski, Kim Christensen, Julian Verdurmen"
+                            Site="https://nlog-project.org/"
+                            License="https://raw.githubusercontent.com/NLog/NLog/master/LICENSE.txt"
+                            Icon="https://api.nuget.org/v3-flatcontainer/nlog/4.7.0/icon"/>
+
+                <sw:LibData Name="Squirrel.Windows"
+                            Authors="GitHub"
+                            Site="https://github.com/squirrel/Squirrel.Windows"
+                            License="https://raw.githubusercontent.com/Squirrel/Squirrel.Windows/develop/COPYING"
+                            Icon="https://api.nuget.org/v3-flatcontainer/squirrel.windows/1.9.1/icon"/>
+
+                <sw:LibData Name="WPFLocalizationExtension"
+                            Authors="Bernhard Millauer,Uwe Mayer"
+                            Site="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension/"
+                            License="https://raw.githubusercontent.com/XAMLMarkupExtensions/WPFLocalizationExtension/master/LICENSE"/>
+            </ItemsControl>
+        </DockPanel>
+    </ScrollViewer>
 </Page>
