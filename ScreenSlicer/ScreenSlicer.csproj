@@ -138,6 +138,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\HyperlinkCommand.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Commands\NewCompatibilityRuleCommand.cs" />
     <Compile Include="Commands\RemoveItemCommand.cs" />
@@ -197,7 +198,6 @@
     <Compile Include="Native\Windows\ISystemWindow.cs" />
     <Compile Include="Native\Windows\SystemWindow.cs" />
     <Compile Include="Native\Windows\SystemWindowsFactory.cs" />
-    <Compile Include="OverrideXml.cs" />
     <Compile Include="Pages\SettingsWindow\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
