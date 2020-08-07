@@ -5,6 +5,7 @@ namespace ScreenSlicer
 {
     public class UpdatesSettings : SettingsPartWithNotifier
     {
+        [JsonIgnore]
         public readonly string Path = @"https://github.com/porohkun/ScreenSlicer/releases/latest/download/";
 
         [JsonProperty(nameof(AutoUpdate))]
