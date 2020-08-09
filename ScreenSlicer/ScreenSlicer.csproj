@@ -145,7 +145,7 @@
     <Compile Include="Commands\MoveWindowCommand.cs" />
     <Compile Include="Commands\EndSliceRegionsCommand.cs" />
     <Compile Include="Commands\BeginSliceRegionsCommand.cs" />
-    <Compile Include="Commands\RestoreDefaultRules.cs" />
+    <Compile Include="Commands\RestoreDefaultRulesCommand.cs" />
     <Compile Include="Commands\SliceRegionHorizontalCommand.cs" />
     <Compile Include="Commands\GlueRegionCommand.cs" />
     <Compile Include="Commands\SliceRegionVerticalCommand.cs" />

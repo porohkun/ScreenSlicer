@@ -16,7 +16,7 @@ namespace ScreenSlicer.Commands
     /// <summary>
     /// Parameter means "forced restore, without dialog"
     /// </summary>
-    public class RestoreDefaultRules : InjectableCommand<RestoreDefaultRules, bool>
+    public class RestoreDefaultRulesCommand : InjectableCommand<RestoreDefaultRulesCommand, bool>
     {
         protected override bool CanExecuteInternal(bool parameter)
         {

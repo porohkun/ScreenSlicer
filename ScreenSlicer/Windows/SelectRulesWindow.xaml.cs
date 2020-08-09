@@ -12,19 +12,19 @@ namespace ScreenSlicer.Windows
     {
         public SelectRulesWindowDummy()
         {
-            Rules = new ObservableCollection<RestoreDefaultRules.SelectingRule>()
+            Rules = new ObservableCollection<RestoreDefaultRulesCommand.SelectingRule>()
             {
-                new RestoreDefaultRules.SelectingRule()
+                new RestoreDefaultRulesCommand.SelectingRule()
                 {
                     Rule = new Rule() { Name = "Rule 1" },
                     IsSelected = true
                 },
-                new RestoreDefaultRules.SelectingRule()
+                new RestoreDefaultRulesCommand.SelectingRule()
                 {
                     Rule = new Rule() { Name = "Rule 2" },
                     IsSelected = true
                 },
-                new RestoreDefaultRules.SelectingRule()
+                new RestoreDefaultRulesCommand.SelectingRule()
                 {
                     Rule = new Rule() { Name = "Rule 3" },
                     IsSelected = true
@@ -35,11 +35,11 @@ namespace ScreenSlicer.Windows
 
     public class SelectRulesWindowViewModel
     {
-        public ObservableCollection<RestoreDefaultRules.SelectingRule> Rules { get; protected set; }
+        public ObservableCollection<RestoreDefaultRulesCommand.SelectingRule> Rules { get; protected set; }
 
         public SelectRulesWindowViewModel()
         {
-            Rules = new ObservableCollection<RestoreDefaultRules.SelectingRule>();
+            Rules = new ObservableCollection<RestoreDefaultRulesCommand.SelectingRule>();
         }
     }
 
@@ -48,7 +48,7 @@ namespace ScreenSlicer.Windows
     /// </summary>
     public partial class SelectRulesWindow : Window
     {
-        private RestoreDefaultRules.SelectingRule[] rulesTuple;
+        private RestoreDefaultRulesCommand.SelectingRule[] rulesTuple;
 
         public SelectRulesWindow()
         {
@@ -56,7 +56,7 @@ namespace ScreenSlicer.Windows
             InitializeComponent();
         }
 
-        public SelectRulesWindow(RestoreDefaultRules.SelectingRule[] rulesTuple) : this()
+        public SelectRulesWindow(RestoreDefaultRulesCommand.SelectingRule[] rulesTuple) : this()
         {
             var rules = (DataContext as SelectRulesWindowViewModel).Rules;
             rules.Clear();

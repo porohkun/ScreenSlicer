@@ -102,7 +102,7 @@ namespace ScreenSlicer.Pages.SettingsWindow
         {
             DataContext = new CompatibilityPageViewModel(
                 App.Container.Get<ShowWindowCommand<Windows.WinListWindow>>(),
-                App.Container.Get<RestoreDefaultRules>());
+                App.Container.Get<RestoreDefaultRulesCommand>());
             InitializeComponent();
         }
 
