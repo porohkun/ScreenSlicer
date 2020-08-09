@@ -7,8 +7,12 @@ namespace ScreenSlicer.Commands
     {
         internal static TParam CastParam<TParam>(object parameter)
         {
+            var typeofTParam = typeof(TParam);
+            if (typeofTParam == typeof(bool))
+                return (TParam)(object)(parameter == null ? false : (parameter is bool ? (bool)parameter : false));
+
             if (parameter == null)
-                if (!typeof(TParam).IsCanBeNull())
+                if (!typeofTParam.IsCanBeNull())
                     throw new ArgumentException($"Type '{nameof(TParam)}' can't be null");
                 else
                     return (TParam)(object)null;

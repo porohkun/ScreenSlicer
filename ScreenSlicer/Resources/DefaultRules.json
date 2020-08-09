@@ -1,0 +1,134 @@
+[
+	{
+		"Name": "Telegram",
+		"Conditions": [
+			{
+				"$type": "ScreenSlicer.Compatibility.TitleCondition, ScreenSlicer",
+				"RegularExpression": true,
+				"TargetValue": "^Telegram"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.FileInfoPropertyCondition, ScreenSlicer",
+				"Property": 0,
+				"RegularExpression": false,
+				"TargetValue": "Telegram Desktop"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.FilenameCondition, ScreenSlicer",
+				"FullPath": false,
+				"RegularExpression": false,
+				"TargetValue": "Telegram.exe"
+			}
+		],
+		"MoveWindowSequence": [
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData, ScreenSlicer"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData, ScreenSlicer",
+				"Left": 7,
+				"Top": 0,
+				"Right": -8,
+				"Bottom": -15
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+				"Message": "EnterSizeMove"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32ShowWindowData, ScreenSlicer",
+				"Command": "ShowNormal"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32SetWindowPosData, ScreenSlicer",
+				"Flags": "NoZOrder, NoSendChanging"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+				"Message": "ExitSizeMove"
+			}
+		]
+	},
+	{
+		"Name": "Discord",
+		"Conditions": [
+			{
+				"$type": "ScreenSlicer.Compatibility.TitleCondition, ScreenSlicer",
+				"RegularExpression": true,
+				"TargetValue": "^Discord"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.FileInfoPropertyCondition, ScreenSlicer",
+				"Property": 0,
+				"RegularExpression": false,
+				"TargetValue": "Discord"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.FilenameCondition, ScreenSlicer",
+				"FullPath": false,
+				"RegularExpression": false,
+				"TargetValue": "Discord.exe"
+			}
+		],
+		"MoveWindowSequence": [
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData, ScreenSlicer"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData, ScreenSlicer",
+				"Left": 6,
+				"Top": 0,
+				"Right": -7,
+				"Bottom": -13
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+				"Message": "EnterSizeMove"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32ShowWindowData, ScreenSlicer",
+				"Command": "ShowNormal"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32SetWindowPosData, ScreenSlicer",
+				"Flags": "NoZOrder, NoSendChanging"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+				"Message": "ExitSizeMove"
+			}
+		]
+	},
+	{
+		"Name": "Default",
+		"Conditions": [],
+		"MoveWindowSequence": [
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData, ScreenSlicer"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData, ScreenSlicer",
+				"Left": 0,
+				"Top": 0,
+				"Right": -1,
+				"Bottom": 0
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+				"Message": "EnterSizeMove"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32ShowWindowData, ScreenSlicer",
+				"Command": "ShowMaximized"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32SetWindowPosData, ScreenSlicer",
+				"Flags": "NoZOrder, NoSendChanging"
+			},
+			{
+				"$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+				"Message": "ExitSizeMove"
+			}
+		]
+	}
+]

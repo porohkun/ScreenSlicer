@@ -135,14 +135,14 @@ namespace ScreenSlicer
             Settings result = null;
             if (File.Exists(SettingsPath))
             {
-                using (JsonTextReader file = new JsonTextReader(File.OpenText(SettingsPath)))
+                using (var file = new JsonTextReader(File.OpenText(SettingsPath)))
                 {
                     var serializer = GetSerializer();
                     try
                     {
                         result = serializer.Deserialize<Settings>(file);
                         if (result == null)
-                            throw new SerializationException("cant read settings.xml");
+                            throw new SerializationException($"cant read '{SettingsPath}'");
                     }
                     catch (Exception e)
                     {
@@ -160,7 +160,7 @@ namespace ScreenSlicer
             if (!Directory.Exists(AppDataPath))
                 Directory.CreateDirectory(AppDataPath);
 
-            using (StreamWriter file = File.CreateText(SettingsPath))
+            using (var file = File.CreateText(SettingsPath))
             {
                 var serializer = GetSerializer();
                 try
@@ -174,7 +174,7 @@ namespace ScreenSlicer
             }
         }
 
-        private static JsonSerializer GetSerializer()
+        public static JsonSerializer GetSerializer()
         {
             if (_serializer == null)
             {
