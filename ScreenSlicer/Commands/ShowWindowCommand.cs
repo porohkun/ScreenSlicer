@@ -6,10 +6,7 @@ using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    /// <summary>
-    /// Parameter means "show window as dialog"
-    /// </summary>
-    public class ShowWindowCommand<T> : InjectableCommand<ShowWindowCommand<T>, bool> where T : Window
+    public class ShowWindowCommand<T> : InjectableCommand<ShowWindowCommand<T>> where T : Window
     {
         protected T _window;
 
@@ -18,19 +15,16 @@ namespace ScreenSlicer.Commands
             _window = window;
         }
 
-        protected override bool CanExecuteInternal(bool parameter)
+        protected override bool CanExecuteInternal(object parameter)
         {
             return !_window.IsActive;
         }
 
-        protected override void ExecuteInternal(bool parameter)
+        protected override void ExecuteInternal(object parameter)
         {
             if (_window is IParametricWindow parametricWindow)
                 parametricWindow.SetParameter(parameter);
-            if (parameter)
-                _window.ShowDialog();
-            else
-                _window.Show();
+            _window.Show();
         }
     }
 }
