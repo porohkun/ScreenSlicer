@@ -145,6 +145,7 @@
     <Compile Include="Commands\MoveWindowCommand.cs" />
     <Compile Include="Commands\EndSliceRegionsCommand.cs" />
     <Compile Include="Commands\BeginSliceRegionsCommand.cs" />
+    <Compile Include="Commands\RestoreDefaultRules.cs" />
     <Compile Include="Commands\SliceRegionHorizontalCommand.cs" />
     <Compile Include="Commands\GlueRegionCommand.cs" />
     <Compile Include="Commands\SliceRegionVerticalCommand.cs" />
@@ -253,6 +254,9 @@
     <Compile Include="Updating\RunAtWindowsStartupEvent.cs" />
     <Compile Include="Updating\Updater.cs" />
     <Compile Include="Windows\IParametricWindow.cs" />
+    <Compile Include="Windows\SelectRulesWindow.xaml.cs">
+      <DependentUpon>SelectRulesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -323,6 +327,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\SelectRulesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -362,6 +370,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -378,6 +387,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DefaultRules.json" />
   </ItemGroup>
   <Import Project="..\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown\WPF.Controls.IntUpDown.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,23 @@
+﻿<Window x:Class="ScreenSlicer.Windows.SelectRulesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ScreenSlicer.Windows"
+        mc:Ignorable="d"
+        Title="Select Rules for restore" Height="450" Width="350"
+        d:DataContext="{StaticResource SelectRulesWindowDummy}">
+    <DockPanel LastChildFill="True" Margin="10">
+        <StackPanel DockPanel.Dock="Bottom" Margin="0,10" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="OK" Click="OkButton_Click" Margin="0,0,30,0"/>
+            <Button Content="Cancel" Click="CancelButton_Click"/>
+        </StackPanel>
+        <ListView DockPanel.Dock="Bottom" ItemsSource="{Binding Rules}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Rule.Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </DockPanel>
+</Window>

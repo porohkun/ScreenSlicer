@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ScreenSlicer.Updating
 {
@@ -16,9 +17,11 @@ namespace ScreenSlicer.Updating
         private readonly Timer _timer;
         private DateTime _lastUpdateCheck = DateTime.Now;
         private TimeSpan _updateFrequency = new TimeSpan(1, 0, 0);
+        ICommand _restoreDefaultRules;
 
-        public Updater()
+        public Updater(Commands.RestoreDefaultRules restoreDefaultRules)
         {
+            _restoreDefaultRules = restoreDefaultRules;
 #if DEBUG
             return;
 #endif
@@ -46,13 +49,20 @@ namespace ScreenSlicer.Updating
                             mgr.CreateShortcutForThisExe();
                             mgr.CreateRunAtWindowsStartupRegistry();
                         },
-                        onAppUpdate: v => mgr.CreateShortcutForThisExe(),
+                        onAppUpdate: v =>
+                        {
+                            mgr.CreateShortcutForThisExe();
+                            _restoreDefaultRules.Execute(true);
+                        },
                         onAppUninstall: v =>
                         {
                             mgr.RemoveShortcutForThisExe();
                             mgr.RemoveRunAtWindowsStartupRegistry();
                         },
-                        onFirstRun: () => { });
+                        onFirstRun: () =>
+                        {
+                            _restoreDefaultRules.Execute(true);
+                        });
 
                     if (!Settings.Instance.Updates.AutoUpdate) //updates are not enabled, skipping update
                         return;

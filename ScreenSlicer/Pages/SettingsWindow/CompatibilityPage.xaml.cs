@@ -71,10 +71,12 @@ namespace ScreenSlicer.Pages.SettingsWindow
         }
 
         public ICommand ShowListWindowCommand { get; private set; }
+        public ICommand RestoreDefaultsCommand { get; private set; }
 
-        public CompatibilityPageViewModel(ICommand showListWindowCommand) : this()
+        public CompatibilityPageViewModel(ICommand showListWindowCommand, ICommand restoreDefaultsCommand) : this()
         {
             ShowListWindowCommand = showListWindowCommand;
+            RestoreDefaultsCommand = restoreDefaultsCommand;
         }
 
         public CompatibilityPageViewModel()
@@ -98,7 +100,9 @@ namespace ScreenSlicer.Pages.SettingsWindow
 
         public CompatibilityPage()
         {
-            DataContext = new CompatibilityPageViewModel(App.Container.Get<ShowWindowCommand<Windows.WinListWindow>>());
+            DataContext = new CompatibilityPageViewModel(
+                App.Container.Get<ShowWindowCommand<Windows.WinListWindow>>(),
+                App.Container.Get<RestoreDefaultRules>());
             InitializeComponent();
         }
 

@@ -18,6 +18,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <w:SlicingWindowDummy x:Key="SlicingWindowDummy"/>
+            <w:SelectRulesWindowDummy x:Key="SelectRulesWindowDummy"/>
             <sp:CompatibilityPageDummy x:Key="CompatibilityPageDummy"/>
         </ResourceDictionary>
     </Application.Resources>
