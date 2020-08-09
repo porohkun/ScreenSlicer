@@ -117,6 +117,8 @@ namespace ScreenSlicer.Windows
 
         private void ShowSelectedWindow()
         {
+            if (SelectedWindow == null)
+                return;
             var handle = SelectedWindow.Handle;
             Methods.SetForegroundWindow(handle);
             Methods.ShowWindow(handle, ShowWindowCommand.ShowNoActive);
