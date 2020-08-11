@@ -62,25 +62,25 @@ namespace ScreenSlicer.Native
         /// </summary>
         DialogFrame = 0x0040_0000,
 
-        /// <summary>
-        /// The window is the first control of a group of controls. The group consists of this first control and all controls defined after it,
-        /// up to the next control with the 'Group' style. The first control in each group usually has the 'TabStop' style so that the user
-        /// can move from group to group. The user can subsequently change the keyboard focus from one control in the group to the next control
-        /// in the group by using the direction keys.
-        /// 
-        /// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.
-        /// </summary>
-        Group = 0x0002_0000,
+        ///// <summary>
+        ///// The window is the first control of a group of controls. The group consists of this first control and all controls defined after it,
+        ///// up to the next control with the 'Group' style. The first control in each group usually has the 'TabStop' style so that the user
+        ///// can move from group to group. The user can subsequently change the keyboard focus from one control in the group to the next control
+        ///// in the group by using the direction keys.
+        ///// 
+        ///// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.
+        ///// </summary>
+        //Group = 0x0002_0000,
 
         /// <summary>
         /// The window has a horizontal scroll bar.
         /// </summary>
         HorizontalScroll = 0x0010_0000,
 
-        /// <summary>
-        /// The window is initially minimized. Same as the 'Minimize' style.
-        /// </summary>
-        Iconic = 0x2000_0000,
+        ///// <summary>
+        ///// The window is initially minimized. Same as the 'Minimize' style.
+        ///// </summary>
+        //Iconic = 0x2000_0000,
 
         /// <summary>
         /// The window is initially maximized.
@@ -95,22 +95,22 @@ namespace ScreenSlicer.Native
         /// <summary>
         /// The window is initially minimized. Same as the 'Iconic' style.
         /// </summary>
-        Minimize = Iconic,
+        Minimize = 0x2000_0000, //Iconic,
 
         /// <summary>
         /// The window has a minimize button. Cannot be combined with the WS_EX_CONTEXTHELP style. The 'SystemMenu' style must also be specified. 
         /// </summary>
-        MinimizeBox = Group,
+        MinimizeBox = 0x0002_0000,// Group,
 
-        /// <summary>
-        /// The window is an overlapped window. An overlapped window has a title bar and a border. Same as the 'Tiled' style.
-        /// </summary>
-        Overlapped = 0x0000_0000,
+        ///// <summary>
+        ///// The window is an overlapped window. An overlapped window has a title bar and a border. Same as the 'Tiled' style.
+        ///// </summary>
+        //Overlapped = 0x0000_0000,
 
         /// <summary>
         /// The window is an overlapped window. Same as the 'TiledWindow' style. 
         /// </summary>
-        OverlappedWindow = Overlapped | Caption | SystemMenu | ThickFrame | MinimizeBox | MaximizeBox,
+        OverlappedWindow = /*Overlapped |*/ Caption | SystemMenu | SizeBox | MinimizeBox | MaximizeBox,
 
         /// <summary>
         /// The windows is a pop-up window. This style cannot be used with the 'Child' style.
@@ -132,30 +132,30 @@ namespace ScreenSlicer.Native
         /// </summary>
         SystemMenu = 0x0008_0000,
 
-        /// <summary>
-        /// The window is a control that can receive the keyboard focus when the user presses the TAB key. Pressing the TAB key changes the
-        /// keyboard focus to the next control with the 'TabStop' style.
-        /// 
-        /// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created,
-        /// use the SetWindowLong function. For user-created windows and modeless dialogs to work with tab stops, alter the message loop
-        /// to call the IsDialogMessage function.
-        /// </summary>
-        TabStop = MaximizeBox,
+        ///// <summary>
+        ///// The window is a control that can receive the keyboard focus when the user presses the TAB key. Pressing the TAB key changes the
+        ///// keyboard focus to the next control with the 'TabStop' style.
+        ///// 
+        ///// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created,
+        ///// use the SetWindowLong function. For user-created windows and modeless dialogs to work with tab stops, alter the message loop
+        ///// to call the IsDialogMessage function.
+        ///// </summary>
+        //TabStop = MaximizeBox,
 
-        /// <summary>
-        /// The window has a sizing border. Same as the 'SizeBox' style.
-        /// </summary>
-        ThickFrame = SizeBox,
+        ///// <summary>
+        ///// The window has a sizing border. Same as the 'SizeBox' style.
+        ///// </summary>
+        //ThickFrame = SizeBox,
 
-        /// <summary>
-        /// The window is an overlapped window. An overlapped window has a title bar and a border. Same as the 'Overlapped' style. 
-        /// </summary>
-        Tiled = Overlapped,
+        ///// <summary>
+        ///// The window is an overlapped window. An overlapped window has a title bar and a border. Same as the 'Overlapped' style. 
+        ///// </summary>
+        //Tiled = Overlapped,
 
-        /// <summary>
-        /// The window is an overlapped window. Same as the 'OverlappedWindow' style. 
-        /// </summary>
-        TiledWindow = OverlappedWindow,
+        ///// <summary>
+        ///// The window is an overlapped window. Same as the 'OverlappedWindow' style. 
+        ///// </summary>
+        //TiledWindow = OverlappedWindow,
 
         /// <summary>
         /// The window is initially visible.

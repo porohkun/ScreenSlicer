@@ -33,7 +33,7 @@
                         <GridViewColumnHeader Content="Visible" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Style}">
-                        <GridViewColumnHeader Content="Styles" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                        <GridViewColumnHeader Content="Style" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Placement}">
                         <GridViewColumnHeader Content="Placement" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>

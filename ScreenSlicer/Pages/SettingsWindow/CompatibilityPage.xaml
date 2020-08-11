@@ -34,6 +34,12 @@
                 <x:Type TypeName="n:ShowWindowPosition"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="WindowStyle" MethodName="GetValues"
+                            ObjectType="{x:Type s:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="n:WindowStyle"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
         <ObjectDataProvider x:Key="ShowWindowCommand" MethodName="GetValues"
                             ObjectType="{x:Type s:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -177,6 +183,15 @@
                                         <TextBlock DockPanel.Dock="Left" Text="Expression:" Visibility="{Binding RegularExpression, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                         <TextBlock DockPanel.Dock="Left" Text="Value:" Visibility="{Binding RegularExpression, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"/>
                                         <TextBox Text="{Binding TargetValue, Mode=TwoWay}" Margin="4,0,0,0" KeyUp="TextBox_KeyUp"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type co:WindowStyleCondition}">
+                                    <DockPanel>
+                                        <RadioButton DockPanel.Dock="Top" Content="MustInclude" IsChecked="{Binding MustInclude}"/>
+                                        <RadioButton DockPanel.Dock="Top" Content="MustExclude" IsChecked="{Binding MustInclude, Converter={StaticResource ReverseBooleanConverter}}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Value:" />
+                                        <local:MultiSelectComboBox ItemsSource="{Binding Source={StaticResource WindowStyle}}"
+                                                               SelectedItems="{Binding TargetValue, Mode=TwoWay}" Margin="4,0,0,0"/>
                                     </DockPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type co:TitleCondition}">

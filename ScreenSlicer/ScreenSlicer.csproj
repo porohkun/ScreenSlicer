@@ -227,6 +227,7 @@
     <Compile Include="Settings\Compatibility\Actions\User32SetWindowPosData.cs" />
     <Compile Include="Settings\Compatibility\Actions\User32ShowWindowData.cs" />
     <Compile Include="Settings\Compatibility\Actions\User32PostMessageData.cs" />
+    <Compile Include="Settings\Compatibility\Conditions\WindowStyleCondition.cs" />
     <Compile Include="Settings\Compatibility\Conditions\TitleCondition.cs" />
     <Compile Include="Settings\Compatibility\Conditions\WindowClassCondition.cs" />
     <Compile Include="Settings\Compatibility\Conditions\AppInfoPropertyCondition.cs" />

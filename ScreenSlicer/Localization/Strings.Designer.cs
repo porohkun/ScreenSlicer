@@ -187,7 +187,7 @@ namespace ScreenSlicer.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FileInfo Property.
+        ///   Looks up a localized string similar to FileInfo property.
         /// </summary>
         internal static string ScreenSlicer_Compatibility_FileInfoPropertyCondition_Description {
             get {
@@ -196,7 +196,7 @@ namespace ScreenSlicer.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FileInfo Property.
+        ///   Looks up a localized string similar to FileInfo property.
         /// </summary>
         internal static string ScreenSlicer_Compatibility_FileInfoPropertyCondition_Name {
             get {
@@ -255,6 +255,24 @@ namespace ScreenSlicer.Localization {
         internal static string ScreenSlicer_Compatibility_WindowClassCondition_Name {
             get {
                 return ResourceManager.GetString("ScreenSlicer.Compatibility.WindowClassCondition.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window style.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_WindowStyleCondition_Description {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.WindowStyleCondition.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window style.
+        /// </summary>
+        internal static string ScreenSlicer_Compatibility_WindowStyleCondition_Name {
+            get {
+                return ResourceManager.GetString("ScreenSlicer.Compatibility.WindowStyleCondition.Name", resourceCulture);
             }
         }
         
