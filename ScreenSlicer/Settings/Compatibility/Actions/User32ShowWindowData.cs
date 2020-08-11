@@ -21,5 +21,13 @@ namespace ScreenSlicer.Compatibility.Actions
                 }
             }
         }
+
+        public override object Clone()
+        {
+            return new User32ShowWindowData()
+            {
+                Command = Command
+            };
+        }
     }
 }

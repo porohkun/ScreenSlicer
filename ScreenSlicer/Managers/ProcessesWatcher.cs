@@ -97,7 +97,7 @@ namespace ScreenSlicer.Managers
             {
                 Logger.Info($"Window '{window.CachedTitle}'({window.Handle}) opened.");
 
-                _windowsFactory.SetRule(window);
+                //_windowsFactory.SetRule(window);
 
                 var windowElement = AutomationElement.FromHandle(window.Handle);
                 if (windowElement != null)

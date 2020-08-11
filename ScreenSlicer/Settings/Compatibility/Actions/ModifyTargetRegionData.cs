@@ -64,5 +64,16 @@ namespace ScreenSlicer.Compatibility.Actions
                 }
             }
         }
+
+        public override object Clone()
+        {
+            return new ModifyTargetRegionData()
+            {
+                Bottom = Bottom,
+                Left = Left,
+                Right = Right,
+                Top = Top
+            };
+        }
     }
 }

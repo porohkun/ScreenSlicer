@@ -32,6 +32,8 @@ namespace ScreenSlicer.Compatibility
 
         public abstract bool Check(ISystemWindow window);
 
+        public abstract object Clone();
+
         protected abstract T GetValue(ISystemWindow window);
     }
 

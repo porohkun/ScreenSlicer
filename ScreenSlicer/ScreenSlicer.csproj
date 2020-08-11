@@ -145,7 +145,7 @@
     <Compile Include="Commands\MoveWindowCommand.cs" />
     <Compile Include="Commands\EndSliceRegionsCommand.cs" />
     <Compile Include="Commands\BeginSliceRegionsCommand.cs" />
-    <Compile Include="Commands\RestoreDefaultRules.cs" />
+    <Compile Include="Commands\RestoreDefaultRulesCommand.cs" />
     <Compile Include="Commands\SliceRegionHorizontalCommand.cs" />
     <Compile Include="Commands\GlueRegionCommand.cs" />
     <Compile Include="Commands\SliceRegionVerticalCommand.cs" />
@@ -178,6 +178,7 @@
     <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Misc\LinqExtensions.cs" />
     <Compile Include="Misc\MarginSetter.cs" />
+    <Compile Include="Misc\ObservabeCollectionOfClones.cs" />
     <Compile Include="Misc\StringFormatProxy.cs" />
     <Compile Include="Native\AsyncKeyStateResult.cs" />
     <Compile Include="Native\Compatibility\Action.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Settings\Compatibility\Actions\User32SetWindowPosData.cs" />
     <Compile Include="Settings\Compatibility\Actions\User32ShowWindowData.cs" />
     <Compile Include="Settings\Compatibility\Actions\User32PostMessageData.cs" />
+    <Compile Include="Settings\Compatibility\Conditions\WindowStyleCondition.cs" />
     <Compile Include="Settings\Compatibility\Conditions\TitleCondition.cs" />
     <Compile Include="Settings\Compatibility\Conditions\WindowClassCondition.cs" />
     <Compile Include="Settings\Compatibility\Conditions\AppInfoPropertyCondition.cs" />

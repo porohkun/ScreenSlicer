@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 namespace ScreenSlicer.Native.Windows
 {
     [DebuggerDisplay(nameof(CachedTitle))]
-    public class SystemWindow : ISystemWindow, ICanUseRules
+    public class SystemWindow : ISystemWindow//, ICanUseRules
     {
         private string _cachedTitle;
-        private Rule _rule;
+        //private Rule _rule;
 
         public IntPtr Handle { get; }
 
@@ -66,14 +66,14 @@ namespace ScreenSlicer.Native.Windows
             Handle = hWnd;
         }
 
-        public void SetRule(Rule rule)
-        {
-            _rule = rule;
-        }
+        //public void SetRule(Rule rule)
+        //{
+        //    _rule = rule;
+        //}
 
         public virtual void Move(Rectangle region)
         {
-            foreach (var action in _rule.MoveWindowSequence)
+            foreach (var action in Settings.Instance.Compatibility.GetRuleForWindow(this).MoveWindowSequence)
                 action.Apply(this, ref region);
         }
 

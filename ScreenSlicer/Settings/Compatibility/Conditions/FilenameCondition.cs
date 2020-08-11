@@ -20,6 +20,16 @@ namespace ScreenSlicer.Compatibility
             }
         }
 
+        public override object Clone()
+        {
+            return new FilenameCondition()
+            {
+                FullPath = FullPath,
+                RegularExpression = RegularExpression,
+                TargetValue = TargetValue
+            };
+        }
+
         protected override string GetValue(ISystemWindow window)
         {
             return FullPath ? window.ProcessName : Path.GetFileName(window.ProcessName);

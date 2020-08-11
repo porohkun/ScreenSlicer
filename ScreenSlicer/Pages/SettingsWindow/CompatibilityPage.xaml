@@ -34,6 +34,12 @@
                 <x:Type TypeName="n:ShowWindowPosition"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="WindowStyle" MethodName="GetValues"
+                            ObjectType="{x:Type s:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="n:WindowStyle"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
         <ObjectDataProvider x:Key="ShowWindowCommand" MethodName="GetValues"
                             ObjectType="{x:Type s:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -142,12 +148,12 @@
                             <ColumnDefinition Width="180"/>
                         </Grid.ColumnDefinitions>
                         <ListView Grid.Column="0"
-                              ItemsSource="{Binding SelectedRule.Conditions}"
-                              Background="{DynamicResource ItemBackgroundHover}"
-                              ScrollViewer.CanContentScroll="False"
-                              dd:DragDrop.IsDragSource="True"
-                              dd:DragDrop.IsDropTarget="True"
-                              dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
+                                  ItemsSource="{Binding SelectedRule.Conditions}"
+                                  Background="{DynamicResource ItemBackgroundHover}"
+                                  ScrollViewer.CanContentScroll="False"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.IsDropTarget="True"
+                                  dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
                             <ListView.Resources>
                                 <DataTemplate DataType="{x:Type co:FileInfoPropertyCondition}">
                                     <DockPanel>
@@ -177,6 +183,15 @@
                                         <TextBlock DockPanel.Dock="Left" Text="Expression:" Visibility="{Binding RegularExpression, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                         <TextBlock DockPanel.Dock="Left" Text="Value:" Visibility="{Binding RegularExpression, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"/>
                                         <TextBox Text="{Binding TargetValue, Mode=TwoWay}" Margin="4,0,0,0" KeyUp="TextBox_KeyUp"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type co:WindowStyleCondition}">
+                                    <DockPanel>
+                                        <RadioButton DockPanel.Dock="Top" Content="MustInclude" IsChecked="{Binding MustInclude}"/>
+                                        <RadioButton DockPanel.Dock="Top" Content="MustExclude" IsChecked="{Binding MustInclude, Converter={StaticResource ReverseBooleanConverter}}"/>
+                                        <TextBlock DockPanel.Dock="Left" Text="Value:" />
+                                        <local:MultiSelectComboBox ItemsSource="{Binding Source={StaticResource WindowStyle}}"
+                                                               SelectedItems="{Binding TargetValue, Mode=TwoWay}" Margin="4,0,0,0"/>
                                     </DockPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type co:TitleCondition}">
@@ -235,12 +250,12 @@
                             </ListView.ItemContainerStyle>
                         </ListView>
                         <ListView Grid.Column="2"
-                              ItemsSource="{Binding Source={StaticResource ICondition}}"
-                              Background="{DynamicResource ItemBackgroundHover}"
-                              ScrollViewer.CanContentScroll="False"
-                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                              dd:DragDrop.IsDragSource="True"
-                              dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
+                                  ItemsSource="{Binding Source={StaticResource ICondition}}"
+                                  Background="{DynamicResource ItemBackgroundHover}"
+                                  ScrollViewer.CanContentScroll="False"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="Focusable" Value="false"/>

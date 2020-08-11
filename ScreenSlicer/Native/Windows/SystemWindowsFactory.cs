@@ -14,16 +14,16 @@ namespace ScreenSlicer.Native.Windows
         {
             var window = new SystemWindow(handle);
 
-            if (setRule)
-                SetRule(window);
+            //if (setRule)
+            //    SetRule(window);
 
             return window;
         }
 
-        public void SetRule(ISystemWindow window)
-        {
-            if (window is ICanUseRules ruledWindow)
-                ruledWindow.SetRule(Settings.Instance.Compatibility.GetRuleForWindow(window));
-        }
+        //public void SetRule(ISystemWindow window)
+        //{
+        //    if (window is ICanUseRules ruledWindow)
+        //        ruledWindow.SetRule(Settings.Instance.Compatibility.GetRuleForWindow(window));
+        //}
     }
 }

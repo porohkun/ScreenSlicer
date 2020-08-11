@@ -19,7 +19,7 @@ namespace ScreenSlicer.Updating
         private TimeSpan _updateFrequency = new TimeSpan(1, 0, 0);
         ICommand _restoreDefaultRules;
 
-        public Updater(Commands.RestoreDefaultRules restoreDefaultRules)
+        public Updater(Commands.RestoreDefaultRulesCommand restoreDefaultRules)
         {
             _restoreDefaultRules = restoreDefaultRules;
 #if DEBUG
