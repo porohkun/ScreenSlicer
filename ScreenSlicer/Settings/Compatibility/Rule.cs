@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ScreenSlicer.Misc;
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -37,17 +38,17 @@ namespace ScreenSlicer.Compatibility
             }
         }
 
-        public ObservableCollection<ICondition> Conditions { get; private set; }
+        public ObservabeCollectionOfClones<ICondition> Conditions { get; private set; }
 
         [JsonProperty]
-        public ObservableCollection<IActionData> MoveWindowSequence { get; private set; }
+        public ObservabeCollectionOfClones<IActionData> MoveWindowSequence { get; private set; }
 
         public Rule()
         {
-            Conditions = new ObservableCollection<ICondition>();
+            Conditions = new ObservabeCollectionOfClones<ICondition>();
             Conditions.CollectionChanged += Conditions_CollectionChanged;
 
-            MoveWindowSequence = new ObservableCollection<IActionData>();
+            MoveWindowSequence = new ObservabeCollectionOfClones<IActionData>();
             MoveWindowSequence.CollectionChanged += MoveWindowSequences_CollectionChanged;
         }
 

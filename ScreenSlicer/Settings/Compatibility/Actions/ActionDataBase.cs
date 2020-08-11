@@ -14,6 +14,8 @@ namespace ScreenSlicer.Compatibility.Actions
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public abstract object Clone();
+
         public static IEnumerable<IActionData> GetAll()
         {
             var iActionDataType = typeof(IActionData);

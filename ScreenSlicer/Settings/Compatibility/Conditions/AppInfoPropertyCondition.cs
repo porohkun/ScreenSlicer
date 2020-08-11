@@ -21,6 +21,16 @@ namespace ScreenSlicer.Compatibility
             }
         }
 
+        public override object Clone()
+        {
+            return new FileInfoPropertyCondition()
+            {
+                Property = Property,
+                RegularExpression = RegularExpression,
+                TargetValue = TargetValue
+            };
+        }
+
         protected override string GetValue(ISystemWindow window)
         {
             var info = FileVersionInfo.GetVersionInfo(window.ProcessName);

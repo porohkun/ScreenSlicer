@@ -142,12 +142,12 @@
                             <ColumnDefinition Width="180"/>
                         </Grid.ColumnDefinitions>
                         <ListView Grid.Column="0"
-                              ItemsSource="{Binding SelectedRule.Conditions}"
-                              Background="{DynamicResource ItemBackgroundHover}"
-                              ScrollViewer.CanContentScroll="False"
-                              dd:DragDrop.IsDragSource="True"
-                              dd:DragDrop.IsDropTarget="True"
-                              dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
+                                  ItemsSource="{Binding SelectedRule.Conditions}"
+                                  Background="{DynamicResource ItemBackgroundHover}"
+                                  ScrollViewer.CanContentScroll="False"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.IsDropTarget="True"
+                                  dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
                             <ListView.Resources>
                                 <DataTemplate DataType="{x:Type co:FileInfoPropertyCondition}">
                                     <DockPanel>
@@ -235,12 +235,12 @@
                             </ListView.ItemContainerStyle>
                         </ListView>
                         <ListView Grid.Column="2"
-                              ItemsSource="{Binding Source={StaticResource ICondition}}"
-                              Background="{DynamicResource ItemBackgroundHover}"
-                              ScrollViewer.CanContentScroll="False"
-                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                              dd:DragDrop.IsDragSource="True"
-                              dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
+                                  ItemsSource="{Binding Source={StaticResource ICondition}}"
+                                  Background="{DynamicResource ItemBackgroundHover}"
+                                  ScrollViewer.CanContentScroll="False"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.ShowAlwaysDropTargetAdorner="True">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="Focusable" Value="false"/>
