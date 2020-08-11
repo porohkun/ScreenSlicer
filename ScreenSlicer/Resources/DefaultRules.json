@@ -1,23 +1,18 @@
 [
   {
-    "Name": "Telegram",
+    "Name": "Photoshop",
     "Conditions": [
-      {
-        "$type": "ScreenSlicer.Compatibility.TitleCondition, ScreenSlicer",
-        "RegularExpression": true,
-        "TargetValue": "^Telegram"
-      },
-      {
-        "$type": "ScreenSlicer.Compatibility.FileInfoPropertyCondition, ScreenSlicer",
-        "Property": 0,
-        "RegularExpression": false,
-        "TargetValue": "Telegram Desktop"
-      },
       {
         "$type": "ScreenSlicer.Compatibility.FilenameCondition, ScreenSlicer",
         "FullPath": false,
         "RegularExpression": false,
-        "TargetValue": "Telegram.exe"
+        "TargetValue": "Photoshop.exe"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.FileInfoPropertyCondition, ScreenSlicer",
+        "Property": 0,
+        "RegularExpression": true,
+        "TargetValue": "Adobe Photoshop*"
       }
     ],
     "MoveWindowSequence": [
@@ -29,7 +24,7 @@
         "Left": 7,
         "Top": 0,
         "Right": -8,
-        "Bottom": -15
+        "Bottom": 1
       },
       {
         "$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
@@ -50,24 +45,107 @@
     ]
   },
   {
-    "Name": "Discord",
+    "Name": "Visual Studio",
     "Conditions": [
       {
-        "$type": "ScreenSlicer.Compatibility.TitleCondition, ScreenSlicer",
-        "RegularExpression": true,
-        "TargetValue": "^Discord"
+        "$type": "ScreenSlicer.Compatibility.FilenameCondition, ScreenSlicer",
+        "FullPath": false,
+        "RegularExpression": false,
+        "TargetValue": "devenv.exe"
       },
       {
         "$type": "ScreenSlicer.Compatibility.FileInfoPropertyCondition, ScreenSlicer",
         "Property": 0,
         "RegularExpression": false,
-        "TargetValue": "Discord"
+        "TargetValue": "Microsoft® Visual Studio®"
+      }
+    ],
+    "MoveWindowSequence": [
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData, ScreenSlicer"
       },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData, ScreenSlicer",
+        "Left": 0,
+        "Top": -8,
+        "Right": -1,
+        "Bottom": 8
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+        "Message": "EnterSizeMove"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.User32ShowWindowData, ScreenSlicer",
+        "Command": "ShowMaximized"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.User32SetWindowPosData, ScreenSlicer",
+        "Flags": "NoZOrder, NoSendChanging"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+        "Message": "ExitSizeMove"
+      }
+    ]
+  },
+  {
+    "Name": "Telegram",
+    "Conditions": [
       {
         "$type": "ScreenSlicer.Compatibility.FilenameCondition, ScreenSlicer",
         "FullPath": false,
         "RegularExpression": false,
-        "TargetValue": "Discord.exe"
+        "TargetValue": "Telegram.exe"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.FileInfoPropertyCondition, ScreenSlicer",
+        "Property": 0,
+        "RegularExpression": false,
+        "TargetValue": "Telegram Desktop"
+      }
+    ],
+    "MoveWindowSequence": [
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.CorrectTargetRegionData, ScreenSlicer"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.ModifyTargetRegionData, ScreenSlicer",
+        "Left": 7,
+        "Top": 0,
+        "Right": -8,
+        "Bottom": 0
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+        "Message": "EnterSizeMove"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.User32ShowWindowData, ScreenSlicer",
+        "Command": "ShowNormal"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.User32SetWindowPosData, ScreenSlicer",
+        "Flags": "NoZOrder, NoSendChanging"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
+        "Message": "ExitSizeMove"
+      }
+    ]
+  },
+  {
+    "Name": "Chrome Widget",
+    "Conditions": [
+      {
+        "$type": "ScreenSlicer.Compatibility.WindowClassCondition, ScreenSlicer",
+        "RegularExpression": false,
+        "TargetValue": "Chrome_WidgetWin_1"
+      },
+      {
+        "$type": "ScreenSlicer.Compatibility.WindowStyleCondition, ScreenSlicer",
+        "MustInclude": false,
+        "TargetValue": 33554432
       }
     ],
     "MoveWindowSequence": [
@@ -79,7 +157,7 @@
         "Left": 6,
         "Top": 0,
         "Right": -7,
-        "Bottom": -13
+        "Bottom": 0
       },
       {
         "$type": "ScreenSlicer.Compatibility.Actions.User32PostMessageData, ScreenSlicer",
