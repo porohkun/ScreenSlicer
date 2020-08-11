@@ -47,7 +47,7 @@ namespace ScreenSlicer.Native.Compatibility
             var expand = Size.Subtract(window.Position.Size, window.ClientRectangle.Size);
             var offset = new Point(-expand.Width / 2, 0);
             region.Offset(offset);
-            region.Size = Size.Add(region.Size, expand);
+            region.Size = Size.Add(region.Size, new Size(expand.Width, 0));
         }
 
         public static void Apply(this ModifyTargetRegionData data, ISystemWindow window, ref Rectangle region)
