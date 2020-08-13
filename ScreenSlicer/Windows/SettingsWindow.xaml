@@ -15,7 +15,7 @@
         Height="{Binding Source={x:Static local:Settings.Instance}, Path=SettingsWindow.Height, Mode=TwoWay}" MinHeight="400"
         BorderThickness="1" 
         IsTitleVisible="True"
-        ContentSource="/Pages/SettingsWindow/SnapPage.xaml"
+        ContentSource="/Pages/SettingsWindow/CompatibilityPage.xaml"
         WindowStartupLocation="CenterScreen">
     <mui:ModernWindow.Title>
         <MultiBinding Converter="{StaticResource LocFormatConverter}">
