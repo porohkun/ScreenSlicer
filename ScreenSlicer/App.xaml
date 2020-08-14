@@ -20,6 +20,103 @@
             <w:SlicingWindowDummy x:Key="SlicingWindowDummy"/>
             <w:SelectRulesWindowDummy x:Key="SelectRulesWindowDummy"/>
             <sp:CompatibilityPageDummy x:Key="CompatibilityPageDummy"/>
+
+            <Style x:Key="GlueRegionButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorder}"/>
+                <Setter Property="Foreground" Value="{DynamicResource ButtonText}"/>
+                <Setter Property="Width" Value="24"/>
+                <Setter Property="Height" Value="24"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Margin" Value="-12"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="Chrome"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}"
+                                    SnapsToDevicePixels="True">
+                                <Path Data="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19M17,8.4L13.4,12L17,15.6L15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4Z"
+                                      SnapsToDevicePixels="True"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{DynamicResource ButtonTextDisabled}"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource CloseButtonBackgroundIsPressed}"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderHover}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource ButtonTextHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FFFF5A4A"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderPressed}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource ButtonTextPressed}"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="Chrome" Value="{DynamicResource Accent}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TrashButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorder}"/>
+                <Setter Property="Foreground" Value="{DynamicResource ButtonText}"/>
+                <Setter Property="Width" Value="20"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="Chrome"
+                                    Padding="{TemplateBinding Padding}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}"
+                                    SnapsToDevicePixels="True">
+                                <Path Data="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z"
+                                      SnapsToDevicePixels="True"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{DynamicResource ButtonTextDisabled}"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource CloseButtonBackgroundIsPressed}"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderHover}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource ButtonBackground}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource #FFFF5A4A}"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderPressed}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource ButtonTextPressed}"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="Chrome" Value="{DynamicResource Accent}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
