@@ -27,6 +27,9 @@ namespace ScreenSlicer
         private event Action PropertyChanged;
 
 
+        [JsonProperty(nameof(Main))]
+        private MainSettings _main;
+
         [JsonProperty(nameof(SettingsWindow))]
         private SettingsWindowSettings _settingsWindow;
 
@@ -45,6 +48,16 @@ namespace ScreenSlicer
         [JsonProperty(nameof(Updates))]
         private UpdatesSettings _updates;
 
+
+        [JsonIgnore]
+        public MainSettings Main
+        {
+            get
+            {
+                _main = CheckSettingsPartExistAndSubscribe<MainSettings>(_main);
+                return _main;
+            }
+        }
 
         [JsonIgnore]
         public SettingsWindowSettings SettingsWindow

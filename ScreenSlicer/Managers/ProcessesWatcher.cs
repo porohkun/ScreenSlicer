@@ -139,7 +139,7 @@ namespace ScreenSlicer.Managers
 
         private void Window_VisualStateChanged(object src, AutomationPropertyChangedEventArgs e)
         {
-            if (src is AutomationElement automation)
+            if (Settings.Instance.Main.IsActive && src is AutomationElement automation)
             {
                 if (e.NewValue.Equals(WindowVisualState.Maximized) && !Methods.GetAsyncKeyState(Keys.ShiftKey).HasFlag(AsyncKeyStateResult.Pressed))
                 {
