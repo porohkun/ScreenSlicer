@@ -48,6 +48,7 @@ namespace ScreenSlicer.Updating
                         {
                             mgr.CreateShortcutForThisExe();
                             mgr.CreateRunAtWindowsStartupRegistry();
+                            _restoreDefaultRules.Execute(true);
                         },
                         onAppUpdate: v =>
                         {

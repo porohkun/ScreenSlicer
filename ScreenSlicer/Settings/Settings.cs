@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ScreenSlicer.Commands;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -163,7 +164,11 @@ namespace ScreenSlicer
                     }
                 }
             }
-            result = result ?? new Settings(true);
+            if (result == null)
+            {
+                result = new Settings(true);
+                new RestoreDefaultRulesCommand().Execute(true);
+            }
             result.PropertyChanged += Save;
             return result;
         }
