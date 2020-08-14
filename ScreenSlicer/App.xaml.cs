@@ -31,7 +31,7 @@ namespace ScreenSlicer
             _notifyIcon = Container.Get<NotifyIcon.NotifyIcon>();
 #if DEBUG
             Container.Get<Updating.Updater>().CheckUpdates();
-            Container.Get<Windows.SettingsWindow>().Show();
+            //Container.Get<Windows.SettingsWindow>().Show();
 #endif
         }
 

@@ -1,10 +1,11 @@
 ﻿<local:TaskbarIcon x:Class="ScreenSlicer.NotifyIcon.NotifyIcon"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="http://www.hardcodet.net/taskbar"
-             xmlns:self="clr-namespace:ScreenSlicer.Commands"
-             MenuActivation="LeftOrRightClick"
-             IconSource="/Images/Icon.ico">
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:s="clr-namespace:ScreenSlicer"
+                   xmlns:local="http://www.hardcodet.net/taskbar"
+                   xmlns:self="clr-namespace:ScreenSlicer.Commands"
+                   MenuActivation="LeftOrRightClick"
+                   IconSource="/Images/Icon.ico">
     <local:TaskbarIcon.CommandBindings>
         <CommandBinding Command="self:CustomCommands.Exit"
                         CanExecute="ExitCommand_CanExecute"
@@ -13,7 +14,7 @@
     </local:TaskbarIcon.CommandBindings>
     <local:TaskbarIcon.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Activated" Command="{Binding AppActivatedCommand}" />
+            <MenuItem Header="Activated" IsChecked="{Binding Source={x:Static s:Settings.Instance}, Path=Main.IsActive, Mode=OneWay}" Command="{Binding AppActivatedCommand}" />
             <MenuItem Header="Edit slicing" Command="{Binding BeginSliceRegionsCommand}" />
             <MenuItem Header="Settings" Command="{Binding ShowSettingsWindowCommand}" />
             <Separator />

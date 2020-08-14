@@ -14,7 +14,7 @@ namespace ScreenSlicer.Commands
 
         protected override void ExecuteInternal(object parameter)
         {
-
+            Settings.Instance.Main.IsActive = !Settings.Instance.Main.IsActive;
         }
     }
 }

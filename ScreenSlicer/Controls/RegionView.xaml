@@ -6,19 +6,35 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:RegionView}">
                     <Grid>
-                        <WrapPanel x:Name="PART_SlicePanel"
-                                   Visibility="Collapsed"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center">
-                            <Button Content="--"
-                                    Command="{DynamicResource SliceRegionHorizontalCommand}"
-                                    CommandParameter="{TemplateBinding Region}"
-                                    Width="24" Height="24" Padding="3,3,3,5"/>
-                            <Button Content="|"
-                                    Command="{DynamicResource SliceRegionVerticalCommand}"
-                                    CommandParameter="{TemplateBinding Region}"
-                                    Width="24" Height="24" Padding="3,3,3,5"/>
-                        </WrapPanel>
+                        <StackPanel x:Name="PART_SlicePanel"
+                                    Visibility="Collapsed"
+                                    Orientation="Vertical"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Command="{DynamicResource SliceRegionHorizontalCommand}"
+                                        CommandParameter="{TemplateBinding Region}"
+                                        Width="26" Height="26" Padding="1">
+                                    <Path Data="M19,3 L5,3 C3.9,3 3,3.9 3,5 L3,9 5,9 5,5 19,5 19,9 21,9 21,5 C21,3.9 20.1,3 19,3 M1,11 L1,13 23,13 23,11 M19,21 L5,21 C3.9,21 3,20.1 3,19 L3,15 5,15 5,19 19,19 19,15 21,15 21,19 C21,20.1 20.1,21 19,21 z"
+                                          SnapsToDevicePixels="True"
+                                          Fill="#FF333333"
+                                          Stretch="Uniform"/>
+                                </Button>
+                                <Button Command="{DynamicResource SliceRegionVerticalCommand}"
+                                        CommandParameter="{TemplateBinding Region}"
+                                        Width="26" Height="26" Padding="1">
+                                    <Path Data="M3,5 L3,19 C3,20.1 3.9,21 5,21 L9,21 9,19 5,19 5,5 9,5 9,3 5,3 C3.9,3 3,3.9 3,5 M11,23 L13,23 13,1 11,1 M21,5 L21,19 C21,20.1 20.1,21 19,21 L15,21 15,19 19,19 19,5 15,5 15,3 19,3 C20.1,3 21,3.9 21,5 z"
+                                          SnapsToDevicePixels="True"
+                                          Fill="#FF333333"
+                                          Stretch="Uniform"/>
+                                </Button>
+                            </StackPanel>
+                            <TextBlock HorizontalAlignment="Center">
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.Bounds.Width}"/>
+                                x
+                                <Run Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Region.Bounds.Height}"/>
+                            </TextBlock>
+                        </StackPanel>
 
                         <Grid x:Name="PART_GridVerticalSplit"
                               Visibility="Collapsed">
@@ -30,18 +46,11 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <GridSplitter Grid.Column="1" Width="6" Margin="-3,0" ResizeBehavior="PreviousAndNext"/>
-                            <Button Content="X"
-                                    Command="{DynamicResource GlueRegionCommand}"
+                            <Button Command="{DynamicResource GlueRegionCommand}"
                                     CommandParameter="{TemplateBinding Region}"
                                     Grid.Column="1"
-                                    Width="24"
-                                    Height="24"
-                                    Padding="3,3,3,5"
-                                    Margin="-12,-12"
-                                    Panel.ZIndex="100"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                            </Button>
+                                    Style="{DynamicResource GlueRegionButtonStyle}"
+                                    Panel.ZIndex="100"/>
                         </Grid>
 
                         <Grid x:Name="PART_GridHorizontalSplit"
@@ -54,18 +63,11 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <GridSplitter Grid.Row="1" Height="6" Margin="0,-3" ResizeBehavior="PreviousAndNext"/>
-                            <Button x:Name="PART_GlueButton" Content="X"
-                                    Command="{DynamicResource GlueRegionCommand}"
+                            <Button Command="{DynamicResource GlueRegionCommand}"
                                     CommandParameter="{TemplateBinding Region}"
                                     Grid.Row="1"
-                                    Width="24"
-                                    Height="24"
-                                    Padding="3,3,3,5"
-                                    Margin="-12,-12"
-                                    Panel.ZIndex="100"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                            </Button>
+                                    Style="{DynamicResource GlueRegionButtonStyle}"
+                                    Panel.ZIndex="100"/>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
