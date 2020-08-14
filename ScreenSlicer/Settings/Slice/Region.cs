@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Xml.Serialization;
 
 namespace ScreenSlicer
 {
-    [Serializable]
     public class Region : INotifyPropertyChanged, ICloneable
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -24,7 +21,7 @@ namespace ScreenSlicer
         private Region _regionA;
         private Region _regionB;
 
-        [XmlElement(Order = 0)]
+        [JsonProperty(nameof(Bounds), Order = 0)]
         public Rectangle Bounds
         {
             get => _bounds;
@@ -45,11 +42,11 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlElement(Order = 2)]
+        [JsonProperty(nameof(Slice), Order = 2)]
         public Slice Slice
         {
             get => _slice;
-            set
+            private set
             {
                 if (_slice != null)
                     _slice.PropertyChanged -= Slice_PropertyChanged;
@@ -69,11 +66,11 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlElement(Order = 3)]
+        [JsonProperty(nameof(RegionA), Order = 3)]
         public Region RegionA
         {
             get => _regionA;
-            set
+            private set
             {
                 if (_regionA != value)
                 {
@@ -87,11 +84,11 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlElement(Order = 4)]
+        [JsonProperty(nameof(RegionB), Order = 4)]
         public Region RegionB
         {
             get => _regionB;
-            set
+            private set
             {
                 if (_regionB != value)
                 {
@@ -105,7 +102,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlIgnore]
+        [JsonIgnore]
         public int MinWidth
         {
             get
@@ -118,7 +115,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlIgnore]
+        [JsonIgnore]
         public int MinHeight
         {
             get
@@ -131,7 +128,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlIgnore]
+        [JsonIgnore]
         public int MinVerticalSlice
         {
             get
@@ -144,7 +141,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlIgnore]
+        [JsonIgnore]
         public int MaxVerticalSlice
         {
             get
@@ -157,7 +154,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlIgnore]
+        [JsonIgnore]
         public int MinHorizontalSlice
         {
             get
@@ -170,7 +167,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlIgnore]
+        [JsonIgnore]
         public int MaxHorizontalSlice
         {
             get

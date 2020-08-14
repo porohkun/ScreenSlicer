@@ -1,4 +1,6 @@
-﻿using ScreenSlicer.Managers;
+﻿using ScreenSlicer.Commands;
+using ScreenSlicer.Compatibility;
+using ScreenSlicer.Managers;
 using ScreenSlicer.Native;
 using ScreenSlicer.Native.Windows;
 using System;
@@ -20,10 +22,7 @@ using System.Windows.Shapes;
 
 namespace ScreenSlicer.Windows
 {
-    /// <summary>
-    /// Interaction logic for WinListWindow.xaml
-    /// </summary>
-    public partial class WinListWindow : INotifyPropertyChanged
+    public class WinListWindowViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged(string propertyName)
@@ -33,10 +32,28 @@ namespace ScreenSlicer.Windows
 
         private readonly ProcessesWatcher _watcher;
         private readonly CollectionView _view;
+        private Rule _selectedRule;
         private ISystemWindow _selectedWindow;
+        private bool _useRule = true;
 
-        public ObservableCollection<ISystemWindow> Windows { get; private set; } = new ObservableCollection<ISystemWindow>();
+        public DelegateCommand ColumnReorderCommand { get; }
+        public DelegateCommand ShowSelectedWindowCommand { get; }
+        public DelegateCommand RefreshCommand { get; }
 
+        public Rule SelectedRule
+        {
+            get => _selectedRule;
+            set
+            {
+                if (_selectedRule != value)
+                {
+                    _selectedRule = value;
+                    NotifyPropertyChanged(nameof(SelectedRule));
+                    Refresh();
+                    _view.Refresh();
+                }
+            }
+        }
         public ISystemWindow SelectedWindow
         {
             get => _selectedWindow;
@@ -49,37 +66,43 @@ namespace ScreenSlicer.Windows
                 }
             }
         }
-
-
-        public WinListWindow()
+        public bool UseRule
         {
-            InitializeComponent();
-            DataContext = this;
+            get => _useRule;
+            set
+            {
+                if (_useRule != value)
+                {
+                    _useRule = value;
+                    NotifyPropertyChanged(nameof(UseRule));
+                    _view.Refresh();
+                }
+            }
         }
 
-        public WinListWindow(ProcessesWatcher _watcher) : this()
+
+        public ObservableCollection<ISystemWindow> Windows { get; private set; } = new ObservableCollection<ISystemWindow>();
+
+        public WinListWindowViewModel()
         {
-            this._watcher = _watcher;
             _view = (CollectionView)CollectionViewSource.GetDefaultView(Windows);
             _view.Filter = ViewFilter;
         }
 
-        private bool ViewFilter(object item)
+        public WinListWindowViewModel(ProcessesWatcher watcher) : this()
         {
-            if (!(item is ISystemWindow window))
-                return false;
-            //if (string.IsNullOrEmpty(window.Title))
-            //    return false;
-            if (!window.Visible)
-                return false;
-            if (window.Style.HasFlag(Native.WindowStyle.Popup) && !window.Style.HasFlag(Native.WindowStyle.PopupWindow))
-                return false;
-            return true;
+            _watcher = watcher;
+            ColumnReorderCommand = new DelegateCommand(p => ColumnReorder((GridViewColumnHeader)p));
+            ShowSelectedWindowCommand = new DelegateCommand(p => ShowSelectedWindow());
+            RefreshCommand = new DelegateCommand(p => Refresh());
+
+            Refresh();
+            _view.Refresh();
         }
 
-        private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
+
+        private void ColumnReorder(GridViewColumnHeader colHeader)
         {
-            GridViewColumnHeader colHeader = (GridViewColumnHeader)e.OriginalSource;
             var colName = colHeader.Content.ToString();
 
             var prevDescription = _view.SortDescriptions.FirstOrDefault(d => d.PropertyName == colName);
@@ -92,19 +115,31 @@ namespace ScreenSlicer.Windows
             _view.Refresh();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ShowSelectedWindow()
         {
+            if (SelectedWindow == null)
+                return;
             var handle = SelectedWindow.Handle;
-            SetForegroundWindow(handle);
+            Methods.SetForegroundWindow(handle);
             Methods.ShowWindow(handle, ShowWindowCommand.ShowNoActive);
         }
 
-        [DllImport("user32.dll")]
-        public static extern long SetForegroundWindow(IntPtr hWnd);
+        private bool ViewFilter(object item)
+        {
+            if (!(item is ISystemWindow window))
+                return false;
+            if (window.Position.Size == default)
+                return false;
+            //if (string.IsNullOrEmpty(window.Title))
+            //    return false;
+            if (!window.Visible)
+                return false;
+            if (window.Style.HasFlag(Native.WindowStyle.Popup) && !window.Style.HasFlag(Native.WindowStyle.PopupWindow))
+                return false;
+            return UseRule ? (SelectedRule != null ? (SelectedRule.Conditions.All(c => c.Check(window))) : true) : true;
+        }
 
-
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Refresh()
         {
             var newWindows = _watcher.GetDesktopWindows().ToList();
             var closedWindows = new List<ISystemWindow>();
@@ -117,6 +152,37 @@ namespace ScreenSlicer.Windows
                 Windows.Remove(win);
             foreach (var win in newWindows)
                 Windows.Add(win);
+        }
+    }
+
+    /// <summary>
+    /// Interaction logic for WinListWindow.xaml
+    /// </summary>
+    public partial class WinListWindow : IParametricWindow
+    {
+        public WinListWindow()
+        {
+            DataContext = new WinListWindowViewModel();
+            InitializeComponent();
+        }
+
+        public WinListWindow(ProcessesWatcher watcher)
+        {
+            DataContext = new WinListWindowViewModel(watcher);
+            InitializeComponent();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
+            base.OnClosing(e);
+        }
+
+        void IParametricWindow.SetParameter(object parameter)
+        {
+            var rule = (Rule)parameter;
+            (DataContext as WinListWindowViewModel).SelectedRule = rule;
         }
     }
 }

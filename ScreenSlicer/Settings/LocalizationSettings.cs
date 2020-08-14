@@ -1,29 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using WPFLocalizeExtension.Engine;
 
 namespace ScreenSlicer
 {
-    [Serializable]
-    public class LocalizationSettings : INotifyPropertyChanged
+    public class LocalizationSettings : SettingsPartWithNotifier
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        [XmlIgnore]
-        public ObservableCollection<CultureInfo> MergedAvailableCultures => LocalizeDictionary.Instance.MergedAvailableCultures;
-
-        [XmlIgnore]
+        [JsonProperty(nameof(Culture))]
         public CultureInfo Culture
         {
             get => LocalizeDictionary.Instance.Culture;
@@ -34,25 +18,6 @@ namespace ScreenSlicer
                     LocalizeDictionary.Instance.Culture = value;
             }
         }
-
-        [XmlAttribute(nameof(Culture))]
-        public string CultureString
-        {
-            get => Culture.Name;
-            set
-            {
-                if (value != CultureString)
-                {
-                    var culture = MergedAvailableCultures.FirstOrDefault(c => c.Name == value);
-                    if (culture == null)
-                        culture = CultureInfo.GetCultureInfo(value);
-                    if (culture == null)
-                        culture = CultureInfo.CurrentCulture;
-                    Culture = culture;
-                }
-            }
-        }
-
 
         public LocalizationSettings()
         {

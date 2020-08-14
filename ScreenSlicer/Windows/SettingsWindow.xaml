@@ -15,7 +15,7 @@
         Height="{Binding Source={x:Static local:Settings.Instance}, Path=SettingsWindow.Height, Mode=TwoWay}" MinHeight="400"
         BorderThickness="1" 
         IsTitleVisible="True"
-        ContentSource="/Pages/SettingsWindow/SnapPage.xaml"
+        ContentSource="/Pages/SettingsWindow/CompatibilityPage.xaml"
         WindowStartupLocation="CenterScreen">
     <mui:ModernWindow.Title>
         <MultiBinding Converter="{StaticResource LocFormatConverter}">
@@ -25,21 +25,26 @@
     </mui:ModernWindow.Title>
     <Grid/>
     <mui:ModernWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Snaps.GroupHeader}">
+        <!--<mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Snaps.GroupHeader}">
             <mui:LinkGroup.Links >
                 <mui:Link Source="/Pages/SettingsWindow/SnapPage.xaml"/>
             </mui:LinkGroup.Links>
+        </mui:LinkGroup>-->
+        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Compatibility.GroupHeader}">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/SettingsWindow/CompatibilityPage.xaml"/>
+            </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.System.GroupHeader}">
+        <!--<mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.System.GroupHeader}">
             <mui:LinkGroup.Links>
                 <mui:Link Source="/Pages/SettingsWindow/SystemPage.xaml"/>
             </mui:LinkGroup.Links>
-        </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Localization.GroupHeader}">
+        </mui:LinkGroup>-->
+        <!--<mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Localization.GroupHeader}">
             <mui:LinkGroup.Links>
                 <mui:Link Source="/Pages/SettingsWindow/LocalesPage.xaml"/>
             </mui:LinkGroup.Links>
-        </mui:LinkGroup>
+        </mui:LinkGroup>-->
         <mui:LinkGroup DisplayName="{extensions:Loc Key=SettingsWindow.Updates.GroupHeader}">
             <mui:LinkGroup.Links>
                 <mui:Link Source="/Pages/SettingsWindow/UpdatesPage.xaml"/>

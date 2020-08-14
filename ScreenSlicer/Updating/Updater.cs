@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ScreenSlicer.Updating
 {
@@ -16,9 +17,14 @@ namespace ScreenSlicer.Updating
         private readonly Timer _timer;
         private DateTime _lastUpdateCheck = DateTime.Now;
         private TimeSpan _updateFrequency = new TimeSpan(1, 0, 0);
+        ICommand _restoreDefaultRules;
 
-        public Updater()
+        public Updater(Commands.RestoreDefaultRulesCommand restoreDefaultRules)
         {
+            _restoreDefaultRules = restoreDefaultRules;
+#if DEBUG
+            return;
+#endif
             _autoEvent = new AutoResetEvent(false);
             _timer = new Timer(CheckStatus, _autoEvent, 60000, 5000);
         }
@@ -35,7 +41,7 @@ namespace ScreenSlicer.Updating
 
             try
             {
-                using (var mgr = new UpdateManager(@"https://github.com/porohkun/ScreenSlicer/releases/latest/download/"))
+                using (var mgr = new UpdateManager(Settings.Instance.Updates.Path))
                 {
                     SquirrelAwareApp.HandleEvents(
                         onInitialInstall: v =>
@@ -43,15 +49,22 @@ namespace ScreenSlicer.Updating
                             mgr.CreateShortcutForThisExe();
                             mgr.CreateRunAtWindowsStartupRegistry();
                         },
-                        onAppUpdate: v => mgr.CreateShortcutForThisExe(),
+                        onAppUpdate: v =>
+                        {
+                            mgr.CreateShortcutForThisExe();
+                            _restoreDefaultRules.Execute(true);
+                        },
                         onAppUninstall: v =>
                         {
                             mgr.RemoveShortcutForThisExe();
                             mgr.RemoveRunAtWindowsStartupRegistry();
                         },
-                        onFirstRun: () => { });
+                        onFirstRun: () =>
+                        {
+                            _restoreDefaultRules.Execute(true);
+                        });
 
-                    if (!true/*Updates.Enabled*/) //updates are not enabled, skipping update
+                    if (!Settings.Instance.Updates.AutoUpdate) //updates are not enabled, skipping update
                         return;
                     if (!mgr.IsInstalledApp) //not installed during Squirrel, skipping update
                         return;
@@ -77,6 +90,26 @@ namespace ScreenSlicer.Updating
             {
                 var errorMessage = $"{ex.Message}\r\n\r\n{ex.StackTrace}\r\n\r\nCopy error message to clipboard?";
                 if (MessageBox.Show(errorMessage, "Error before update/install process", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    Clipboard.SetText(errorMessage);
+            }
+        }
+
+        public void SetStartup(bool enable)
+        {
+            try
+            {
+                using (var mgr = new UpdateManager(Settings.Instance.Updates.Path))
+                {
+                    if (enable)
+                        mgr.CreateRunAtWindowsStartupRegistry();
+                    else
+                        mgr.RemoveRunAtWindowsStartupRegistry();
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = $"{ex.Message}\r\n\r\n{ex.StackTrace}\r\n\r\nCopy error message to clipboard?";
+                if (MessageBox.Show(errorMessage, "Error on startup changing process", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     Clipboard.SetText(errorMessage);
             }
         }

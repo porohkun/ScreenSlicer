@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ScreenSlicer.Compatibility;
+using ScreenSlicer.Native.Compatibility;
+using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScreenSlicer.Native.Windows
 {
-    public class SystemWindow : ISystemWindow
+    [DebuggerDisplay(nameof(CachedTitle))]
+    public class SystemWindow : ISystemWindow//, ICanUseRules
     {
+        private string _cachedTitle;
+        //private Rule _rule;
+
         public IntPtr Handle { get; }
 
         public ISystemWindow Root => new SystemWindow(Methods.GetAncestor(Handle, GetAncestorFlag.GetRoot));
@@ -25,16 +27,22 @@ namespace ScreenSlicer.Native.Windows
             ? Rectangle.Empty
             : new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
 
-        public string Title
+        public string Title => _cachedTitle = Methods.GetWindowTitle(Handle);
+
+        public string CachedTitle
         {
             get
             {
-                var length = Methods.GetWindowTextLength(Handle) + 1;
-                var builder = new StringBuilder(length);
-                Methods.GetWindowText(Handle, builder, length);
-                return builder.ToString();
+                if (_cachedTitle == null)
+                    return Title;
+                else
+                    return _cachedTitle;
             }
         }
+
+        public string WindowClass => Methods.GetWindowClassName(Handle);
+
+        public string ProcessName => Methods.GetProcessName(Handle);
 
         public bool Visible => Methods.IsWindowVisible(Handle);
 
@@ -58,19 +66,15 @@ namespace ScreenSlicer.Native.Windows
             Handle = hWnd;
         }
 
-        public void PostMessage(WindowMessage message, IntPtr wParam = default, IntPtr lParam = default)
-        {
-            PostMessage((uint)message, wParam, lParam);
-        }
+        //public void SetRule(Rule rule)
+        //{
+        //    _rule = rule;
+        //}
 
-        public void PostMessage(uint message, IntPtr wParam = default, IntPtr lParam = default)
+        public virtual void Move(Rectangle region)
         {
-            Methods.PostMessage(Handle, message, wParam, lParam);
-        }
-
-        public void SetPosition(Rectangle rectangle, ShowWindowPosition flags, ISystemWindow behindWindow = null)
-        {
-            Methods.SetWindowPos(Handle, behindWindow != null ? behindWindow.Handle : IntPtr.Zero, rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height, (uint)flags);
+            foreach (var action in Settings.Instance.Compatibility.GetRuleForWindow(this).MoveWindowSequence)
+                action.Apply(this, ref region);
         }
 
         public override bool Equals(object obj)

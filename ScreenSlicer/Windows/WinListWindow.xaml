@@ -5,32 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenSlicer.Windows"
         mc:Ignorable="d"
-        Title="WinListWindow" Height="450" Width="600">
+        Title="Rules test" Height="450" Width="600">
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
-            <Button Content="Update" Click="Button_Click_1"/>
-            <Button Content="{Binding SelectedWindow.Title, StringFormat=Move `{0}`}" Click="Button_Click"/>
+            <Button Content="Refresh" Command="{Binding RefreshCommand}"/>
+            <CheckBox IsChecked="{Binding UseRule}">
+                <TextBlock>
+                    <Run Text="Use rule"/>
+                    <Run Text="{Binding SelectedRule.Name, StringFormat='`{0}`'}"/>
+                </TextBlock>
+            </CheckBox>
+            <Button Content="Show Window" Command="{Binding ShowSelectedWindowCommand}"/>
         </StatusBar>
         <ListView x:Name="listView" DockPanel.Dock="Bottom" ItemsSource="{Binding Windows, Mode=OneWay}" SelectedItem="{Binding SelectedWindow}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Title}">
-                        <GridViewColumnHeader Content="Title" Click="GridViewColumnHeader_Click"/>
+                        <GridViewColumnHeader Content="Title" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding WindowClass}">
+                        <GridViewColumnHeader Content="WindowClass" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProcessName}">
+                        <GridViewColumnHeader Content="ProcessName" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Visible}">
-                        <GridViewColumnHeader Content="Visible" Click="GridViewColumnHeader_Click"/>
+                        <GridViewColumnHeader Content="Visible" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Style}">
-                        <GridViewColumnHeader Content="Styles" Click="GridViewColumnHeader_Click"/>
+                        <GridViewColumnHeader Content="Style" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Placement}">
-                        <GridViewColumnHeader Content="Placement" Click="GridViewColumnHeader_Click"/>
+                        <GridViewColumnHeader Content="Placement" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Position}">
-                        <GridViewColumnHeader Content="Position" Click="GridViewColumnHeader_Click"/>
+                        <GridViewColumnHeader Content="Position" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding ClientRectangle}">
-                        <GridViewColumnHeader Content="ClientRectangle" Click="GridViewColumnHeader_Click"/>
+                        <GridViewColumnHeader Content="ClientRectangle" Command="{Binding ColumnReorderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 
 namespace ScreenSlicer.Native.Windows
@@ -12,12 +11,13 @@ namespace ScreenSlicer.Native.Windows
         Rectangle Position { get; }
         Rectangle ClientRectangle { get; }
         string Title { get; }
+        string CachedTitle { get; }
+        string WindowClass { get; }
+        string ProcessName { get; }
         bool Visible { get; }
         WindowStyle Style { get; }
         WindowPlacement Placement { get; }
 
-        void PostMessage(WindowMessage message, IntPtr wParam = default, IntPtr lParam = default);
-        void PostMessage(uint message, IntPtr wParam = default, IntPtr lParam = default);
-        void SetPosition(Rectangle rectangle, ShowWindowPosition flags, ISystemWindow behindWindow = null);
+        void Move(Rectangle region);
     }
 }

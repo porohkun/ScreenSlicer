@@ -17,6 +17,7 @@ namespace ScreenSlicer
             Bind<Windows.WinListWindow>().ToSelf().InSingletonScope();
             Bind<Updating.Updater>().ToSelf().InSingletonScope();
             Bind<Managers.RegionsManager>().ToSelf().InSingletonScope();
+            Bind<Native.Windows.SystemWindowsFactory>().ToSelf().InSingletonScope();
             Bind<Managers.ProcessesWatcher>().ToSelf().InSingletonScope();
         }
     }

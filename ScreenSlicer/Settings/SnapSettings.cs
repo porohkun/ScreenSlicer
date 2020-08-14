@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using WPFLocalizeExtension.Engine;
+﻿using Newtonsoft.Json;
 
 namespace ScreenSlicer
 {
-    [Serializable]
-    public class SnapSettings : INotifyPropertyChanged
+    public class SnapSettings : SettingsPartWithNotifier
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        [JsonProperty(nameof(AutoFill))]
         private bool _autoFill;
-        private bool _snapToMonitors;
-        private bool _snapToWindows;
-        private bool _snapToRegions;
-        private int _snapDistance;
 
-        [XmlAttribute]
+        [JsonProperty(nameof(SnapToMonitors))]
+        private bool _snapToMonitors = true;
+
+        [JsonProperty(nameof(SnapToWindows))]
+        private bool _snapToWindows;
+
+        [JsonProperty(nameof(SnapToRegions))]
+        private bool _snapToRegions = true;
+
+        [JsonProperty(nameof(SnapDistance))]
+        private int _snapDistance = 10;
+
+        [JsonIgnore]
         public bool AutoFill
         {
             get => _autoFill;
@@ -40,7 +33,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlAttribute]
+        [JsonIgnore]
         public bool SnapToMonitors
         {
             get => _snapToMonitors;
@@ -54,7 +47,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlAttribute]
+        [JsonIgnore]
         public bool SnapToWindows
         {
             get => _snapToWindows;
@@ -68,7 +61,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlAttribute]
+        [JsonIgnore]
         public bool SnapToRegions
         {
             get => _snapToRegions;
@@ -82,7 +75,7 @@ namespace ScreenSlicer
             }
         }
 
-        [XmlAttribute]
+        [JsonIgnore]
         public int SnapDistance
         {
             get => _snapDistance;
@@ -94,17 +87,6 @@ namespace ScreenSlicer
                     NotifyPropertyChanged(nameof(SnapDistance));
                 }
             }
-        }
-
-
-        public SnapSettings()
-        {
-
-        }
-
-        private void Instance_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            NotifyPropertyChanged(e.PropertyName);
         }
     }
 }

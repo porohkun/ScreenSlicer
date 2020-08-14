@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ScreenSlicer.Windows;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
 namespace ScreenSlicer.Commands
 {
-    public class ShowWindowCommand<T> : InjectableCommand where T : Window
+    public class ShowWindowCommand<T> : InjectableCommand<ShowWindowCommand<T>> where T : Window
     {
         protected T _window;
 
@@ -21,6 +22,8 @@ namespace ScreenSlicer.Commands
 
         protected override void ExecuteInternal(object parameter)
         {
+            if (_window is IParametricWindow parametricWindow)
+                parametricWindow.SetParameter(parameter);
             _window.Show();
         }
     }
