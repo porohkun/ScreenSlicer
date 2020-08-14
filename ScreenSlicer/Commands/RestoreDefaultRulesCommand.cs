@@ -55,7 +55,7 @@ namespace ScreenSlicer.Commands
             foreach (var rule in rulesTuple.Where(r => r.IsSelected))
             {
                 var oldRule = Settings.Instance.Compatibility.Rules.FirstOrDefault(r => r.Name == rule.Rule.Name);
-                int index = oldRule == null ? 0 : Settings.Instance.Compatibility.Rules.IndexOf(oldRule);
+                int index = oldRule == null ? Settings.Instance.Compatibility.Rules.Count : Settings.Instance.Compatibility.Rules.IndexOf(oldRule);
                 if (oldRule != null)
                     Settings.Instance.Compatibility.Rules.Remove(oldRule);
                 Settings.Instance.Compatibility.Rules.Insert(index, rule.Rule);
